@@ -1,10 +1,23 @@
 "use strict"
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const ejsMate = require('ejs-mate');
 const path = require('path');
 
-const app = express();
 const mysql = require('mysql2');
+
+const multer = require('multer')
+const {
+    storage
+} = require('./cloudinary')
+const upload = multer({
+    storage
+})
+
+const app = express();
 
 const connection = mysql.createConnection({
     host: '192.168.2.129',
@@ -24,9 +37,27 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// home page
 app.get('/home', (req, res, next) => {
     res.render('home');
+    next();
+});
+
+// the page when we want add new product
+app.get('/products/new', (req, res, next) => {
+    res.render('new');
+    next();
+});
+
+
+app.post('/product', upload.array('image'), (req, res, next) => {
+    try {
+        console.log(req.body);
+    } catch (err) {
+        console.log('Error: ', err);
+        return next();
+    }
+
     next();
 });
 

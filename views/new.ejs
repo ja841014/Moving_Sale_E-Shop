@@ -1,0 +1,83 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/new.css">
+
+<div class="row">
+
+    <div class="col-md-6 offset-md-3">
+
+        <div class="card shadow">
+            <div class="card-body">
+                <h5>New Product</h5>
+                <form action="/product" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="title">Category</label>
+                        <input class="form-control" type="text" id="category" name="product[category]" autofocus
+                            required>
+                        <div class="valid-feedback">Looks good</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="price">Price</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="price-label">$</span>
+                            <input type="text" class="form-control" placeholder="0.00" aria-label="price"
+                                aria-describedby="price-label" name="product[price]" required>
+                            <div class="valid-feedback">Looks good</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="quantity">Owner</label>
+                        <input class="form-control" type="text" id="owner" name="product[owner]" required>
+                        <div class="valid-feedback">Looks good</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="location">Location</label>
+                        <input class="form-control" type="text" id="location" name="product[location]" required>
+                        <div class="valid-feedback">Looks good</div>
+                    </div>
+
+
+                    <!-- <div class="mb-3">
+                            <div class="form-file custom-file">
+                                <input type="file" class="form-file-input" id="image" name="image" multiple>
+                                <div>
+                                    <label class="form-file-label" for="image">
+                                        <span class="form-file-text custom-file-label">Choose image(s)...</span>
+                                        <span class="form-file-button">Browse</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    <!-- <div class="mb-3">
+                            <label class="form-label" for="image">Image URL</label>
+                            <input class="form-control" type="text" id="image" name="campground[image]" required>
+                            <div class="valid-feedback">Looks good</div>
+                        </div> -->
+
+                    <!--  multiple files can be upload-->
+
+                    <div class="mb-3 custom-file">
+                        <!-- <label for="image" class="form-label">Upload Image </label> -->
+                        <input class="form-control" type="file" id="image" name="image" multiple>
+                        <div>
+                            <label class="form-file-label" for="image">
+                                <span class="form-file-text custom-file-label">Choose image(s)...</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3 d-grid">
+                        <button class="btn btn-success">Add Product</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
