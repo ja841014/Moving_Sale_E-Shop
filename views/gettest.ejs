@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') %>
+
+  user list
+    <div class="row">
+
+        <div class="col-md-6 offset-md-3">
+            <ul id="content">
+              hello
+                <li v-for="user in users" :key="user.seller_id">
+                    <img class="avatar"  :src= "user.url_1" />
+                    <div class="first_name">
+                      {{ user.file_name_1 }}
+                    </div>
+                    
+                </li>
+            </ul>
+            
+    
+        </div>
+    </div>
+    
+    <script>
+        const va = new Vue({
+          el: '#content',
+          data: {
+            // users: []
+            users: JSON.parse('<%- data %>')
+          },
+          // created() {
+          //   fetch('/testget')
+          //     .then(r => r.json())
+          //     .then(r => (this.users = r))
+          // }
+        })
+    </script>
+
