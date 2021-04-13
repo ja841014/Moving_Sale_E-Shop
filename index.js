@@ -19,13 +19,13 @@ const upload = multer({
 
 const app = express();
 
-const connection = mysql.createConnection({
-    host: '192.168.2.129',
-    user: 'root',
-    password: '1',
-    database: 'user',
-    multipleStatements: true
-});
+// const connection = mysql.createConnection({
+//     host: '192.168.2.129',
+//     user: 'root',
+//     password: '1',
+//     database: 'user',
+//     multipleStatements: true
+// });
 
 
 // kind of template
@@ -41,6 +41,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // home page
 app.get('/home', (req, res, next) => {
     res.render('home');
+    next();
+});
+
+// Introduce our website
+app.get('/about', (req, res, next) => {
+    res.render('about');
+    next();
+});
+
+
+app.get('/products', (req, res, next) => {
+    res.render('product');
     next();
 });
 
@@ -76,8 +88,8 @@ app.post('/product', upload.array('image'), async (req, res, next) => {
         return next();
     }
 
-    next();
-});
+//     next();
+// });
 
 
 app.get('/testget', async (req,res, next) => {
@@ -138,4 +150,4 @@ app.post('/test', async (req, res, next) => {
 
 app.listen(3000);
 
-//https://stackoverflow.com/questions/45526666/are-you-able-to-use-vue-js-inside-an-ejs-file
+// https://stackoverflow.com/questions/45526666/are-you-able-to-use-vue-js-inside-an-ejs-file
