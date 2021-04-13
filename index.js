@@ -19,13 +19,13 @@ const upload = multer({
 
 const app = express();
 
-const connection = mysql.createConnection({
-    host: '192.168.2.129',
-    user: 'root',
-    password: '1',
-    database: 'user',
-    multipleStatements: true
-});
+// const connection = mysql.createConnection({
+//     host: '192.168.2.129',
+//     user: 'root',
+//     password: '1',
+//     database: 'user',
+//     multipleStatements: true
+// });
 
 
 // kind of template
@@ -43,6 +43,18 @@ app.get('/home', (req, res, next) => {
     next();
 });
 
+// Introduce our website
+app.get('/about', (req, res, next) => {
+    res.render('about');
+    next();
+});
+
+
+app.get('/products', (req, res, next) => {
+    res.render('product');
+    next();
+});
+
 // the page when we want add new product
 app.get('/products/new', (req, res, next) => {
     res.render('new');
@@ -50,16 +62,16 @@ app.get('/products/new', (req, res, next) => {
 });
 
 
-app.post('/product', upload.array('image'), (req, res, next) => {
-    try {
-        console.log(req.body);
-    } catch (err) {
-        console.log('Error: ', err);
-        return next();
-    }
+// app.post('/product', upload.array('image'), (req, res, next) => {
+//     try {
+//         console.log(req.body);
+//     } catch (err) {
+//         console.log('Error: ', err);
+//         return next();
+//     }
 
-    next();
-});
+//     next();
+// });
 
 
 
