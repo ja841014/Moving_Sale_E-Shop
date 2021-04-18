@@ -14,7 +14,7 @@ const upload = multer({storage})
 
 
 const connection = mysql.createConnection({
-    host: '192.168.2.129',
+    host: '192.168.12.128',
     user: 'root',
     password: '1',
     database: 'user',
@@ -41,6 +41,31 @@ app.get('/about', (req, res, next) => {
     // res.render('about');
     // next();
 });
+
+// Add Product
+app.get('/products/new', (req, res, next) => {
+    res.sendFile(__dirname+'/views/add.html');
+
+});
+
+// Show products
+app.get('/products', (req, res, next) => {
+    res.sendFile(__dirname+'/views/products.html');
+
+});
+
+// Product Detail
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(3000);
 
