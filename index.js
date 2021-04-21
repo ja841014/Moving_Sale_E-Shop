@@ -49,7 +49,7 @@ app.listen(3000);
 
 
 // upload.array('image') 已經把image傳到cloudinary 
-// app.post('/product', upload.array('image'), async (req, res, next) => {
+// app.post('/products', upload.array('image'), async (req, res, next) => {
 //     try {
 //         // upload 後可能有1~3張圖片, 用這樣的方式把這兩個infomation取下來  url = file.path filename = f.filename
 //         // productImage 是一個json of array
