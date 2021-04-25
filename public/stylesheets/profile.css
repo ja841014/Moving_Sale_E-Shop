@@ -1,0 +1,151 @@
+
+body {
+    font-family: 'Open Sans', serif;
+    padding-top: 54px;
+    color: #62686e;
+    background-color: rgba(139, 148, 226, 0.459);
+  }
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 0;
+        padding-left: 0em;
+    }
+}
+
+
+
+@media (min-width: 992px) {
+    
+    #sideNav {
+        text-align: center;
+        position: fixed;
+        top: 7vh;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        width: 10rem;
+        height: 100vh;
+      }
+
+      #sideNav .navbar-brand {
+        display: flex;
+        margin: auto auto 0;
+        padding: 0.5rem;
+      }
+
+      #sideNav .navbar-collapse {
+        display: flex;
+        align-items: flex-start;
+        flex-grow: 0;
+        width: 100%;
+        margin-bottom: auto;
+      }
+
+      #sideNav .navbar-collapse .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      #sideNav .navbar-collapse .navbar-nav .nav-item {
+        display: block;
+      }
+     
+    /* disable the blue bg */
+    #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
+        
+        display: block;
+    }
+
+    #copyright {
+        color: rgba(255,255,255,0.5);
+    }
+}
+
+
+h1 {
+    font-size: 6rem;
+    line-height: 5.5rem;
+    padding-bottom: 1rem;
+    color: darkblue;
+  }
+p {
+    font-size: 18px;
+    line-height: 5.5rem;
+}
+
+.list-name{
+    position: relative;
+    float: left;
+    text-align: center;
+    font-size:3.5vh;
+    margin: 10px;
+  }
+
+.list-social-icons a {
+    margin: 10px;
+}
+
+.list-social-icons .list-inline-item i:hover {
+    color: rgb(0, 176, 245);
+  }
+
+
+.nav-link.active {
+    color: white;
+    border-bottom-color:white;
+}
+
+.nav-link {
+    padding: 0.5rem 0;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    margin-left: 0.5rem;
+    border-bottom: 0.25rem solid transparent;
+}
+
+.nav-link:hover{
+    color: rgba(255,255,255,0.5);
+    border-bottom-color:rgba(255,255,255,0.5);
+}
+
+.navbar a{
+    letter-spacing: .2em;
+
+}
+
+#languagestyle {
+    color: rgba(255,255,255,0.5);  
+    background-color: rgba(0,0,0,0);
+}
+#languagestyle:hover{
+    color: rgba(0,255,255,1);
+}
+
+section.resume-section {
+    border-bottom: 1px solid #dee2e6;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+  }
+  
+section.resume-section .resume-item .resume-date {
+    min-width: none;
+}
+
+
+
+@media (min-width: 768px) {
+    section.resume-section {
+      min-height: 100vh;
+    }
+    section.resume-section .resume-item .resume-date {
+      min-width: 18rem;
+    }
+  }
+
+@media (min-width: 992px) {
+    section.resume-section {
+        padding-top: 5rem !important;
+        padding-bottom: 3rem !important;
+    }
+}

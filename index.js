@@ -14,17 +14,51 @@ const upload = multer({storage})
 
 
 const connection = mysql.createConnection({
-    host: '192.168.12.128',
+    // '192.168.12.128', 
+    // '192.168.2.129'
+    host: '192.168.2.129',
     user: 'root',
     password: '1',
-    database: 'user',
+    database: 'project',
     multipleStatements: true
 });
+
+// graphql thing
+const { graphqlHTTP } = require('express-graphql');
+const { readFileSync } = require('fs')
+const { assertResolversPresent, makeExecutableSchema } = require('@graphql-tools/schema');
+
+const typeDefs = readFileSync('./schema.graphql').toString('utf-8')
+const resolvers = require('./resolvers');
+
+const schema = makeExecutableSchema({
+  resolvers,
+  resolverValidationOptions: {
+    requireResolversForAllFields:  'warn',
+    requireResolversToMatchSchema: 'warn'
+  },
+  typeDefs
+});
+
 
 
 const app = express();
 // let express can use the public folder directly  https://expressjs.com/zh-tw/starter/static-files.html
 app.use(express.static('public'));
+
+app.use('/graphql', graphqlHTTP(async (req) => {
+    return {
+      schema,
+      graphiql: true,
+      context: {
+        req,
+        db: await connection.promise(),
+        userCache: {},
+        productCache: {}
+      }
+    };
+  }));
+
 
 
 app.get('/home', (req, res, next) => {
@@ -59,6 +93,34 @@ app.get('/products', (req, res, next) => {
 
 
 
+// Profile
+// app.get('/profile', (req, res, next) => {
+//     res.sendFile(__dirname+'/views/profile.html');
+
+// });
+
+// go to login page
+// app.get('/login', (req, res)=> {
+//     res.sendFile(__dirname+'/views/login.html');
+// })
+// go to register page
+// app.get('/register', (req, res)=> {
+//     res.sendFile(__dirname+'/views/register.html');
+// })
+
+// user submit the form will come to here to do something
+// app.post('/register', async (req,res, next) => {
+//     try{
+//         const {email, username, password } = req.body;
+
+//     }
+//     catch (e){
+//         console.log("error:", e);
+//     }
+// });
+// singup
+
+// cart
 
 
 
@@ -68,13 +130,14 @@ app.get('/products', (req, res, next) => {
 
 
 app.listen(3000);
+// console.log('GraphQL API server running at http://localhost:3000/graphql');
 
 
 
 
 
 // upload.array('image') 已經把image傳到cloudinary 
-// app.post('/product', upload.array('image'), async (req, res, next) => {
+// app.post('/products', upload.array('image'), async (req, res, next) => {
 //     try {
 //         // upload 後可能有1~3張圖片, 用這樣的方式把這兩個infomation取下來  url = file.path filename = f.filename
 //         // productImage 是一個json of array
