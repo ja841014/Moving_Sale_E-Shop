@@ -21,11 +21,12 @@
                     <h3 class="float-md-left mb-0">Moving Sale E-Shop</h3>
                     <nav class="nav nav-masthead justify-content-center float-md-right">
                         <a class="nav-link active" aria-current="page" href="/home">Home</a>
-                        <a class="nav-link" href="/products/new">Add</a>
                         <a class="nav-link" href="/about">About</a>
+                        <a class="nav-link" href="/products/new">Add</a>                       
                         <a class="nav-link" href="/products">Products</a>
                         <a class="nav-link" href="/login">Login</a>
                         <a class="nav-link" href="/register">Register</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </nav>
                 </div>
             </header>
@@ -39,11 +40,39 @@
             </main>
 
             <footer class="mt-auto text-white-50">
-                <p>&copy; 2020 </p>
+                <p>&copy; Lai & Lee 2021 </p>
             </footer>
 
 
         </div>
+
+
+
+        <script>
+            const va = new Vue({
+              el: '#content',
+              data: {
+                errorMsg:  '',
+                isEditing: {},
+                users: []
+              },
+              created() {
+                this.load();
+              },
+              methods: {
+                load() {
+                  fetch('/home')
+                    .then(async r => {
+                      if(!r.ok) throw new Error(await r.text());
+                      return r;
+                    })
+                    .then(r => r.json())
+                    .then(r => (this.users = r))
+                    .catch(this.flash)
+                }
+              }
+            })
+          </script>
 
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"

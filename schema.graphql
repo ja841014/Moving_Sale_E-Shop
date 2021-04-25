@@ -1,0 +1,41 @@
+type Query {
+  user(
+    userId:   ID!
+  ): User
+
+  users(
+    limit:  Int
+    offset: Int
+    sort:   String
+  ): [User]
+
+  product(
+    productId: ID!
+  ): Product
+
+  products(
+    limit:  Int
+    offset: Int
+    sort:   String
+  ): [Product]
+  
+}
+
+
+type Product {
+  productId:    ID!
+  productName:  String!
+  images:       [String]
+  price:        Int!
+  seller:       User!
+  buyer:        User!
+}
+
+type User {
+  userId:   ID!
+  userName: String!
+  account:  String!
+  pass: String!
+  email:    String!
+  products: [Product]
+}
