@@ -8,10 +8,6 @@ body {
     box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
 }
 
-/*.cover-container {
-    max-width: 60vw;
-}*/
-
 .nav-link {
     padding: 0.25rem 0;
     font-weight: 700;
@@ -31,42 +27,27 @@ body {
 
 }
 
-/** {box-sizing:border-box}
-body {font-family: Verdana,sans-serif;}*/
+/* * {box-sizing:border-box} */
+/* 幻灯片容器 */
+.slideshow-container {
+    max-width: 500px;
+    position: relative;
+    margin: auto;
+    border: 3px solid rgb(4, 8, 238);
+  }
+
 .mySlides {
     display:none;
 }
-/* 幻灯片容器 */
-.slideshow-container {
-  max-width: 500px;
-  position: relative;
-  margin: auto;
-}
 
-/* 下一张 & 上一张 按钮 */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-}
-
-/* 定位 "下一张" 按钮靠右 */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+/* 数字文本 (1/3 等) */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: relative;
+    bottom: 5;
+    text-align: center;
 }
 
 /* 标题文本 */
@@ -80,28 +61,44 @@ body {font-family: Verdana,sans-serif;}*/
   text-align: center;
 }
 
-/* 数字文本 (1/3 等) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: relative;
-  bottom: 5;
-  text-align: center;
-}
-
-
 /* 标记符号 */
 .dot {
-  cursor:pointer;
-  height: 13px;
-  width: 13px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
+    cursor: pointer;
+    height: 13px;
+    width: 13px;
+    margin: 0 2px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.5s;
 }
+
+/* 下一张 & 上一张 按钮 */
+/* .prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+} */
+
+/* 定位 "下一张" 按钮靠右 */
+/* .next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+} */
+
+/* On hover, add a black background color with a little bit see-through */
+/* .prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+} */
+
 
 .active, .dot:hover {
   background-color: #717171;
@@ -124,3 +121,48 @@ body {font-family: Verdana,sans-serif;}*/
   from {opacity: .4} 
   to {opacity: 1}
 }
+
+
+.middle {
+  border: 3px solid rgb(203, 8, 241);
+
+  content: "";
+  display: table;
+  /* clear: both; */
+}
+
+
+
+
+.leftColumn {
+  width: 20%;
+  margin: auto;
+  border: 3px solid green;
+  float: left;
+  /* position: relative; */
+  /* top: 5%;
+  left: -35%; */
+}
+
+.rightColumn .imageBox{
+  width: 70%;
+  border: 3px solid rgb(238, 78, 4);
+  float: left;
+  /* top: 5%;
+  right: 5%; */
+
+}
+
+
+
+.imageBox img{
+    display: block;
+    margin: auto;
+    width: 10%;
+    height: 10%;
+    /* position: relative; */
+    top: 5%;
+    right: 5%;
+  
+}
+
