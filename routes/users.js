@@ -7,6 +7,7 @@ const users = require('../controllers/users');
 
 
 
+// these methods are define in controllers folder
 
 // render register page 
 router.get('/register', users.renderRegister);
