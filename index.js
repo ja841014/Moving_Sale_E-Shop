@@ -185,7 +185,10 @@ app.get('/profile', (req, res, next) => {
     res.render('profile')
     // res.sendFile(__dirname+'/views/profile.html');
 })
-// Product Detail
+// Product Detail 
+
+// user route
+// they are in routes folder
 app.use('/', userRoutes);
 
 

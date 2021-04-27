@@ -195,7 +195,9 @@ app.get('/products', function (req, res, next) {
 app.get('/profile', function (req, res, next) {
   // console.log(res.locals.currentUser );
   res.render('profile'); // res.sendFile(__dirname+'/views/profile.html');
-}); // Product Detail
+}); // Product Detail 
+// user route
+// they are in routes folder
 
 app.use('/', userRoutes); // // go to login page
 // app.get('/login', (req, res)=> {
