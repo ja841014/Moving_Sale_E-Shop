@@ -11,66 +11,108 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
-    <!-- mapbox -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
-    <!-- <link rel="stylesheet" href="/stylesheets/app.css"> -->
-
     <!-- connect to home.css -->
-    <link rel="stylesheet" href="/stylesheets/home.css">
-</head>
+    <link rel="stylesheet" href="/stylesheets/add.css">
 
+</head>
 
 <body class="d-flex flex-column vh-100">
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/home">Moving Sale E-Shop</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link " href="/home">Home</a>
-              <a class="nav-link" href="/about">About</a>
-              <a class="nav-link" href="/products/new">Add</a>
-              <a class="nav-link" href="/products">Products</a>
+            <a class="navbar-brand" href="/home">Moving Sale E-Shop</a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                <a class="nav-link " href="/home">Home</a>
+                <a class="nav-link" href="/about">About</a>
+                <a class="nav-link" href="/products/new">Add</a>
+                <a class="nav-link" href="/products">Products</a>
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="/logout">Logout</a>
+                </div>
             </div>
-            <div class="navbar-nav ml-auto">
-              <!-- here hava something be deleted -->
-              <a class="nav-link" href="/login">Login</a>
-              <a class="nav-link" href="/register">Register</a>
-              <!-- here hava something be deleted -->
-              <a class="nav-link" href="/logout">Logout</a>
-              <!-- here hava something be deleted -->
-            </div>
-          </div>
         </div>
-      </nav>
-    <!-- mt = magin top 5 pixal -->
-    <main class="container mt-5">
-        <!-- here hava something be deleted include('../partials/flash')-->
-        <div>
-        </div>
-    </main>
+    </nav>
     
-    <!-- padding  y-axis top and bottom-->
-    <footer class="footer bg-dark py-3 mt-auto">
-        <div class="container">
-            <span class="text-muted">&copf; Lai & Lee 2021</span>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
-        integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
-        integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous">
-    </script>
-    <!-- ref: https://v5.getbootstrap.com/docs/5.0/forms/validation/ -->
-    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
-    <script src="/javascripts/validateForm.js"></script>
-
 </body>
+
+<br />
+TODO LIST: <br />
+Connect backend database <br />
+<br />
+
+<div class="middle">
+    <div class="leftColumn">
+        <!--Connect to Cloudinary-->
+        <div class="imageBox">
+            <img src="/stylesheets/image/Bagel.jpg">
+        </div>
+    </div>
+
+
+    <div class="rightColumn">
+        <div class="form-container">
+            <h4>Product Information</h4>
+            <form ACTION="/products/new" METHOD="POST" ENCTYPE="multipart/form-data">
+                <label for="product_name">Product Name:</label>
+                <input type="text" name="product_name" id="product_name" />
+                <br />
+
+                <label for="price">Price:</label>
+                <input type="text" name="price" id="price" />
+                <br />
+
+                <label for="price">When did you buy:</label>
+                <input type="text" name="date" id="date" />
+                <br />
+
+                <label for="product_photo">Picture:</label>
+                <input type="file" name="product_photo" id="product_photo" />
+                <br />
+
+                <label for="Look like">Look like:</label>
+                <input type="radio" name="Look like" value="Look like new" />Look like new
+                <input type="radio" name="Look like" value="Used" />Used
+                <br />
+
+                <label for="numberOfProduct">Number of Product:</label>
+                <select name="numberOfProduct">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <br />
+
+                <label for="description">Description:</label>
+                <textarea rows="3" cols="30">Describe your item...</textarea>
+                <br />
+
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- padding  y-axis top and bottom-->
+<footer class="footer bg-dark py-3 mt-auto">
+    <div class="container">
+        <span class="text-muted">&copf; Lai & Lee 2021</span>
+    </div>
+</footer>
+
+
+
+
 
 </html>

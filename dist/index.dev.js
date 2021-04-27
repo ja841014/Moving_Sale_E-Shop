@@ -177,7 +177,15 @@ app.get('/about', function (req, res, next) {
 }); // Add Product 
 
 app.get('/products/new', function (req, res, next) {
-  res.sendFile(__dirname + '/views/add.html');
+  res.sendFile(__dirname + '/views/add.html'); // try {
+  //   const q = 'INSERT INTO image(filepath, mimetype, filesize) VALUES (?, ?, ?); INSERT INTO user (first_name, last_name, avatar_pic_id) VALUES (?, ?, LAST_INSERT_ID())';
+  //   //mimetype: file type
+  //   const d = [req.file.filename, req.file.mimetype, req.file.size, req.body.first_name, req.body.last_name];
+  //   await connection.promise().query(q, d);
+  // } catch (err) {
+  //   console.error('Error', err);
+  //   return next();
+  // }
 }); // Show products
 
 app.get('/products', function (req, res, next) {
