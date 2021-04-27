@@ -2,28 +2,105 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
+const ejsMate = require('ejs-mate');
 
 const express = require('express');
+
 const path = require('path');
 
-const mysql = require('mysql2');
+// const mysql = require('mysql2');
+const {connection} = require("./database");
 
 const multer = require('multer')
 const {storage} = require('./cloudinary')
 const upload = multer({storage})
 
+const userRoutes = require('./routes/users')
 
-const connection = mysql.createConnection({
-    // '192.168.12.128', 
-    // '192.168.2.129'
-    host: '192.168.2.129',
-    user: 'root',
-    password: '1',
-    database: 'project',
-    multipleStatements: true
+/// for authentication ///
+const flash = require('connect-flash')
+const session = require('express-session')
+const mongoose = require("mongoose")
+const passport = require("passport")
+const bodyParser = require("body-parser")
+const LocalStrategy = require("passport-local")
+
+const User = require("./models/user");
+
+const MongoDBStore = require("connect-mongo")(session);
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/project';
+
+// project db name
+// 'mongodb://localhost:27017/project'
+mongoose.connect(dbUrl, { 
+    useNewUrlParser: true, 
+    useCreateIndex: true, 
+    useUnifiedTopology: true,
+    useFindAndModify: false 
+});
+const db = mongoose.connection;
+// connect fail
+db.on("error", console.error.bind(console, "connection error"));
+// connect sucessful
+db.once('open', () => console.log('Connected to MongoDB')); 
+
+const secret = process.env.SECRET || 'sould be a good secret'
+
+// use mongo to help us store session
+const store = new MongoDBStore({
+    url: dbUrl,
+    secret,
+    touchAfter: 24 * 60 * 60
 });
 
-// graphql thing
+store.on("error", function(e) {
+    console.log("SESSION STORE ERROR", e);
+})
+
+const sessionConfig = {
+    store,
+    name: 'session',
+    secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        // secure: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+
+//////////////////////////
+
+
+const app = express();
+// let express can use the public folder directly  https://expressjs.com/zh-tw/starter/static-files.html
+app.use(express.static('public'));
+app.set('views', path.join(__dirname, 'views'));
+
+/// authentication part ///
+app.use(session(sessionConfig));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+//////////////////////////////////////////
+
+/////////////////////////
+///// graphql thing /////
 const { graphqlHTTP } = require('express-graphql');
 const { readFileSync } = require('fs')
 const { assertResolversPresent, makeExecutableSchema } = require('@graphql-tools/schema');
@@ -40,12 +117,6 @@ const schema = makeExecutableSchema({
   typeDefs
 });
 
-
-
-const app = express();
-// let express can use the public folder directly  https://expressjs.com/zh-tw/starter/static-files.html
-app.use(express.static('public'));
-
 app.use('/graphql', graphqlHTTP(async (req) => {
     return {
       schema,
@@ -58,7 +129,14 @@ app.use('/graphql', graphqlHTTP(async (req) => {
       }
     };
   }));
+/////////////////////
+/////////////////////
 
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+
+//if put in front of graphql route will break grpahql//
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/home', (req, res, next) => {
@@ -76,7 +154,7 @@ app.get('/about', (req, res, next) => {
     // next();
 });
 
-// Add Product
+// Add Product 
 app.get('/products/new', (req, res, next) => {
     res.sendFile(__dirname+'/views/add.html');
 
@@ -88,49 +166,78 @@ app.get('/products', (req, res, next) => {
 
 });
 
-// Product Detail
-
-
-
-
 // Profile
-// app.get('/profile', (req, res, next) => {
-//     res.sendFile(__dirname+'/views/profile.html');
+app.get('/profile', (req, res, next) => {
+    // console.log(res.locals.currentUser );
+    res.render('profile')
+    // res.sendFile(__dirname+'/views/profile.html');
+})
+// Product Detail
+app.use('/', userRoutes);
 
-// });
 
-// go to login page
+
+
+// // go to login page
 // app.get('/login', (req, res)=> {
 //     res.sendFile(__dirname+'/views/login.html');
 // })
-// go to register page
+// app.post("/login", passport.authenticate("local", {
+// 	successRedirect: "/home",
+// 	failureRedirect: "/login",
+//     // failureFlash: true
+// }), function (req, res) {
+// });
+// // go to register page
 // app.get('/register', (req, res)=> {
 //     res.sendFile(__dirname+'/views/register.html');
 // })
 
-// user submit the form will come to here to do something
+// // user submit the form will come to here to do something
 // app.post('/register', async (req,res, next) => {
 //     try{
-//         const {email, username, password } = req.body;
+//         const {email, username, password, account} = req.body;
+//         const q = 'INSERT INTO user(username, account, email, pass) VALUES (?, ?, ?, ?);';
+//         const d = [username,account, email, password];
+//         await connection.promise().query(q, d);
 
+//         // var username = req.body.username
+//         // var password = req.body.password
+//         User.register(new User({ username: username }),
+//                 password, function (err, user) {
+//             if (err) {
+//                 console.log(err);
+//                 return res.sendFile(__dirname+'/views/home.html');
+//             }
+
+//             passport.authenticate("local")(
+//                 req, res, function () {
+//                 res.sendFile(__dirname+'/views/about.html');
+//             });
+//         });
+
+//             /////
 //     }
 //     catch (e){
 //         console.log("error:", e);
 //     }
 // });
-// singup
+
+
+// // logout
+// app.get("/logout", function (req, res) {
+//     console.log("before logout:", req)
+//     req.logout();
+//     req.flash('success', "GoodBye");
+// 	res.redirect("/home");
+// });
 
 // cart
 
 
 
-
-
-
-
-
 app.listen(3000);
-// console.log('GraphQL API server running at http://localhost:3000/graphql');
+console.log('GraphQL API server running at http://localhost:3000/graphql');
 
 
 

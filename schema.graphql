@@ -25,7 +25,9 @@ type Query {
 type Product {
   productId:    ID!
   productName:  String!
-  images:       [String]
+  image1:       String
+  image2:       String
+  image3:       String
   price:        Int!
   seller:       User!
   buyer:        User!
@@ -33,7 +35,7 @@ type Product {
 
 type User {
   userId:   ID!
-  userName: String!
+  userName: String
   account:  String!
   pass: String!
   email:    String!

@@ -44,15 +44,28 @@ const ProductModel = {
       return context.productCache[productId];
     }
     const [rows, fields] = await context.db.query('SELECT * FROM product WHERE product_id = ?', [productId]);
-    console.log("product rows", rows)
-    context.userCache[productId] = rows;
+    // console.log("product rows", rows)
+    context.productCache[productId] = rows;
     return rows;
   },
 
   getName: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
-    console.log("product rows getName", rows)
-    return (rows.length === 0 ? null : rows[0].product_name);
+    // console.log("product rows getName", rows)
+    return (rows.length === 0 ? null : rows[0].productName);
+  },
+
+  getImage1: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].image1);
+  },
+  getImage2: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].image2);
+  },
+  getImage3: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].image3);
   },
 
   getPrice: async (context, { productId }) => {
@@ -80,24 +93,24 @@ const ProductModel = {
 const resolvers = {
   Product: {
     productId: ({ productId }, _, context) => {
-      console.log("productId", productId)
+      // console.log("productId", productId)
       return productId;
     },
     productName: async({ productId }, _, context) => {
-      // console.log(productId);
-      // const [rows, fields] = await context.db.query('SELECT product_name FROM product WHERE product_id = ?', [productId]);
-      // console.log("productName", rows[0].product_name)
-      // return (rows.length === 0 ? null : { productId: rows[0].productName });
-      console.log("productName", productName)
+      
       return ProductModel.getName(context, { productId });
     },
     price: async({ productId }, _, context) => {
-      console.log("productprice", productId)
       return ProductModel.getPrice(context, { productId });
     },
-    images: async ({ productId }, _, context) => {
-      const [rows, fields] = await context.db.query('SELECT image1, image2, image3 FROM product WHERE product_id = ?', [productId]);
-      return rows.map(({ product_id }) => ({ productId: product_id }));
+    image1: async ({ productId }, _, context) => {
+      return ProductModel.getImage1(context, { productId });
+    },
+    image2: async ({ productId }, _, context) => {
+      return ProductModel.getImage2(context, { productId });
+    },
+    image3: async ({ productId }, _, context) => {
+      return ProductModel.getImage3(context, { productId });
     },
     seller: async({ productId }, _, context) => {
       return ProductModel.getSeller(context, { productId });
@@ -117,14 +130,13 @@ const resolvers = {
       return rows;
     },
     product: async (_, { productId }, context) => {
-      console.log("Query", productId)
+
       const [rows, fields] = await context.db.query('SELECT product_id AS productId FROM product WHERE product_id = ?', [productId]);
       return (rows.length > 0 ? { productId: rows[0].productId } : null);
     },
     products: async (_, { limit = 20, offset = 0, sort = 'ASC' }, context) => {
       
       const [rows, fields] = await context.db.query('SELECT product_id AS productId FROM product LIMIT ? OFFSET ?', [limit, offset]);
-      console.log("Query rows", rows)
       return rows;
     }
   },
@@ -145,9 +157,9 @@ const resolvers = {
       return UserModel.getEmail(context, { userId });
     },
     products: async ({ userId }, _, context) => {
-      const [rows, fields] = await context.db.query('SELECT product_id AS productID FROM product WHERE seller = ?', [userId]);
-      console.log("User products", rows.map(({ productID }) => ({ productID: productID })));
-      return rows.map(({ productID }) => ({ productID: productID }));
+
+      const [rows, fields] = await context.db.query('SELECT product_id AS productId FROM product WHERE seller = ?', [userId]);
+      return rows.map(({ productId }) => ({ productId: productId }));
     }
   }
 };
