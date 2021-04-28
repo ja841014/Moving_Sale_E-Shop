@@ -157,21 +157,37 @@ app.get('/about', (req, res, next) => {
 // Add Product 
 app.get('/products/new', (req, res, next) => {
     res.sendFile(__dirname+'/views/add.html');
-
-
-    // try {
-    //   const q = 'INSERT INTO image(filepath, mimetype, filesize) VALUES (?, ?, ?); INSERT INTO user (first_name, last_name, avatar_pic_id) VALUES (?, ?, LAST_INSERT_ID())';
-    //   //mimetype: file type
-    //   const d = [req.file.filename, req.file.mimetype, req.file.size, req.body.first_name, req.body.last_name];
-
-    //   await connection.promise().query(q, d);
-    // } catch (err) {
-    //   console.error('Error', err);
-    //   return next();
-    // }
-
-
 });
+
+app.post('/products/new', upload.single('product_photo'), async (req, res, next) => {
+    try {
+
+        const q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);'
+        const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, 'look_like', req.body.numberOfProduct, 'descript']
+
+        await connection.promise().query(q, d);
+    } catch (err) {
+      console.error('Error', err);
+    //   return next();
+    }
+    res.redirect('/products/new');
+});
+
+// CREATE TABLE product(
+//     product_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+//     productName VARCHAR(40) NOT NULL CHECK (productName <> ''),
+//     seller VARCHAR(40) NOT NULL DEFAULT 'Alison',
+//     buyer VARCHAR(40) NOT NULL DEFAULT 'Alison',
+//     price INT NOT NULL CHECK (price <> ''),
+//     boughtDate VARCHAR(40) NOT NULL,
+//     product_photo VARCHAR(150) NOT NULL CHECK (product_photo <> ''),
+//     look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),
+//     numberOfProduct INT NOT NULL CHECK (numberOfProduct <> ''),
+//     descript VARCHAR(200) NOT NULL,
+//     CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
+//     PRIMARY KEY (product_id)
+//   );
+
 
 // Show products
 app.get('/products', (req, res, next) => {

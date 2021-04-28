@@ -10,12 +10,14 @@ CREATE TABLE user(
 CREATE TABLE product(
   product_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   productName VARCHAR(40) NOT NULL CHECK (productName <> ''),
+  seller VARCHAR(40) NOT NULL DEFAULT 'Alison',
+  buyer VARCHAR(40) NOT NULL DEFAULT 'Alison',
   price INT NOT NULL CHECK (price <> ''),
-  seller VARCHAR(40) NOT NULL,
-  buyer VARCHAR(40),
-  image1 VARCHAR(150) NOT NULL CHECK (image1 <> ''),
-  image2 VARCHAR(150),
-  image3 VARCHAR(150),
+  boughtDate VARCHAR(40) NOT NULL,
+  product_photo VARCHAR(150) NOT NULL CHECK (product_photo <> ''),
+  look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),
+  numberOfProduct INT NOT NULL CHECK (numberOfProduct <> ''),
+  descript VARCHAR(200) NOT NULL,
   CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
   PRIMARY KEY (product_id)
 );
@@ -31,9 +33,9 @@ INSERT INTO user (user_id, userName, account, email, pass) VALUES
   ("8", "Linda", "8", "Linda@gmail.com", "8");
 
 
-  INSERT INTO product (product_id, productName, price, seller, image1, image2) VALUES
-  (2, "tshirt", 10, 3, "http:///2","http://2"),
-  (3, "tshirt3", 11, 1, "http:///3","http://3"),
-  (4, "tshir4", 12, 2, "http:///4","http://4"),
-  (5, "tshir5", 103, 1, "http:///5","http://5"),
-  (6, "tshir6", 1, 2, "http:///6","http://6")
+  INSERT INTO product (product_id, productName, price, seller, image1) VALUES
+  (2, "tshirt", 10, 3, "http:///2"),
+  (3, "tshirt3", 11, 1, "http:///3"),
+  (4, "tshir4", 12, 2, "http:///4"),
+  (5, "tshir5", 103, 1, "http:///5"),
+  (6, "tshir6", 1, 2, "http:///6");
