@@ -163,7 +163,9 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
     try {
 
         const q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);'
-        const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, 'look_like', req.body.numberOfProduct, 'descript']
+        const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, req.body.look_like, req.body.numberOfProduct, req.body.description]
+
+        console.log(req.file.url);
 
         await connection.promise().query(q, d);
     } catch (err) {
@@ -173,24 +175,32 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
     res.redirect('/products/new');
 });
 
-// CREATE TABLE product(
-//     product_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-//     productName VARCHAR(40) NOT NULL CHECK (productName <> ''),
-//     seller VARCHAR(40) NOT NULL DEFAULT 'Alison',
-//     buyer VARCHAR(40) NOT NULL DEFAULT 'Alison',
-//     price INT NOT NULL CHECK (price <> ''),
-//     boughtDate VARCHAR(40) NOT NULL,
-//     product_photo VARCHAR(150) NOT NULL CHECK (product_photo <> ''),
-//     look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),
-//     numberOfProduct INT NOT NULL CHECK (numberOfProduct <> ''),
-//     descript VARCHAR(200) NOT NULL,
-//     CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
-//     PRIMARY KEY (product_id)
-//   );
-
-
 // Show products
-app.get('/products', (req, res, next) => {
+app.get('/products', async (req, res, next) => {
+
+    try {
+        const q = 'SELECT p.product_id, p.productName, p.price, p.boughtDate, p.look_like, p.numberOfProduct, p.descript FROM product AS p';
+        // const q = 'SELECT u.user_id, u.first_name, u.last_name, u.email, i.filepath FROM user AS u LEFT JOIN image AS i ON i.image_id = u.avatar_pic_id';
+        //To wait: await, only use inside a function
+        const [rows, fields] = await connection.promise().query(q);    
+      
+        res.json(rows.map(({product_id, productName, price, boughtDate, look_like, numberOfProduct, descript}) => ({
+            product_id,
+            productName,
+            price,
+            boughtDate,
+            look_like,
+            numberOfProduct,
+            descript
+        })));
+        console.log('End map');
+
+      } catch(err) { // 改用promise的catch error
+        console.error('Error', err);
+        //This terminate immediately
+        // return next(err);
+      }
+
     res.sendFile(__dirname+'/views/products.html');
 
 });
