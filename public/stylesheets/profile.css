@@ -69,13 +69,15 @@ body {
     }
 }
 
-
+#sellerHistory, #userinfo {
+  font-size: 2rem;
+}
 
 h1 {
     font-size: 6rem;
     line-height: 5.5rem;
     padding-bottom: 1rem;
-    color: darkblue;
+    /* color: darkblue; */
   }
 p {
     font-size: 18px;

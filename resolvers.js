@@ -54,20 +54,6 @@ const ProductModel = {
     // console.log("product rows getName", rows)
     return (rows.length === 0 ? null : rows[0].productName);
   },
-
-  getImage1: async (context, { productId }) => {
-    const rows = await ProductModel.load(context, productId);
-    return (rows.length === 0 ? null : rows[0].image1);
-  },
-  getImage2: async (context, { productId }) => {
-    const rows = await ProductModel.load(context, productId);
-    return (rows.length === 0 ? null : rows[0].image2);
-  },
-  getImage3: async (context, { productId }) => {
-    const rows = await ProductModel.load(context, productId);
-    return (rows.length === 0 ? null : rows[0].image3);
-  },
-
   getPrice: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
     return (rows.length === 0 ? null : rows[0].price);
@@ -79,15 +65,29 @@ const ProductModel = {
   getBuyer: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
     return (rows.length === 0 ? null : rows[0].buyer);
+  },
+  getBoughtDate: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].boughtDate);
+  },
+  getProductPhoto: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].product_photo);
+  },
+  getLookLike: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].look_like);
+  },
+  getNumberOfProduct: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].numberOfProduct);
+  },
+  getDescript: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].descript);
   }
 
-
-  // getProducts: async (context, { userId }) => {
-  //   const rows = UserModel.load(context, userId);
-  //   return (rows.length === 0 ? null : rows[0].name);
-  // }
 }
-
 
 
 const resolvers = {
@@ -103,21 +103,27 @@ const resolvers = {
     price: async({ productId }, _, context) => {
       return ProductModel.getPrice(context, { productId });
     },
-    image1: async ({ productId }, _, context) => {
-      return ProductModel.getImage1(context, { productId });
-    },
-    image2: async ({ productId }, _, context) => {
-      return ProductModel.getImage2(context, { productId });
-    },
-    image3: async ({ productId }, _, context) => {
-      return ProductModel.getImage3(context, { productId });
-    },
     seller: async({ productId }, _, context) => {
       return ProductModel.getSeller(context, { productId });
     },
     buyer: async({ productId }, _, context) => {
       return ProductModel.getBuyer(context, { productId });
-    }
+    },
+    boughtDate: async({ productId }, _, context) => {
+      return ProductModel.getBoughtDate(context, { productId });
+    },
+    product_photo: async({ productId }, _, context) => {
+      return ProductModel.getProductPhoto(context, { productId });
+    },
+    look_like: async({ productId }, _, context) => {
+      return ProductModel.getLookLike(context, { productId });
+    },
+    numberOfProduct: async({ productId }, _, context) => {
+      return ProductModel.getNumberOfProduct(context, { productId });
+    },
+    descript: async({ productId }, _, context) => {
+      return ProductModel.getDescript(context, { productId });
+    },
   },
   Query: {
     user: async (_, { userId }, context) => {

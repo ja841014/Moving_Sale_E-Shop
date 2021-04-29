@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
 
     <link href="/stylesheets/profile.css" rel="stylesheet">
-    <title>Resume</title>
+    <title>Moving Sale E-Shop</title>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50" id="page-top">
@@ -37,6 +37,7 @@
                 <a class="nav-link" href="/login">Login</a>
                 <a class="nav-link" href="/register">Register</a>
                 <% } else { %> 
+                <a class="nav-link" href="/profile">Profile</a>
                 <a class="nav-link" href="/logout">Logout</a>
                 <% } %> 
             </div>
@@ -86,45 +87,33 @@
 
 
                             <h1 class="mb-0 text-dark"> Hello, {{ users.userName }} </h1>
-
+                            <div id="userinfo">
                               <div>
                                 Account: 
                                 <input type="text" v-model="users.account" :disabled="!isEditing[0]" :class="{view: !isEditing[0]}">
-                                <button @click="$set(isEditing, 0, true)" v-if="!isEditing[0]">
-                                  Edit
-                                </button>
-                                <button @click="save(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
-                                  Save
-                                </button>
-                                <button @click="del(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
-                                  Delete
-                                </button>        
-                                <button @click="$set(isEditing, 0, false)" v-if="isEditing[0]">
-                                  Cancel
-                                </button>
                               </div>
 
                               <div>
                                 Email: 
                                 <input type="text" v-model="users.email" :disabled="!isEditing[0]" :class="{view: !isEditing[0]}">
-                                <button @click="$set(isEditing, 0, true)" v-if="!isEditing[0]">
-                                  Edit
-                                </button>
-                                <button @click="save(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
-                                  Save
-                                </button>
-                                <button @click="del(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
-                                  Delete
-                                </button>        
-                                <button @click="$set(isEditing, 0, false)" v-if="isEditing[0]">
-                                  Cancel
-                                </button>
                               </div>
                               <!-- <div>{{ users.account }}</div> -->
-                              <div>  {{ users.pass }}</div>
+                              <div>  Password: {{ users.pass }}</div>
 
+                              <button class="btn btn-info" @click="$set(isEditing, 0, true)" v-if="!isEditing[0]">
+                                Edit
+                              </button>
+                              <button class="btn btn-success" @click="save(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
+                                Save
+                              </button>
+                              <button class="btn btn-danger" @click="del(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
+                                Delete
+                              </button>        
+                              <button class="btn btn-dark" @click="$set(isEditing, 0, false)" v-if="isEditing[0]">
+                                Cancel
+                              </button>
 
-
+                            </div>
 
                               
                             
@@ -134,23 +123,44 @@
 
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="History">
                         <div>
-                            <h1> History</h1>
-                            <div class="resume-item d-flex flex-column flex-md-row mb-5">
-                                <div class="resume-content mr-auto">
-                                    <h3 class="mb-0">University of Southern California (USC), Los Angeles, CA</h3>
-                                    <div class="subheading mb-3"><I>Master of Science, Electrical Engineering</I></div>
-                                    <ul>
-                                        <li>Introduction of Computer Network</li>
-                                        <li>Analysis of Algorithms</li>
-                                        <li>Software Design and Optimization</li>
-                                        <li>Computing and Software for Systems Engineers</li>
-                                        <li>Applied and Cloud Computing for Electrical Engineers</li>
+                            <h1 class="mb-0 text-dark"> History</h1>
+                            <div id="sellerHistory" class="resume-item d-flex flex-column flex-md-row mb-5">
+                                <div class="resume-content mr-auto w-100">
+                                    <h3 class="mb-0">Things to Sell</h3>
 
-                                    </ul>
+                                    <div class="container">
+                                      <div style="background-color: rgba(99, 111, 216, 0.5)" class="row">
+                                        <div class="col-sm">
+                                          Name
+                                        </div>
+                                        <div class="col-sm">
+                                          Price
+                                        </div>
+                                        <div class="col-sm">
+                                          Remain
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div v-for="(user, idx) in users.products" >
+
+                                      <div class="container">
+                                        <div style="background-color: rgba(181, 186, 228, 0.5)" class="row">
+                                          <div class="col-sm">
+                                            {{ user.productName }}
+                                          </div>
+                                          <div class="col-sm">
+                                            $ {{ user.price }}
+                                          </div>
+                                          <div class="col-sm">
+                                            {{ user.numberOfProduct }} piece(s)
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
                                 </div>
-                                <div class="resume-date text-md-right">
-                                    <span class="text-black">Aug. 2019 – May 2021</span>
-                                </div>
+                                
                                 
                             </div>
 
@@ -192,6 +202,11 @@
                       account
                       email
                       pass
+                      products{
+                        productName
+                        price
+                        numberOfProduct
+                      }
                     }
                   }
                 `
@@ -203,7 +218,7 @@
               })
               .then(r => r.json())
               .then(r => (this.users = r.data.user))
-              // .then(console.log("hfuhd",this.users.email))
+              // .then(console.log("hfuhd",JSON.parse(JSON.stringify(this.users))))
               .catch(this.flash)
           },
           save(idx) {

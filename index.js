@@ -141,10 +141,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/home', (req, res, next) => {
     
-    console.log(__dirname);
-    res.sendFile(__dirname+'/views/home.html');
+    // console.log(__dirname);
+    // res.sendFile(__dirname+'/views/home.html');
 
-    // res.render('/home');
+    res.render('home');
 });
 
 // Introduce our website
@@ -161,7 +161,7 @@ app.get('/products/new', (req, res, next) => {
 
 app.post('/products/new', upload.single('product_photo'), async (req, res, next) => {
     try {
-
+        console.log("/products/new",req);
         const q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);'
         const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, 'look_like', req.body.numberOfProduct, 'descript']
 
@@ -197,73 +197,14 @@ app.get('/products', (req, res, next) => {
 
 // Profile
 app.get('/profile', (req, res, next) => {
-    // console.log(res.locals.currentUser );
+    console.log(res.locals.currentUser );
     res.render('profile')
     // res.sendFile(__dirname+'/views/profile.html');
 })
 
-// app.use('/users', userUpdateRoutes);
-
 // user route
 // they are in routes folder
 app.use('/', userRoutes);
-
-
-
-
-// // go to login page
-// app.get('/login', (req, res)=> {
-//     res.sendFile(__dirname+'/views/login.html');
-// })
-// app.post("/login", passport.authenticate("local", {
-// 	successRedirect: "/home",
-// 	failureRedirect: "/login",
-//     // failureFlash: true
-// }), function (req, res) {
-// });
-// // go to register page
-// app.get('/register', (req, res)=> {
-//     res.sendFile(__dirname+'/views/register.html');
-// })
-
-// // user submit the form will come to here to do something
-// app.post('/register', async (req,res, next) => {
-//     try{
-//         const {email, username, password, account} = req.body;
-//         const q = 'INSERT INTO user(username, account, email, pass) VALUES (?, ?, ?, ?);';
-//         const d = [username,account, email, password];
-//         await connection.promise().query(q, d);
-
-//         // var username = req.body.username
-//         // var password = req.body.password
-//         User.register(new User({ username: username }),
-//                 password, function (err, user) {
-//             if (err) {
-//                 console.log(err);
-//                 return res.sendFile(__dirname+'/views/home.html');
-//             }
-
-//             passport.authenticate("local")(
-//                 req, res, function () {
-//                 res.sendFile(__dirname+'/views/about.html');
-//             });
-//         });
-
-//             /////
-//     }
-//     catch (e){
-//         console.log("error:", e);
-//     }
-// });
-
-
-// // logout
-// app.get("/logout", function (req, res) {
-//     console.log("before logout:", req)
-//     req.logout();
-//     req.flash('success', "GoodBye");
-// 	res.redirect("/home");
-// });
 
 // cart
 

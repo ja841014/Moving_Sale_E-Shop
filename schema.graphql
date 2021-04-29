@@ -25,16 +25,17 @@ type Mutation {
     updateUser( userId: ID!, account: String, email: String): User!
 }
 
-
 type Product {
   productId:    ID!
   productName:  String!
-  image1:       String
-  image2:       String
-  image3:       String
   price:        Int!
   seller:       User!
   buyer:        User!
+  boughtDate:   String!
+  product_photo:String!
+  look_like:    String!
+  numberOfProduct: Int!
+  descript:     String!
 }
 
 type User {

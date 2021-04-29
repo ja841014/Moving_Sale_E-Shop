@@ -33,9 +33,9 @@ INSERT INTO user (user_id, userName, account, email, pass) VALUES
   ("8", "Linda", "8", "Linda@gmail.com", "8");
 
 
-  INSERT INTO product (product_id, productName, price, seller, image1) VALUES
-  (2, "tshirt", 10, 3, "http:///2"),
-  (3, "tshirt3", 11, 1, "http:///3"),
-  (4, "tshir4", 12, 2, "http:///4"),
-  (5, "tshir5", 103, 1, "http:///5"),
-  (6, "tshir6", 1, 2, "http:///6");
+  INSERT INTO product (product_id, productName, price, seller, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES
+  (2, "tshirt", 10, 3, "4/28/2021","http:///2", "used", 2, "descript"),
+  (3, "tshirt3", 11, 1, "4/28/2021","http:///3", "used",1, "descript"),
+  (4, "tshir4", 12, 2, "4/28/2021","http:///4", "used", 6, "descript"),
+  (5, "tshir5", 103, 1, "4/28/2021","http:///5", "used",3, "descript"),
+  (6, "tshir6", 1, 2, "4/28/2021","http:///6", "used", 9, "descript");

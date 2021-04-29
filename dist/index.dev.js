@@ -167,8 +167,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.get('/home', function (req, res, next) {
-  console.log(__dirname);
-  res.sendFile(__dirname + '/views/home.html'); // res.render('/home');
+  // console.log(__dirname);
+  // res.sendFile(__dirname+'/views/home.html');
+  res.render('home');
 }); // Introduce our website
 
 app.get('/about', function (req, res, next) {
@@ -186,29 +187,30 @@ app.post('/products/new', upload.single('product_photo'), function _callee2(req,
       switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
+          console.log("/products/new", req);
           q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);';
           d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, 'look_like', req.body.numberOfProduct, 'descript'];
-          _context2.next = 5;
+          _context2.next = 6;
           return regeneratorRuntime.awrap(connection.promise().query(q, d));
 
-        case 5:
-          _context2.next = 10;
+        case 6:
+          _context2.next = 11;
           break;
 
-        case 7:
-          _context2.prev = 7;
+        case 8:
+          _context2.prev = 8;
           _context2.t0 = _context2["catch"](0);
           console.error('Error', _context2.t0); //   return next();
 
-        case 10:
+        case 11:
           res.redirect('/products/new');
 
-        case 11:
+        case 12:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 7]]);
+  }, null, null, [[0, 8]]);
 }); // CREATE TABLE product(
 //     product_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 //     productName VARCHAR(40) NOT NULL CHECK (productName <> ''),
@@ -230,60 +232,12 @@ app.get('/products', function (req, res, next) {
 }); // Profile
 
 app.get('/profile', function (req, res, next) {
-  // console.log(res.locals.currentUser );
+  console.log(res.locals.currentUser);
   res.render('profile'); // res.sendFile(__dirname+'/views/profile.html');
-}); // app.use('/users', userUpdateRoutes);
-// user route
+}); // user route
 // they are in routes folder
 
-app.use('/', userRoutes); // // go to login page
-// app.get('/login', (req, res)=> {
-//     res.sendFile(__dirname+'/views/login.html');
-// })
-// app.post("/login", passport.authenticate("local", {
-// 	successRedirect: "/home",
-// 	failureRedirect: "/login",
-//     // failureFlash: true
-// }), function (req, res) {
-// });
-// // go to register page
-// app.get('/register', (req, res)=> {
-//     res.sendFile(__dirname+'/views/register.html');
-// })
-// // user submit the form will come to here to do something
-// app.post('/register', async (req,res, next) => {
-//     try{
-//         const {email, username, password, account} = req.body;
-//         const q = 'INSERT INTO user(username, account, email, pass) VALUES (?, ?, ?, ?);';
-//         const d = [username,account, email, password];
-//         await connection.promise().query(q, d);
-//         // var username = req.body.username
-//         // var password = req.body.password
-//         User.register(new User({ username: username }),
-//                 password, function (err, user) {
-//             if (err) {
-//                 console.log(err);
-//                 return res.sendFile(__dirname+'/views/home.html');
-//             }
-//             passport.authenticate("local")(
-//                 req, res, function () {
-//                 res.sendFile(__dirname+'/views/about.html');
-//             });
-//         });
-//             /////
-//     }
-//     catch (e){
-//         console.log("error:", e);
-//     }
-// });
-// // logout
-// app.get("/logout", function (req, res) {
-//     console.log("before logout:", req)
-//     req.logout();
-//     req.flash('success', "GoodBye");
-// 	res.redirect("/home");
-// });
-// cart
+app.use('/', userRoutes); // cart
 
 app.listen(3000);
 console.log('GraphQL API server running at http://localhost:3000/graphql'); // upload.array('image') 已經把image傳到cloudinary 
