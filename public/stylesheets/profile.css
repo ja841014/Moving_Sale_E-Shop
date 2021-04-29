@@ -61,7 +61,14 @@ body {
     #copyright {
         color: rgba(255,255,255,0.5);
     }
+
+    #content {
+      margin-bottom: auto!important;
+      margin-left: 5rem;
+      margin-right: 5rem;
+    }
 }
+
 
 
 h1 {

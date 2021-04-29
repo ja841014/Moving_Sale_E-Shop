@@ -140,6 +140,31 @@ const resolvers = {
       return rows;
     }
   },
+  Mutation: {
+    updateUser: async(_, { userId, account, email }, context) => {
+      console.log("mutation:", userId,account, email);
+      let q = '';
+      let d = [];
+      if(account && !email ) {
+        console.log("email null")
+        q = 'UPDATE user SET account = ? WHERE user_id = ?';
+        d = [account, userId];
+      }
+      else if(!account  && email ) {
+        console.log("account null")
+        q = 'UPDATE user SET email = ? WHERE user_id = ?';
+        d = [email, userId];
+      }
+      else {
+        console.log("both not null")
+        q = 'UPDATE user SET account = ?, email = ? WHERE user_id = ?';
+        d = [account, email, userId];
+      }
+      const [rows, fields] = await context.db.query(q, d);
+      // this return is useless, because mysql cannot return anything
+      return rows
+    }
+  },
   User: {
     userName: async ({ userId }, _, context) => {
       return UserModel.getName(context, { userId });

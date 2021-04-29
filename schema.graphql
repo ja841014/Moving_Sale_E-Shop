@@ -21,6 +21,10 @@ type Query {
   
 }
 
+type Mutation {
+    updateUser( userId: ID!, account: String, email: String): User!
+}
+
 
 type Product {
   productId:    ID!

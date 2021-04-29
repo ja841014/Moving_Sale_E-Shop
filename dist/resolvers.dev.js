@@ -558,37 +558,60 @@ var resolvers = {
       });
     }
   },
-  User: {
-    userName: function userName(_ref36, _, context) {
-      var userId;
-      return regeneratorRuntime.async(function userName$(_context25) {
+  Mutation: {
+    updateUser: function updateUser(_, _ref36, context) {
+      var userId, account, email, q, d, _ref37, _ref38, rows, fields;
+
+      return regeneratorRuntime.async(function updateUser$(_context25) {
         while (1) {
           switch (_context25.prev = _context25.next) {
             case 0:
-              userId = _ref36.userId;
-              return _context25.abrupt("return", UserModel.getName(context, {
-                userId: userId
-              }));
+              userId = _ref36.userId, account = _ref36.account, email = _ref36.email;
+              console.log("mutation:", userId, account, email);
+              q = '';
+              d = [];
 
-            case 2:
+              if (account && !email) {
+                console.log("email null");
+                q = 'UPDATE user SET account = ? WHERE user_id = ?';
+                d = [account, userId];
+              } else if (!account && email) {
+                console.log("account null");
+                q = 'UPDATE user SET email = ? WHERE user_id = ?';
+                d = [email, userId];
+              } else {
+                console.log("both not null");
+                q = 'UPDATE user SET account = ?, email = ? WHERE user_id = ?';
+                d = [account, email, userId];
+              }
+
+              _context25.next = 7;
+              return regeneratorRuntime.awrap(context.db.query(q, d));
+
+            case 7:
+              _ref37 = _context25.sent;
+              _ref38 = _slicedToArray(_ref37, 2);
+              rows = _ref38[0];
+              fields = _ref38[1];
+              return _context25.abrupt("return", rows);
+
+            case 12:
             case "end":
               return _context25.stop();
           }
         }
       });
-    },
-    userId: function userId(_ref37, _, context) {
-      var _userId = _ref37.userId;
-      return _userId;
-    },
-    account: function account(_ref38, _, context) {
+    }
+  },
+  User: {
+    userName: function userName(_ref39, _, context) {
       var userId;
-      return regeneratorRuntime.async(function account$(_context26) {
+      return regeneratorRuntime.async(function userName$(_context26) {
         while (1) {
           switch (_context26.prev = _context26.next) {
             case 0:
-              userId = _ref38.userId;
-              return _context26.abrupt("return", UserModel.getAccount(context, {
+              userId = _ref39.userId;
+              return _context26.abrupt("return", UserModel.getName(context, {
                 userId: userId
               }));
 
@@ -599,14 +622,18 @@ var resolvers = {
         }
       });
     },
-    pass: function pass(_ref39, _, context) {
+    userId: function userId(_ref40, _, context) {
+      var _userId = _ref40.userId;
+      return _userId;
+    },
+    account: function account(_ref41, _, context) {
       var userId;
-      return regeneratorRuntime.async(function pass$(_context27) {
+      return regeneratorRuntime.async(function account$(_context27) {
         while (1) {
           switch (_context27.prev = _context27.next) {
             case 0:
-              userId = _ref39.userId;
-              return _context27.abrupt("return", UserModel.getPassword(context, {
+              userId = _ref41.userId;
+              return _context27.abrupt("return", UserModel.getAccount(context, {
                 userId: userId
               }));
 
@@ -617,14 +644,14 @@ var resolvers = {
         }
       });
     },
-    email: function email(_ref40, _, context) {
+    pass: function pass(_ref42, _, context) {
       var userId;
-      return regeneratorRuntime.async(function email$(_context28) {
+      return regeneratorRuntime.async(function pass$(_context28) {
         while (1) {
           switch (_context28.prev = _context28.next) {
             case 0:
-              userId = _ref40.userId;
-              return _context28.abrupt("return", UserModel.getEmail(context, {
+              userId = _ref42.userId;
+              return _context28.abrupt("return", UserModel.getPassword(context, {
                 userId: userId
               }));
 
@@ -635,24 +662,42 @@ var resolvers = {
         }
       });
     },
-    products: function products(_ref41, _, context) {
-      var userId, _ref42, _ref43, rows, fields;
-
-      return regeneratorRuntime.async(function products$(_context29) {
+    email: function email(_ref43, _, context) {
+      var userId;
+      return regeneratorRuntime.async(function email$(_context29) {
         while (1) {
           switch (_context29.prev = _context29.next) {
             case 0:
-              userId = _ref41.userId;
-              _context29.next = 3;
+              userId = _ref43.userId;
+              return _context29.abrupt("return", UserModel.getEmail(context, {
+                userId: userId
+              }));
+
+            case 2:
+            case "end":
+              return _context29.stop();
+          }
+        }
+      });
+    },
+    products: function products(_ref44, _, context) {
+      var userId, _ref45, _ref46, rows, fields;
+
+      return regeneratorRuntime.async(function products$(_context30) {
+        while (1) {
+          switch (_context30.prev = _context30.next) {
+            case 0:
+              userId = _ref44.userId;
+              _context30.next = 3;
               return regeneratorRuntime.awrap(context.db.query('SELECT product_id AS productId FROM product WHERE seller = ?', [userId]));
 
             case 3:
-              _ref42 = _context29.sent;
-              _ref43 = _slicedToArray(_ref42, 2);
-              rows = _ref43[0];
-              fields = _ref43[1];
-              return _context29.abrupt("return", rows.map(function (_ref44) {
-                var productId = _ref44.productId;
+              _ref45 = _context30.sent;
+              _ref46 = _slicedToArray(_ref45, 2);
+              rows = _ref46[0];
+              fields = _ref46[1];
+              return _context30.abrupt("return", rows.map(function (_ref47) {
+                var productId = _ref47.productId;
                 return {
                   productId: productId
                 };
@@ -660,7 +705,7 @@ var resolvers = {
 
             case 8:
             case "end":
-              return _context29.stop();
+              return _context30.stop();
           }
         }
       });

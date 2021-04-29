@@ -20,20 +20,25 @@
     
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark" id = "topNav">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">YelpCamp</a>
+          <a class="navbar-brand" href="#">Moving Sale E-Shop</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link " href="/">Home</a>
-              <a class="nav-link" href="/campgrounds">Campgrounds</a>
-              <a class="nav-link" href="/campgrounds/new">New Campgrounds</a>
+              <a class="nav-link " href="/home">Home</a>
+              <a class="nav-link" href="/about">About</a>
+              <a class="nav-link" href="/products/new">Add</a>
+              <a class="nav-link" href="/products">Products</a>
             </div>
             <div class="navbar-nav ml-auto" >
-              <a class="nav-link" href="/login">Login</a>
-              <a class="nav-link" href="/register">Register</a>
-              <a class="nav-link" href="/logout">Logout</a>
+                <% if(!currentUser) {%>
+                
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/register">Register</a>
+                <% } else { %> 
+                <a class="nav-link" href="/logout">Logout</a>
+                <% } %> 
             </div>
           </div>
         </div>
@@ -46,7 +51,7 @@
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">
                     
                     <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                        <span class="d-block d-lg-none">YelpCamp</span>
+                        <span class="d-block d-lg-none">Moving Sale E-Shop</span>
                         <span class="d-none d-lg-block">
                         <img class="img-fluid img-profile mx-auto mb-2" src="img/profile.jpg" alt="">
                         </span> 
@@ -74,9 +79,9 @@
                     </footer>
                 </nav>
 
-                <div id="content" class="container-fluid p-0">
+                <div id="content" class="container-fluid p-0" style="position: relative;">
                     <section class="resume-section p-3 p-lg-5 d-flex d-column" id="Information">
-                        <div class="my-auto">
+                        <div class="my-auto" >
                             <div id="mydiv" data-test=<%= currentUser._id %>></div>
 
 
@@ -98,8 +103,24 @@
                                   Cancel
                                 </button>
                               </div>
+
+                              <div>
+                                Email: 
+                                <input type="text" v-model="users.email" :disabled="!isEditing[0]" :class="{view: !isEditing[0]}">
+                                <button @click="$set(isEditing, 0, true)" v-if="!isEditing[0]">
+                                  Edit
+                                </button>
+                                <button @click="save(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
+                                  Save
+                                </button>
+                                <button @click="del(0); $set(isEditing, 0, false);" v-if="isEditing[0]">
+                                  Delete
+                                </button>        
+                                <button @click="$set(isEditing, 0, false)" v-if="isEditing[0]">
+                                  Cancel
+                                </button>
+                              </div>
                               <!-- <div>{{ users.account }}</div> -->
-                              <div>{{ users.email }} </div>
                               <div>  {{ users.pass }}</div>
 
 
@@ -182,23 +203,29 @@
               })
               .then(r => r.json())
               .then(r => (this.users = r.data.user))
+              // .then(console.log("hfuhd",this.users.email))
               .catch(this.flash)
           },
           save(idx) {
-            const { account, user_id } = this.users[idx];
+            console.log(JSON.parse(JSON.stringify(this.users)))
+            // console.log(users.user_id)
+            // console.log(users.email)
+            const { account, email } = JSON.parse(JSON.stringify(this.users));
+            // console.log(user_id)
 
-            // validation
-
-            const opts = {
+            return fetch('/graphql', {
               method: 'POST',
-              body: JSON.stringify({ account }),
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            };
-
-            return fetch(`/api/user/${user_id}`, opts)
-              .then(async r => {
+              headers: {"Content-Type": "application/json"},
+              body: JSON.stringify({
+                query: `
+                mutation  {
+                  updateUser( userId: "`+userID+`", account: "`+account+`", email: "`+email+`" ) {
+                    account
+                  }
+                }
+                `
+              })
+            }).then(async r => {
                 if (!r.ok) throw new Error(await r.text());
                 return r;
               })
