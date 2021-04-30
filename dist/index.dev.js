@@ -167,14 +167,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.get('/home', function (req, res, next) {
-  // console.log(__dirname);
-  // res.sendFile(__dirname+'/views/home.html');
   res.render('home');
 }); // Introduce our website
 
 app.get('/about', function (req, res, next) {
-  res.sendFile(__dirname + '/views/about.html'); // res.render('about');
-  // next();
+  res.sendFile(__dirname + '/views/about.html');
 }); // Add Product 
 
 app.get('/products/new', function (req, res, next) {
@@ -187,65 +184,71 @@ app.post('/products/new', upload.single('product_photo'), function _callee2(req,
       switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
-          console.log("/products/new", req);
           q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);';
-          d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.description];
-          console.log(req.file.url);
-          _context2.next = 7;
+          d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript];
+          _context2.next = 5;
           return regeneratorRuntime.awrap(connection.promise().query(q, d));
 
-        case 7:
-          _context2.next = 12;
+        case 5:
+          _context2.next = 10;
           break;
 
-        case 9:
-          _context2.prev = 9;
+        case 7:
+          _context2.prev = 7;
           _context2.t0 = _context2["catch"](0);
-          console.error('Error', _context2.t0); //   return next();
+          console.error('Errorrrr', _context2.t0); //   return next();
 
-        case 12:
+        case 10:
           res.redirect('/products/new');
 
-        case 13:
+        case 11:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 9]]);
-}); // Show products
-
-app.get('/products', function _callee3(req, res, next) {
+  }, null, null, [[0, 7]]);
+});
+app.get('/products/new/:productId', function _callee3(req, res, next) {
+  var q;
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          try {
-            // const q = 'SELECT p.product_id, p.productName, p.price, p.boughtDate, p.look_like, p.numberOfProduct, p.descript FROM product AS p';
-            // const q = 'SELECT u.user_id, u.first_name, u.last_name, u.email, i.filepath FROM user AS u LEFT JOIN image AS i ON i.image_id = u.avatar_pic_id';
-            //To wait: await, only use inside a function
-            // const [rows, fields] = await connection.promise().query(q);    
-            // console.log("rows",rows)
-            // res.json(rows.map(({product_id, productName, price, boughtDate, look_like, numberOfProduct, descript}) => ({
-            //     product_id,
-            //     productName,
-            //     price,
-            //     boughtDate,
-            //     look_like,
-            //     numberOfProduct,
-            //     descript
-            // })));
-            console.log('End map:');
-          } catch (err) {
-            // 改用promise的catch error
-            console.error('Error', err); //This terminate immediately
-            // return next(err);
-          }
+          //   res.sendFile(__dirname+'/views/productDetail.html');
+          console.log("hdhdh");
+          _context3.prev = 1;
+          q = 'SELECT * FROM product';
+          _context3.next = 5;
+          return regeneratorRuntime.awrap(connection.promise().query(q));
 
-          res.sendFile(__dirname + '/views/products.html');
+        case 5:
+          _context3.next = 11;
+          break;
 
-        case 2:
+        case 7:
+          _context3.prev = 7;
+          _context3.t0 = _context3["catch"](1);
+          console.error('Error', _context3.t0);
+          res.status(500).end(_context3.t0.message);
+
+        case 11:
         case "end":
           return _context3.stop();
+      }
+    }
+  }, null, null, [[1, 7]]);
+}); // Show products
+
+app.get('/products', function _callee4(req, res, next) {
+  return regeneratorRuntime.async(function _callee4$(_context4) {
+    while (1) {
+      switch (_context4.prev = _context4.next) {
+        case 0:
+          res.sendFile(__dirname + '/views/products.html');
+
+        case 1:
+        case "end":
+          return _context4.stop();
       }
     }
   });

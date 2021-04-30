@@ -36,7 +36,7 @@
     </nav>
     TODO LIST:<br />
     slide不能對齊 -> 圖片要跟框框一樣大<br />
-    商品圖<br />
+    商品圖link detail<br />
 
     <!-- mt = magin top 5 pixal -->
     <!-- <main class="container mt-5"> -->
@@ -68,71 +68,12 @@
               <span class="sr-only">Next</span>
             </a>
         </div>
-    </div>
-    <div id="content" >
-        <div v-for="(user, idx) in users" >
-            <img :src="user.product_photo">
-            mdfmlkdfmdl;{{user.productName}}
-        </div>
-        
-    </div>
-    
+    </div>    
     <!-- </main> -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-    <script>
-        console.log("fdfdjal")
-        const va = new Vue({
-        el: '#content',
-        data: {
-          errorMsg:  '',
-          isEditing: {},
-          users: []
-        },
-        created() {
-          this.load();
-        },
-        methods: {
-          load() {
-            
-            fetch('/graphql', {
-              method: 'POST',
-              headers: {"Content-Type": "application/json"},
-              body: JSON.stringify({
-                query: `
-                query {
-                    
-                    products {
-                            productName
-                            productId
-                            price
-                            product_photo
-                            look_like
-                            numberOfProduct
-                            boughtDate
-                        }
-                    
-                  }
-                `
-              })
-            })
-              .then(async r => {
-                if(!r.ok) throw new Error(await r.text());
-                return r;
-              })
-              .then(r => r.json())
-              .then(r => (this.users = r.data.products))
-              // .then(console.log("hfuhd",JSON.parse(JSON.stringify(this.users))))
-              .catch(this.flash)
-          }
-        }
-    })
-    </script>
-    
 
 </body>
 
@@ -160,10 +101,18 @@
         </ul>
     </div>
 
-    <!--Connect Cloudinary-->
     <div class="rightColumn">
         <div class="imageBox">
-            <img src="stylesheets/image/Bobo.JPG">
+            <div id="content" >
+              <div v-for="(product, idx) in productList" >
+                  {{product.productName}}
+                  <!-- <a href="/products/new/:productId"> -->
+                    <img v-if="product.product_photo" :src="product.product_photo" />
+                    <img v-else src="stylesheets/image/Bee.jpg" />
+                  <a class="btn btn-primary" :href="'/products/new/'+product.productId"> View  {{product.productName}} </a>
+                  <!-- <a :href="'/job/' + r.id"> -->
+              </div>
+            </div>
 
         </div>
     </div>
@@ -173,10 +122,54 @@
     $('.carousel').carousel({
         interval:2000
     });
-    // $('.carousel').carousel('cycle');
-    // $('.carousel').carousel('prev');
-    // $('.carousel').carousel('next');
 </script>
+
+
+<script>
+  const va = new Vue({
+  el: '#content',
+  data: {
+    errorMsg:  '',
+    isEditing: {},
+    productList: []
+  },
+  created() {
+    this.load();
+  },
+  methods: {
+    load() {      
+      fetch('/graphql', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          query: `
+          query {
+              
+              products {
+                      productName
+                      productId
+                      price
+                      product_photo
+                      look_like
+                      numberOfProduct
+                      boughtDate
+                  }
+            }
+          `
+        })
+      })
+        .then(async r => {
+          if(!r.ok) throw new Error(await r.text());
+          return r;
+        })
+        .then(r => r.json())
+        .then(r => (this.productList = r.data.products))
+        .catch(this.flash)
+    }
+  }
+})
+</script>
+
 
 
 

@@ -140,18 +140,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/home', (req, res, next) => {
-    
-    // console.log(__dirname);
-    // res.sendFile(__dirname+'/views/home.html');
-
     res.render('home');
 });
 
 // Introduce our website
 app.get('/about', (req, res, next) => {
     res.sendFile(__dirname+'/views/about.html');
-    // res.render('about');
-    // next();
 });
 
 // Add Product 
@@ -161,48 +155,40 @@ app.get('/products/new', (req, res, next) => {
 
 app.post('/products/new', upload.single('product_photo'), async (req, res, next) => {
     try {
-        console.log("/products/new",req);
-        const q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);'
-        const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.description]
 
-        console.log(req.file.url);
+        const q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);';
+        const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript];
 
         await connection.promise().query(q, d);
     } catch (err) {
-      console.error('Error', err);
+      console.error('Errorrrr', err);
     //   return next();
     }
     res.redirect('/products/new');
 });
 
+app.get('/products/new/:productId', async (req, res, next) => {
+//   res.sendFile(__dirname+'/views/productDetail.html');
+    console.log("hdhdh")
+  try {
+
+    const q = 'SELECT * FROM product';
+    await connection.promise().query(q);
+    // const d = [req.body.email_address, req.params.userId];
+    // const [rows, fields] = await connection.promise().query(q, d);
+
+  } catch(err) {
+    console.error('Error', err);
+    res.status(500).end(err.message);
+  }
+});
+
+
+
+
 // Show products
 app.get('/products', async (req, res, next) => {
-
-    try {
-        // const q = 'SELECT p.product_id, p.productName, p.price, p.boughtDate, p.look_like, p.numberOfProduct, p.descript FROM product AS p';
-        // const q = 'SELECT u.user_id, u.first_name, u.last_name, u.email, i.filepath FROM user AS u LEFT JOIN image AS i ON i.image_id = u.avatar_pic_id';
-        //To wait: await, only use inside a function
-        // const [rows, fields] = await connection.promise().query(q);    
-        // console.log("rows",rows)
-        // res.json(rows.map(({product_id, productName, price, boughtDate, look_like, numberOfProduct, descript}) => ({
-        //     product_id,
-        //     productName,
-        //     price,
-        //     boughtDate,
-        //     look_like,
-        //     numberOfProduct,
-        //     descript
-        // })));
-        console.log('End map:');
-
-      } catch(err) { // 改用promise的catch error
-        console.error('Error', err);
-        //This terminate immediately
-        // return next(err);
-      }
-
-    res.sendFile(__dirname+'/views/products.html');
-
+  res.sendFile(__dirname+'/views/products.html');
 });
 
 // Profile
