@@ -189,7 +189,7 @@ app.post('/products/new', upload.single('product_photo'), function _callee2(req,
           _context2.prev = 0;
           console.log("/products/new", req);
           q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);';
-          d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, req.body.look_like, req.body.numberOfProduct, req.body.description];
+          d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.description];
           console.log(req.file.url);
           _context2.next = 7;
           return regeneratorRuntime.awrap(connection.promise().query(q, d));

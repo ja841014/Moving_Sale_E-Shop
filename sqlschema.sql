@@ -18,9 +18,11 @@ CREATE TABLE product(
   look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),
   numberOfProduct INT NOT NULL CHECK (numberOfProduct <> ''),
   descript VARCHAR(200) NOT NULL,
-  CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
+  -- CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
   PRIMARY KEY (product_id)
 );
+
+
 
 INSERT INTO user (user_id, userName, account, email, pass) VALUES
   ("1", "John", "1", "John@gmail.com", "1"),

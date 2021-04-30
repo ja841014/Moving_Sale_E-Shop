@@ -163,7 +163,7 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
     try {
         console.log("/products/new",req);
         const q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);'
-        const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, req.body.look_like, req.body.numberOfProduct, req.body.description]
+        const d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.description]
 
         console.log(req.file.url);
 
