@@ -179,21 +179,21 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
 app.get('/products', async (req, res, next) => {
 
     try {
-        const q = 'SELECT p.product_id, p.productName, p.price, p.boughtDate, p.look_like, p.numberOfProduct, p.descript FROM product AS p';
+        // const q = 'SELECT p.product_id, p.productName, p.price, p.boughtDate, p.look_like, p.numberOfProduct, p.descript FROM product AS p';
         // const q = 'SELECT u.user_id, u.first_name, u.last_name, u.email, i.filepath FROM user AS u LEFT JOIN image AS i ON i.image_id = u.avatar_pic_id';
         //To wait: await, only use inside a function
-        const [rows, fields] = await connection.promise().query(q);    
-      
-        res.json(rows.map(({product_id, productName, price, boughtDate, look_like, numberOfProduct, descript}) => ({
-            product_id,
-            productName,
-            price,
-            boughtDate,
-            look_like,
-            numberOfProduct,
-            descript
-        })));
-        console.log('End map');
+        // const [rows, fields] = await connection.promise().query(q);    
+        // console.log("rows",rows)
+        // res.json(rows.map(({product_id, productName, price, boughtDate, look_like, numberOfProduct, descript}) => ({
+        //     product_id,
+        //     productName,
+        //     price,
+        //     boughtDate,
+        //     look_like,
+        //     numberOfProduct,
+        //     descript
+        // })));
+        console.log('End map:');
 
       } catch(err) { // 改用promise的catch error
         console.error('Error', err);

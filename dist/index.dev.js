@@ -189,46 +189,66 @@ app.post('/products/new', upload.single('product_photo'), function _callee2(req,
           _context2.prev = 0;
           console.log("/products/new", req);
           q = 'INSERT INTO product(productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?);';
-          d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, 'look_like', req.body.numberOfProduct, 'descript'];
-          _context2.next = 6;
+          d = [req.body.product_name, req.body.price, req.body.boughtDate, req.file.filename, req.body.look_like, req.body.numberOfProduct, req.body.description];
+          console.log(req.file.url);
+          _context2.next = 7;
           return regeneratorRuntime.awrap(connection.promise().query(q, d));
 
-        case 6:
-          _context2.next = 11;
+        case 7:
+          _context2.next = 12;
           break;
 
-        case 8:
-          _context2.prev = 8;
+        case 9:
+          _context2.prev = 9;
           _context2.t0 = _context2["catch"](0);
           console.error('Error', _context2.t0); //   return next();
 
-        case 11:
+        case 12:
           res.redirect('/products/new');
 
-        case 12:
+        case 13:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 8]]);
-}); // CREATE TABLE product(
-//     product_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-//     productName VARCHAR(40) NOT NULL CHECK (productName <> ''),
-//     seller VARCHAR(40) NOT NULL DEFAULT 'Alison',
-//     buyer VARCHAR(40) NOT NULL DEFAULT 'Alison',
-//     price INT NOT NULL CHECK (price <> ''),
-//     boughtDate VARCHAR(40) NOT NULL,
-//     product_photo VARCHAR(150) NOT NULL CHECK (product_photo <> ''),
-//     look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),
-//     numberOfProduct INT NOT NULL CHECK (numberOfProduct <> ''),
-//     descript VARCHAR(200) NOT NULL,
-//     CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
-//     PRIMARY KEY (product_id)
-//   );
-// Show products
+  }, null, null, [[0, 9]]);
+}); // Show products
 
-app.get('/products', function (req, res, next) {
-  res.sendFile(__dirname + '/views/products.html');
+app.get('/products', function _callee3(req, res, next) {
+  return regeneratorRuntime.async(function _callee3$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          try {
+            // const q = 'SELECT p.product_id, p.productName, p.price, p.boughtDate, p.look_like, p.numberOfProduct, p.descript FROM product AS p';
+            // const q = 'SELECT u.user_id, u.first_name, u.last_name, u.email, i.filepath FROM user AS u LEFT JOIN image AS i ON i.image_id = u.avatar_pic_id';
+            //To wait: await, only use inside a function
+            // const [rows, fields] = await connection.promise().query(q);    
+            // console.log("rows",rows)
+            // res.json(rows.map(({product_id, productName, price, boughtDate, look_like, numberOfProduct, descript}) => ({
+            //     product_id,
+            //     productName,
+            //     price,
+            //     boughtDate,
+            //     look_like,
+            //     numberOfProduct,
+            //     descript
+            // })));
+            console.log('End map:');
+          } catch (err) {
+            // 改用promise的catch error
+            console.error('Error', err); //This terminate immediately
+            // return next(err);
+          }
+
+          res.sendFile(__dirname + '/views/products.html');
+
+        case 2:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  });
 }); // Profile
 
 app.get('/profile', function (req, res, next) {
