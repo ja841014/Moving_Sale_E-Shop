@@ -42,7 +42,10 @@ var User = require("./models/user");
 
 var MongoDBStore = require("connect-mongo")(session);
 
-var dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/project'; // project db name
+var dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/project'; ///////////////////
+
+var jsonBodyParser = bodyParser.json(); ///////////////////
+// project db name
 // 'mongodb://localhost:27017/project'
 
 mongoose.connect(dbUrl, {
@@ -208,35 +211,20 @@ app.post('/products/new', upload.single('product_photo'), function _callee2(req,
     }
   }, null, null, [[0, 7]]);
 });
-app.get('/products/new/:productId', function _callee3(req, res, next) {
-  var q;
+app.get('/products/new/:productId', jsonBodyParser, function _callee3(req, res, next) {
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          //   res.sendFile(__dirname+'/views/productDetail.html');
-          console.log("hdhdh");
-          _context3.prev = 1;
-          q = 'SELECT * FROM product';
-          _context3.next = 5;
-          return regeneratorRuntime.awrap(connection.promise().query(q));
+          // console.log(req.params)
+          res.sendFile(__dirname + '/views/productDetail.html');
 
-        case 5:
-          _context3.next = 11;
-          break;
-
-        case 7:
-          _context3.prev = 7;
-          _context3.t0 = _context3["catch"](1);
-          console.error('Error', _context3.t0);
-          res.status(500).end(_context3.t0.message);
-
-        case 11:
+        case 1:
         case "end":
           return _context3.stop();
       }
     }
-  }, null, null, [[1, 7]]);
+  });
 }); // Show products
 
 app.get('/products', function _callee4(req, res, next) {
