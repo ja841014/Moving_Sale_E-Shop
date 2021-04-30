@@ -106,13 +106,12 @@
             <div id="content" >
               <div v-for="(product, idx) in productList" >
                   {{product.productName}}
-                  <!-- <a href="/products/new/:productId"> -->
+                  <a :href="'/products/new/'+product.productId">
                     <img v-if="product.product_photo" :src="product.product_photo" />
                     <img v-else src="stylesheets/image/Bee.jpg" />
-                  <!-- </a> -->
+                  </a>
               </div>
             </div>
-
         </div>
     </div>
 </div>

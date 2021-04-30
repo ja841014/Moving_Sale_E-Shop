@@ -30,6 +30,18 @@ const User = require("./models/user");
 const MongoDBStore = require("connect-mongo")(session);
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/project';
 
+
+
+
+
+///////////////////
+const jsonBodyParser = bodyParser.json();
+///////////////////
+
+
+
+
+
 // project db name
 // 'mongodb://localhost:27017/project'
 mongoose.connect(dbUrl, { 
@@ -167,21 +179,12 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
     res.redirect('/products/new');
 });
 
-// app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
-//   res.sendFile(__dirname+'/views/productDetail.html');
+app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
+  
+  // console.log(req.params)
+  res.sendFile(__dirname+'/views/productDetail.html');
 
-  // try {
-
-  //   const q = 'SELECT * FROM product';
-  //   await connection.promise().query(q);
-  //   // const d = [req.body.email_address, req.params.userId];
-  //   // const [rows, fields] = await connection.promise().query(q, d);
-
-  // } catch(err) {
-  //   console.error('Error', err);
-  //   res.status(500).end(err.message);
-  // }
-// });
+});
 
 
 
