@@ -106,9 +106,10 @@
             <div id="content" >
               <div v-for="(product, idx) in productList" >
                   {{product.productName}}
-                  <img v-if="product.product_photo" :src="product.product_photo" />
-                  <img v-else src="stylesheets/image/Bee.jpg" />
-  
+                  <!-- <a href="/products/new/:productId"> -->
+                    <img v-if="product.product_photo" :src="product.product_photo" />
+                    <img v-else src="stylesheets/image/Bee.jpg" />
+                  <!-- </a> -->
               </div>
             </div>
 

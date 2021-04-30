@@ -167,6 +167,25 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
     res.redirect('/products/new');
 });
 
+// app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
+//   res.sendFile(__dirname+'/views/productDetail.html');
+
+  // try {
+
+  //   const q = 'SELECT * FROM product';
+  //   await connection.promise().query(q);
+  //   // const d = [req.body.email_address, req.params.userId];
+  //   // const [rows, fields] = await connection.promise().query(q, d);
+
+  // } catch(err) {
+  //   console.error('Error', err);
+  //   res.status(500).end(err.message);
+  // }
+// });
+
+
+
+
 // Show products
 app.get('/products', async (req, res, next) => {
   res.sendFile(__dirname+'/views/products.html');
