@@ -201,7 +201,7 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
     for(let i = 0; i < req.body.length; i++) {
         const curUser = req.user._id
         console.log("user:", curUser);
-        
+
         const {productName, productId, price, sellerName, number } = req.body[i];
         console.log("productId", productId)
 
@@ -209,18 +209,23 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
         const d  = [productId];
         const [rows, fields] = await connection.promise().query(q, d);
 
-        console.log("rows:", rows[0].numberOfProduct - number)
+
+        const numberOfProduct = (rows[0].numberOfProduct - number) == 0 ? 0 : rows[0].numberOfProduct - number;
+        console.log("numberOfProduct", numberOfProduct);
 
         const updateq = 'UPDATE product SET numberOfProduct=?, buyer=? WHERE product_id=?';
-        const updated = [rows[0].numberOfProduct - number, curUser, productId];
+        const updated = [numberOfProduct, String(curUser), productId];
         const [rowsUPDATE, fieldsUPDATE] = await connection.promise().query(updateq, updated);
         console.log("rowsUPDATE:", rowsUPDATE)
 
         const insertq = 'INSERT INTO history (buyer, seller, product_id, num) VALUES (?, ?, ?, ?)';
-        const insertd = [curUser, sellerName, productId, number];
+        const insertd = [String(curUser), String(sellerName), productId, number];
         const [rowsInsert, fieldsInsert] = await connection.promise().query(insertq, insertd);
+
+        
         console.log("DONE")
     }
+    // window.localStorage.removeItem('items')
     // console.log(req);
     // try {
     //     const q = 'UPDATE product SET numberOfProduct = ? WHERE seller = ?';

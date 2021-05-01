@@ -250,7 +250,7 @@ app.get('/products', function _callee4(req, res, next) {
   });
 });
 app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
-  var i, curUser, _req$body$i, productName, productId, price, sellerName, number, q, d, _ref, _ref2, rows, fields, updateq, updated, _ref3, _ref4, rowsUPDATE, fieldsUPDATE, insertq, insertd, _ref5, _ref6, rowsInsert, fieldsInsert;
+  var i, curUser, _req$body$i, productName, productId, price, sellerName, number, q, d, _ref, _ref2, rows, fields, numberOfProduct, updateq, updated, _ref3, _ref4, rowsUPDATE, fieldsUPDATE, insertq, insertd, _ref5, _ref6, rowsInsert, fieldsInsert;
 
   return regeneratorRuntime.async(function _callee5$(_context5) {
     while (1) {
@@ -260,7 +260,7 @@ app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
 
         case 1:
           if (!(i < req.body.length)) {
-            _context5.next = 36;
+            _context5.next = 37;
             break;
           }
 
@@ -278,36 +278,37 @@ app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
           _ref2 = _slicedToArray(_ref, 2);
           rows = _ref2[0];
           fields = _ref2[1];
-          console.log("rows:", rows[0].numberOfProduct - number);
+          numberOfProduct = rows[0].numberOfProduct - number == 0 ? 0 : rows[0].numberOfProduct - number;
+          console.log("numberOfProduct", numberOfProduct);
           updateq = 'UPDATE product SET numberOfProduct=?, buyer=? WHERE product_id=?';
-          updated = [rows[0].numberOfProduct - number, curUser, productId];
-          _context5.next = 19;
+          updated = [numberOfProduct, String(curUser), productId];
+          _context5.next = 20;
           return regeneratorRuntime.awrap(connection.promise().query(updateq, updated));
 
-        case 19:
+        case 20:
           _ref3 = _context5.sent;
           _ref4 = _slicedToArray(_ref3, 2);
           rowsUPDATE = _ref4[0];
           fieldsUPDATE = _ref4[1];
           console.log("rowsUPDATE:", rowsUPDATE);
           insertq = 'INSERT INTO history (buyer, seller, product_id, num) VALUES (?, ?, ?, ?)';
-          insertd = [curUser, sellerName, productId, number];
-          _context5.next = 28;
+          insertd = [String(curUser), String(sellerName), productId, number];
+          _context5.next = 29;
           return regeneratorRuntime.awrap(connection.promise().query(insertq, insertd));
 
-        case 28:
+        case 29:
           _ref5 = _context5.sent;
           _ref6 = _slicedToArray(_ref5, 2);
           rowsInsert = _ref6[0];
           fieldsInsert = _ref6[1];
           console.log("DONE");
 
-        case 33:
+        case 34:
           i++;
           _context5.next = 1;
           break;
 
-        case 36:
+        case 37:
         case "end":
           return _context5.stop();
       }

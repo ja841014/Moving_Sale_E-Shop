@@ -302,6 +302,7 @@
               })
               .then(localStorage.removeItem('items'))
               .then(this.load)
+              .then(window.location.reload())
               .catch(this.flash)
             
           }
