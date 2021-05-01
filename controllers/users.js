@@ -62,7 +62,6 @@ module.exports.login = (req, res)=> {
 module.exports.logout = (req, res) => {
     console.log("LOGOUT!!");
     req.logout();
-    
     req.flash('success', "GoodBye");
     // console.log(req);
     res.redirect('/home')

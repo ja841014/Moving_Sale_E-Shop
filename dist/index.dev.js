@@ -1,5 +1,13 @@
 "use strict";
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 if (process.env.NODE_ENV !== "production") {
   require('dotenv').config();
 }
@@ -217,7 +225,7 @@ app.get('/products/new/:productId', jsonBodyParser, function _callee3(req, res, 
       switch (_context3.prev = _context3.next) {
         case 0:
           // console.log(req.params)
-          res.sendFile(__dirname + '/views/productDetail.html');
+          res.render('productDetail'); //   res.sendFile(__dirname+'/views/productDetail.html');
 
         case 1:
         case "end":
@@ -240,6 +248,71 @@ app.get('/products', function _callee4(req, res, next) {
       }
     }
   });
+});
+app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
+  var i, curUser, _req$body$i, productName, productId, price, sellerName, number, q, d, _ref, _ref2, rows, fields, updateq, updated, _ref3, _ref4, rowsUPDATE, fieldsUPDATE, insertq, insertd, _ref5, _ref6, rowsInsert, fieldsInsert;
+
+  return regeneratorRuntime.async(function _callee5$(_context5) {
+    while (1) {
+      switch (_context5.prev = _context5.next) {
+        case 0:
+          i = 0;
+
+        case 1:
+          if (!(i < req.body.length)) {
+            _context5.next = 36;
+            break;
+          }
+
+          curUser = req.user._id;
+          console.log("user:", curUser);
+          _req$body$i = req.body[i], productName = _req$body$i.productName, productId = _req$body$i.productId, price = _req$body$i.price, sellerName = _req$body$i.sellerName, number = _req$body$i.number;
+          console.log("productId", productId);
+          q = 'SELECT numberOfProduct FROM product WHERE product_id =?';
+          d = [productId];
+          _context5.next = 10;
+          return regeneratorRuntime.awrap(connection.promise().query(q, d));
+
+        case 10:
+          _ref = _context5.sent;
+          _ref2 = _slicedToArray(_ref, 2);
+          rows = _ref2[0];
+          fields = _ref2[1];
+          console.log("rows:", rows[0].numberOfProduct - number);
+          updateq = 'UPDATE product SET numberOfProduct=?, buyer=? WHERE product_id=?';
+          updated = [rows[0].numberOfProduct - number, curUser, productId];
+          _context5.next = 19;
+          return regeneratorRuntime.awrap(connection.promise().query(updateq, updated));
+
+        case 19:
+          _ref3 = _context5.sent;
+          _ref4 = _slicedToArray(_ref3, 2);
+          rowsUPDATE = _ref4[0];
+          fieldsUPDATE = _ref4[1];
+          console.log("rowsUPDATE:", rowsUPDATE);
+          insertq = 'INSERT INTO history (buyer, seller, product_id, num) VALUES (?, ?, ?, ?)';
+          insertd = [curUser, sellerName, productId, number];
+          _context5.next = 28;
+          return regeneratorRuntime.awrap(connection.promise().query(insertq, insertd));
+
+        case 28:
+          _ref5 = _context5.sent;
+          _ref6 = _slicedToArray(_ref5, 2);
+          rowsInsert = _ref6[0];
+          fieldsInsert = _ref6[1];
+          console.log("DONE");
+
+        case 33:
+          i++;
+          _context5.next = 1;
+          break;
+
+        case 36:
+        case "end":
+          return _context5.stop();
+      }
+    }
+  });
 }); // Profile
 
 app.get('/profile', function (req, res, next) {
@@ -248,8 +321,7 @@ app.get('/profile', function (req, res, next) {
 }); // user route
 // they are in routes folder
 
-app.use('/', userRoutes); // cart
-
+app.use('/', userRoutes);
 app.listen(3000);
 console.log('GraphQL API server running at http://localhost:3000/graphql'); // upload.array('image') 已經把image傳到cloudinary 
 // app.post('/products', upload.array('image'), async (req, res, next) => {

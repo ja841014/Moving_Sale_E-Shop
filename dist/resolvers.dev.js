@@ -220,9 +220,12 @@ var ProductModel = {
 
           case 3:
             rows = _context9.sent;
-            return _context9.abrupt("return", rows.length === 0 ? null : rows[0].seller);
+            console.log("getSeller", rows[0].seller);
+            return _context9.abrupt("return", rows.length === 0 ? null : {
+              userId: rows[0].seller
+            });
 
-          case 5:
+          case 6:
           case "end":
             return _context9.stop();
         }

@@ -60,7 +60,9 @@ const ProductModel = {
   },
   getSeller: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
-    return (rows.length === 0 ? null : rows[0].seller);
+    console.log("getSeller", rows[0].seller)
+
+    return (rows.length === 0 ? null : { userId: rows[0].seller });
   },
   getBuyer: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
@@ -104,6 +106,7 @@ const resolvers = {
       return ProductModel.getPrice(context, { productId });
     },
     seller: async({ productId }, _, context) => {
+      
       return ProductModel.getSeller(context, { productId });
     },
     buyer: async({ productId }, _, context) => {
@@ -128,11 +131,12 @@ const resolvers = {
   Query: {
     user: async (_, { userId }, context) => {
       const [rows, fields] = await context.db.query('SELECT user_id AS userId FROM user WHERE user_id = ?', [userId]);
-      
+      // console.log("Query user", userId)
       return (rows.length > 0 ? { userId: rows[0].userId } : null);
     },
     users: async (_, { limit = 20, offset = 0, sort = 'ASC' }, context) => {
       const [rows, fields] = await context.db.query('SELECT user_id AS userId FROM user LIMIT ? OFFSET ?', [limit, offset]);
+      // console.log("Query users:")
       return rows;
     },
     product: async (_, { productId }, context) => {
@@ -173,6 +177,7 @@ const resolvers = {
   },
   User: {
     userName: async ({ userId }, _, context) => {
+      // console.log("userId", userId)
       return UserModel.getName(context, { userId });
     },
     userId: ({ userId }, _, context) => {

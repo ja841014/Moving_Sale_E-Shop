@@ -182,7 +182,8 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
 app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
   
   // console.log(req.params)
-  res.sendFile(__dirname+'/views/productDetail.html');
+  res.render('productDetail')
+//   res.sendFile(__dirname+'/views/productDetail.html');
 
 });
 
@@ -193,6 +194,46 @@ app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
 app.get('/products', async (req, res, next) => {
   res.sendFile(__dirname+'/views/products.html');
 });
+
+
+app.post('/cart', jsonBodyParser, async(req, res, next) => {
+    
+    for(let i = 0; i < req.body.length; i++) {
+        const curUser = req.user._id
+        console.log("user:", curUser);
+        
+        const {productName, productId, price, sellerName, number } = req.body[i];
+        console.log("productId", productId)
+
+        const q = 'SELECT numberOfProduct FROM product WHERE product_id =?';
+        const d  = [productId];
+        const [rows, fields] = await connection.promise().query(q, d);
+
+        console.log("rows:", rows[0].numberOfProduct - number)
+
+        const updateq = 'UPDATE product SET numberOfProduct=?, buyer=? WHERE product_id=?';
+        const updated = [rows[0].numberOfProduct - number, curUser, productId];
+        const [rowsUPDATE, fieldsUPDATE] = await connection.promise().query(updateq, updated);
+        console.log("rowsUPDATE:", rowsUPDATE)
+
+        const insertq = 'INSERT INTO history (buyer, seller, product_id, num) VALUES (?, ?, ?, ?)';
+        const insertd = [curUser, sellerName, productId, number];
+        const [rowsInsert, fieldsInsert] = await connection.promise().query(insertq, insertd);
+        console.log("DONE")
+    }
+    // console.log(req);
+    // try {
+    //     const q = 'UPDATE product SET numberOfProduct = ? WHERE seller = ?';
+    //     const d = [req.body.email_address, req.params.userId];
+    //     const [rows, fields] = await connection.promise().query(q, d);
+    
+    //     res.status(204).end();
+    
+    //   } catch(err) {
+    //     console.error('Error', err);
+    //     res.status(500).end(err.message);
+    //   }
+}) 
 
 // Profile
 app.get('/profile', (req, res, next) => {
@@ -205,7 +246,6 @@ app.get('/profile', (req, res, next) => {
 // they are in routes folder
 app.use('/', userRoutes);
 
-// cart
 
 
 
