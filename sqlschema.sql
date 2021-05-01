@@ -12,11 +12,11 @@ CREATE TABLE product(
   productName VARCHAR(40) NOT NULL CHECK (productName <> ''),
   seller VARCHAR(40) NOT NULL DEFAULT 'Alison',
   buyer VARCHAR(40),
-  price INT NOT NULL CHECK (price <> ''),
+  price INT UNSIGNED NOT NULL CHECK (price >= 0),
   boughtDate VARCHAR(40) NOT NULL,
   product_photo VARCHAR(150) NOT NULL CHECK (product_photo <> ''),
   look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),
-  numberOfProduct INT NOT NULL CHECK (numberOfProduct <> ''),
+  numberOfProduct INT SIGNED NOT NULL CHECK (numberOfProduct >= 0),
   descript VARCHAR(200) NOT NULL,
   -- CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
   PRIMARY KEY (product_id)
