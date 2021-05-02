@@ -150,19 +150,21 @@ app.use('/graphql', graphqlHTTP(function _callee(req) {
           _context.t2 = _context.sent;
           _context.t3 = {};
           _context.t4 = {};
-          _context.t5 = {
+          _context.t5 = {};
+          _context.t6 = {
             req: _context.t1,
             db: _context.t2,
             userCache: _context.t3,
-            productCache: _context.t4
+            productCache: _context.t4,
+            historyCache: _context.t5
           };
           return _context.abrupt("return", {
             schema: _context.t0,
             graphiql: true,
-            context: _context.t5
+            context: _context.t6
           });
 
-        case 9:
+        case 10:
         case "end":
           return _context.stop();
       }
@@ -278,10 +280,10 @@ app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
           _ref2 = _slicedToArray(_ref, 2);
           rows = _ref2[0];
           fields = _ref2[1];
-          numberOfProduct = rows[0].numberOfProduct - number == 0 ? 0 : rows[0].numberOfProduct - number;
+          numberOfProduct = rows[0].numberOfProduct - number;
           console.log("numberOfProduct", numberOfProduct);
-          updateq = 'UPDATE product SET numberOfProduct=?, buyer=? WHERE product_id=?';
-          updated = [numberOfProduct, String(curUser), productId];
+          updateq = 'UPDATE product SET numberOfProduct=?  WHERE product_id=?';
+          updated = [numberOfProduct, productId];
           _context5.next = 20;
           return regeneratorRuntime.awrap(connection.promise().query(updateq, updated));
 
@@ -291,8 +293,8 @@ app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
           rowsUPDATE = _ref4[0];
           fieldsUPDATE = _ref4[1];
           console.log("rowsUPDATE:", rowsUPDATE);
-          insertq = 'INSERT INTO history (buyer, seller, product_id, num) VALUES (?, ?, ?, ?)';
-          insertd = [String(curUser), String(sellerName), productId, number];
+          insertq = 'INSERT INTO history (buyer, seller, product_name, num, price) VALUES (?, ?, ?, ?, ?)';
+          insertd = [String(curUser), String(sellerName), productName, number, Number(price) * Number(number)];
           _context5.next = 29;
           return regeneratorRuntime.awrap(connection.promise().query(insertq, insertd));
 
@@ -314,7 +316,24 @@ app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
       }
     }
   });
-}); // Profile
+}); // fetch history
+// app.get('/history', jsonBodyParser, async(req, res, next) => {
+//     console.log("history", req.body);
+//     const buyer = req.body.userID;
+//     const q = 'SELECT product_id FROM history WHERE buyer =?';
+//     const d  = [buyer];
+//     const [rows, fields] = await connection.promise().query(q, d);
+//     const productName = [];
+//     const fieldsproduct = [];
+//     for(let i = 0 ;i < rows.length; i++) {
+//         const qproduct = 'SELECT productName FROM product WHERE product_id =?';
+//         const dproduct  = [rows[i].product_id];
+//         [productName, fieldsproduct] = await connection.promise().query(qproduct, dproduct);
+//     }
+//     console.log("productName", productName);
+//     res.render('profile', {productName});
+// })
+// Profile
 
 app.get('/profile', function (req, res, next) {
   console.log(res.locals.currentUser);

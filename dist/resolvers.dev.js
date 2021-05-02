@@ -232,9 +232,13 @@ var ProductModel = {
       }
     });
   },
-  getBuyer: function getBuyer(context, _ref12) {
+  // getBuyer: async (context, { productId }) => {
+  //   const rows = await ProductModel.load(context, productId);
+  //   return (rows.length === 0 ? null : rows[0].buyer);
+  // },
+  getBoughtDate: function getBoughtDate(context, _ref12) {
     var productId, rows;
-    return regeneratorRuntime.async(function getBuyer$(_context10) {
+    return regeneratorRuntime.async(function getBoughtDate$(_context10) {
       while (1) {
         switch (_context10.prev = _context10.next) {
           case 0:
@@ -244,7 +248,7 @@ var ProductModel = {
 
           case 3:
             rows = _context10.sent;
-            return _context10.abrupt("return", rows.length === 0 ? null : rows[0].buyer);
+            return _context10.abrupt("return", rows.length === 0 ? null : rows[0].boughtDate);
 
           case 5:
           case "end":
@@ -253,9 +257,9 @@ var ProductModel = {
       }
     });
   },
-  getBoughtDate: function getBoughtDate(context, _ref13) {
+  getProductPhoto: function getProductPhoto(context, _ref13) {
     var productId, rows;
-    return regeneratorRuntime.async(function getBoughtDate$(_context11) {
+    return regeneratorRuntime.async(function getProductPhoto$(_context11) {
       while (1) {
         switch (_context11.prev = _context11.next) {
           case 0:
@@ -265,7 +269,7 @@ var ProductModel = {
 
           case 3:
             rows = _context11.sent;
-            return _context11.abrupt("return", rows.length === 0 ? null : rows[0].boughtDate);
+            return _context11.abrupt("return", rows.length === 0 ? null : rows[0].product_photo);
 
           case 5:
           case "end":
@@ -274,9 +278,9 @@ var ProductModel = {
       }
     });
   },
-  getProductPhoto: function getProductPhoto(context, _ref14) {
+  getLookLike: function getLookLike(context, _ref14) {
     var productId, rows;
-    return regeneratorRuntime.async(function getProductPhoto$(_context12) {
+    return regeneratorRuntime.async(function getLookLike$(_context12) {
       while (1) {
         switch (_context12.prev = _context12.next) {
           case 0:
@@ -286,7 +290,7 @@ var ProductModel = {
 
           case 3:
             rows = _context12.sent;
-            return _context12.abrupt("return", rows.length === 0 ? null : rows[0].product_photo);
+            return _context12.abrupt("return", rows.length === 0 ? null : rows[0].look_like);
 
           case 5:
           case "end":
@@ -295,9 +299,9 @@ var ProductModel = {
       }
     });
   },
-  getLookLike: function getLookLike(context, _ref15) {
+  getNumberOfProduct: function getNumberOfProduct(context, _ref15) {
     var productId, rows;
-    return regeneratorRuntime.async(function getLookLike$(_context13) {
+    return regeneratorRuntime.async(function getNumberOfProduct$(_context13) {
       while (1) {
         switch (_context13.prev = _context13.next) {
           case 0:
@@ -307,7 +311,7 @@ var ProductModel = {
 
           case 3:
             rows = _context13.sent;
-            return _context13.abrupt("return", rows.length === 0 ? null : rows[0].look_like);
+            return _context13.abrupt("return", rows.length === 0 ? null : rows[0].numberOfProduct);
 
           case 5:
           case "end":
@@ -316,9 +320,9 @@ var ProductModel = {
       }
     });
   },
-  getNumberOfProduct: function getNumberOfProduct(context, _ref16) {
+  getDescript: function getDescript(context, _ref16) {
     var productId, rows;
-    return regeneratorRuntime.async(function getNumberOfProduct$(_context14) {
+    return regeneratorRuntime.async(function getDescript$(_context14) {
       while (1) {
         switch (_context14.prev = _context14.next) {
           case 0:
@@ -328,7 +332,7 @@ var ProductModel = {
 
           case 3:
             rows = _context14.sent;
-            return _context14.abrupt("return", rows.length === 0 ? null : rows[0].numberOfProduct);
+            return _context14.abrupt("return", rows.length === 0 ? null : rows[0].descript);
 
           case 5:
           case "end":
@@ -336,44 +340,46 @@ var ProductModel = {
         }
       }
     });
-  },
-  getDescript: function getDescript(context, _ref17) {
-    var productId, rows;
-    return regeneratorRuntime.async(function getDescript$(_context15) {
-      while (1) {
-        switch (_context15.prev = _context15.next) {
-          case 0:
-            productId = _ref17.productId;
-            _context15.next = 3;
-            return regeneratorRuntime.awrap(ProductModel.load(context, productId));
+  } // ,
+  // getSoldDate: async (context, { productId }) => {
+  //   const rows = await ProductModel.load(context, productId);
+  //   return (rows.length === 0 ? null : rows[0].buy_at);
+  // }
 
-          case 3:
-            rows = _context15.sent;
-            return _context15.abrupt("return", rows.length === 0 ? null : rows[0].descript);
-
-          case 5:
-          case "end":
-            return _context15.stop();
-        }
-      }
-    });
-  }
 };
 var resolvers = {
   Product: {
-    productId: function productId(_ref18, _, context) {
-      var _productId = _ref18.productId;
+    productId: function productId(_ref17, _, context) {
+      var _productId = _ref17.productId;
       // console.log("productId", productId)
       return _productId;
     },
-    productName: function productName(_ref19, _, context) {
+    productName: function productName(_ref18, _, context) {
       var productId;
-      return regeneratorRuntime.async(function productName$(_context16) {
+      return regeneratorRuntime.async(function productName$(_context15) {
+        while (1) {
+          switch (_context15.prev = _context15.next) {
+            case 0:
+              productId = _ref18.productId;
+              return _context15.abrupt("return", ProductModel.getName(context, {
+                productId: productId
+              }));
+
+            case 2:
+            case "end":
+              return _context15.stop();
+          }
+        }
+      });
+    },
+    price: function price(_ref19, _, context) {
+      var productId;
+      return regeneratorRuntime.async(function price$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
             case 0:
               productId = _ref19.productId;
-              return _context16.abrupt("return", ProductModel.getName(context, {
+              return _context16.abrupt("return", ProductModel.getPrice(context, {
                 productId: productId
               }));
 
@@ -384,14 +390,14 @@ var resolvers = {
         }
       });
     },
-    price: function price(_ref20, _, context) {
+    seller: function seller(_ref20, _, context) {
       var productId;
-      return regeneratorRuntime.async(function price$(_context17) {
+      return regeneratorRuntime.async(function seller$(_context17) {
         while (1) {
           switch (_context17.prev = _context17.next) {
             case 0:
               productId = _ref20.productId;
-              return _context17.abrupt("return", ProductModel.getPrice(context, {
+              return _context17.abrupt("return", ProductModel.getSeller(context, {
                 productId: productId
               }));
 
@@ -402,14 +408,17 @@ var resolvers = {
         }
       });
     },
-    seller: function seller(_ref21, _, context) {
+    // buyer: async({ productId }, _, context) => {
+    //   return ProductModel.getBuyer(context, { productId });
+    // },
+    boughtDate: function boughtDate(_ref21, _, context) {
       var productId;
-      return regeneratorRuntime.async(function seller$(_context18) {
+      return regeneratorRuntime.async(function boughtDate$(_context18) {
         while (1) {
           switch (_context18.prev = _context18.next) {
             case 0:
               productId = _ref21.productId;
-              return _context18.abrupt("return", ProductModel.getSeller(context, {
+              return _context18.abrupt("return", ProductModel.getBoughtDate(context, {
                 productId: productId
               }));
 
@@ -420,14 +429,14 @@ var resolvers = {
         }
       });
     },
-    buyer: function buyer(_ref22, _, context) {
+    product_photo: function product_photo(_ref22, _, context) {
       var productId;
-      return regeneratorRuntime.async(function buyer$(_context19) {
+      return regeneratorRuntime.async(function product_photo$(_context19) {
         while (1) {
           switch (_context19.prev = _context19.next) {
             case 0:
               productId = _ref22.productId;
-              return _context19.abrupt("return", ProductModel.getBuyer(context, {
+              return _context19.abrupt("return", ProductModel.getProductPhoto(context, {
                 productId: productId
               }));
 
@@ -438,14 +447,14 @@ var resolvers = {
         }
       });
     },
-    boughtDate: function boughtDate(_ref23, _, context) {
+    look_like: function look_like(_ref23, _, context) {
       var productId;
-      return regeneratorRuntime.async(function boughtDate$(_context20) {
+      return regeneratorRuntime.async(function look_like$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
               productId = _ref23.productId;
-              return _context20.abrupt("return", ProductModel.getBoughtDate(context, {
+              return _context20.abrupt("return", ProductModel.getLookLike(context, {
                 productId: productId
               }));
 
@@ -456,14 +465,14 @@ var resolvers = {
         }
       });
     },
-    product_photo: function product_photo(_ref24, _, context) {
+    numberOfProduct: function numberOfProduct(_ref24, _, context) {
       var productId;
-      return regeneratorRuntime.async(function product_photo$(_context21) {
+      return regeneratorRuntime.async(function numberOfProduct$(_context21) {
         while (1) {
           switch (_context21.prev = _context21.next) {
             case 0:
               productId = _ref24.productId;
-              return _context21.abrupt("return", ProductModel.getProductPhoto(context, {
+              return _context21.abrupt("return", ProductModel.getNumberOfProduct(context, {
                 productId: productId
               }));
 
@@ -474,14 +483,14 @@ var resolvers = {
         }
       });
     },
-    look_like: function look_like(_ref25, _, context) {
+    descript: function descript(_ref25, _, context) {
       var productId;
-      return regeneratorRuntime.async(function look_like$(_context22) {
+      return regeneratorRuntime.async(function descript$(_context22) {
         while (1) {
           switch (_context22.prev = _context22.next) {
             case 0:
               productId = _ref25.productId;
-              return _context22.abrupt("return", ProductModel.getLookLike(context, {
+              return _context22.abrupt("return", ProductModel.getDescript(context, {
                 productId: productId
               }));
 
@@ -491,63 +500,86 @@ var resolvers = {
           }
         }
       });
-    },
-    numberOfProduct: function numberOfProduct(_ref26, _, context) {
-      var productId;
-      return regeneratorRuntime.async(function numberOfProduct$(_context23) {
+    } // ,
+    // soldDate: async({ productId }, _, context) => {
+    //   console.log("soldDate",productId)
+    //   const [rows, fields] = await context.db.query('SELECT buy_at AS BoughtDate FROM history WHERE product_id = ?', [productId]);
+    //   console.log("soldDate after:", JSON.stringify(rows))
+    //   return rows.map(({ BoughtDate }) => ({ BoughtDate: BoughtDate }));
+    // }
+
+  },
+  Query: {
+    user: function user(_, _ref26, context) {
+      var userId, _ref27, _ref28, rows, fields;
+
+      return regeneratorRuntime.async(function user$(_context23) {
         while (1) {
           switch (_context23.prev = _context23.next) {
             case 0:
-              productId = _ref26.productId;
-              return _context23.abrupt("return", ProductModel.getNumberOfProduct(context, {
-                productId: productId
-              }));
+              userId = _ref26.userId;
+              _context23.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT user_id AS userId FROM user WHERE user_id = ?', [userId]));
 
-            case 2:
+            case 3:
+              _ref27 = _context23.sent;
+              _ref28 = _slicedToArray(_ref27, 2);
+              rows = _ref28[0];
+              fields = _ref28[1];
+              return _context23.abrupt("return", rows.length > 0 ? {
+                userId: rows[0].userId
+              } : null);
+
+            case 8:
             case "end":
               return _context23.stop();
           }
         }
       });
     },
-    descript: function descript(_ref27, _, context) {
-      var productId;
-      return regeneratorRuntime.async(function descript$(_context24) {
+    users: function users(_, _ref29, context) {
+      var _ref29$limit, limit, _ref29$offset, offset, _ref29$sort, sort, _ref30, _ref31, rows, fields;
+
+      return regeneratorRuntime.async(function users$(_context24) {
         while (1) {
           switch (_context24.prev = _context24.next) {
             case 0:
-              productId = _ref27.productId;
-              return _context24.abrupt("return", ProductModel.getDescript(context, {
-                productId: productId
-              }));
+              _ref29$limit = _ref29.limit, limit = _ref29$limit === void 0 ? 20 : _ref29$limit, _ref29$offset = _ref29.offset, offset = _ref29$offset === void 0 ? 0 : _ref29$offset, _ref29$sort = _ref29.sort, sort = _ref29$sort === void 0 ? 'ASC' : _ref29$sort;
+              _context24.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT user_id AS userId FROM user LIMIT ? OFFSET ?', [limit, offset]));
 
-            case 2:
+            case 3:
+              _ref30 = _context24.sent;
+              _ref31 = _slicedToArray(_ref30, 2);
+              rows = _ref31[0];
+              fields = _ref31[1];
+              return _context24.abrupt("return", rows);
+
+            case 8:
             case "end":
               return _context24.stop();
           }
         }
       });
-    }
-  },
-  Query: {
-    user: function user(_, _ref28, context) {
-      var userId, _ref29, _ref30, rows, fields;
+    },
+    product: function product(_, _ref32, context) {
+      var productId, _ref33, _ref34, rows, fields;
 
-      return regeneratorRuntime.async(function user$(_context25) {
+      return regeneratorRuntime.async(function product$(_context25) {
         while (1) {
           switch (_context25.prev = _context25.next) {
             case 0:
-              userId = _ref28.userId;
+              productId = _ref32.productId;
               _context25.next = 3;
-              return regeneratorRuntime.awrap(context.db.query('SELECT user_id AS userId FROM user WHERE user_id = ?', [userId]));
+              return regeneratorRuntime.awrap(context.db.query('SELECT product_id AS productId FROM product WHERE product_id = ?', [productId]));
 
             case 3:
-              _ref29 = _context25.sent;
-              _ref30 = _slicedToArray(_ref29, 2);
-              rows = _ref30[0];
-              fields = _ref30[1];
+              _ref33 = _context25.sent;
+              _ref34 = _slicedToArray(_ref33, 2);
+              rows = _ref34[0];
+              fields = _ref34[1];
               return _context25.abrupt("return", rows.length > 0 ? {
-                userId: rows[0].userId
+                productId: rows[0].productId
               } : null);
 
             case 8:
@@ -557,22 +589,22 @@ var resolvers = {
         }
       });
     },
-    users: function users(_, _ref31, context) {
-      var _ref31$limit, limit, _ref31$offset, offset, _ref31$sort, sort, _ref32, _ref33, rows, fields;
+    products: function products(_, _ref35, context) {
+      var _ref35$limit, limit, _ref35$offset, offset, _ref35$sort, sort, _ref36, _ref37, rows, fields;
 
-      return regeneratorRuntime.async(function users$(_context26) {
+      return regeneratorRuntime.async(function products$(_context26) {
         while (1) {
           switch (_context26.prev = _context26.next) {
             case 0:
-              _ref31$limit = _ref31.limit, limit = _ref31$limit === void 0 ? 20 : _ref31$limit, _ref31$offset = _ref31.offset, offset = _ref31$offset === void 0 ? 0 : _ref31$offset, _ref31$sort = _ref31.sort, sort = _ref31$sort === void 0 ? 'ASC' : _ref31$sort;
+              _ref35$limit = _ref35.limit, limit = _ref35$limit === void 0 ? 20 : _ref35$limit, _ref35$offset = _ref35.offset, offset = _ref35$offset === void 0 ? 0 : _ref35$offset, _ref35$sort = _ref35.sort, sort = _ref35$sort === void 0 ? 'ASC' : _ref35$sort;
               _context26.next = 3;
-              return regeneratorRuntime.awrap(context.db.query('SELECT user_id AS userId FROM user LIMIT ? OFFSET ?', [limit, offset]));
+              return regeneratorRuntime.awrap(context.db.query('SELECT product_id AS productId FROM product LIMIT ? OFFSET ?', [limit, offset]));
 
             case 3:
-              _ref32 = _context26.sent;
-              _ref33 = _slicedToArray(_ref32, 2);
-              rows = _ref33[0];
-              fields = _ref33[1];
+              _ref36 = _context26.sent;
+              _ref37 = _slicedToArray(_ref36, 2);
+              rows = _ref37[0];
+              fields = _ref37[1];
               return _context26.abrupt("return", rows);
 
             case 8:
@@ -582,49 +614,50 @@ var resolvers = {
         }
       });
     },
-    product: function product(_, _ref34, context) {
-      var productId, _ref35, _ref36, rows, fields;
+    history: function history(_, _ref38, context) {
+      var historyId, _ref39, _ref40, rows, fields;
 
-      return regeneratorRuntime.async(function product$(_context27) {
+      return regeneratorRuntime.async(function history$(_context27) {
         while (1) {
           switch (_context27.prev = _context27.next) {
             case 0:
-              productId = _ref34.productId;
-              _context27.next = 3;
-              return regeneratorRuntime.awrap(context.db.query('SELECT product_id AS productId FROM product WHERE product_id = ?', [productId]));
+              historyId = _ref38.historyId;
+              console.log("history", historyId);
+              _context27.next = 4;
+              return regeneratorRuntime.awrap(context.db.query('SELECT history_id AS historyId FROM history WHERE history_id = ?', [historyId]));
 
-            case 3:
-              _ref35 = _context27.sent;
-              _ref36 = _slicedToArray(_ref35, 2);
-              rows = _ref36[0];
-              fields = _ref36[1];
+            case 4:
+              _ref39 = _context27.sent;
+              _ref40 = _slicedToArray(_ref39, 2);
+              rows = _ref40[0];
+              fields = _ref40[1];
               return _context27.abrupt("return", rows.length > 0 ? {
-                productId: rows[0].productId
+                historyId: rows[0].historyId
               } : null);
 
-            case 8:
+            case 9:
             case "end":
               return _context27.stop();
           }
         }
       });
     },
-    products: function products(_, _ref37, context) {
-      var _ref37$limit, limit, _ref37$offset, offset, _ref37$sort, sort, _ref38, _ref39, rows, fields;
+    historys: function historys(_, _ref41, context) {
+      var _ref41$limit, limit, _ref41$offset, offset, _ref41$sort, sort, _ref42, _ref43, rows, fields;
 
-      return regeneratorRuntime.async(function products$(_context28) {
+      return regeneratorRuntime.async(function historys$(_context28) {
         while (1) {
           switch (_context28.prev = _context28.next) {
             case 0:
-              _ref37$limit = _ref37.limit, limit = _ref37$limit === void 0 ? 20 : _ref37$limit, _ref37$offset = _ref37.offset, offset = _ref37$offset === void 0 ? 0 : _ref37$offset, _ref37$sort = _ref37.sort, sort = _ref37$sort === void 0 ? 'ASC' : _ref37$sort;
+              _ref41$limit = _ref41.limit, limit = _ref41$limit === void 0 ? 20 : _ref41$limit, _ref41$offset = _ref41.offset, offset = _ref41$offset === void 0 ? 0 : _ref41$offset, _ref41$sort = _ref41.sort, sort = _ref41$sort === void 0 ? 'ASC' : _ref41$sort;
               _context28.next = 3;
-              return regeneratorRuntime.awrap(context.db.query('SELECT product_id AS productId FROM product LIMIT ? OFFSET ?', [limit, offset]));
+              return regeneratorRuntime.awrap(context.db.query('SELECT history_id AS historyId FROM history LIMIT ? OFFSET ?', [limit, offset]));
 
             case 3:
-              _ref38 = _context28.sent;
-              _ref39 = _slicedToArray(_ref38, 2);
-              rows = _ref39[0];
-              fields = _ref39[1];
+              _ref42 = _context28.sent;
+              _ref43 = _slicedToArray(_ref42, 2);
+              rows = _ref43[0];
+              fields = _ref43[1];
               return _context28.abrupt("return", rows);
 
             case 8:
@@ -636,14 +669,14 @@ var resolvers = {
     }
   },
   Mutation: {
-    updateUser: function updateUser(_, _ref40, context) {
-      var userId, account, email, q, d, _ref41, _ref42, rows, fields;
+    updateUser: function updateUser(_, _ref44, context) {
+      var userId, account, email, q, d, _ref45, _ref46, rows, fields;
 
       return regeneratorRuntime.async(function updateUser$(_context29) {
         while (1) {
           switch (_context29.prev = _context29.next) {
             case 0:
-              userId = _ref40.userId, account = _ref40.account, email = _ref40.email;
+              userId = _ref44.userId, account = _ref44.account, email = _ref44.email;
               console.log("mutation:", userId, account, email);
               q = '';
               d = [];
@@ -666,10 +699,10 @@ var resolvers = {
               return regeneratorRuntime.awrap(context.db.query(q, d));
 
             case 7:
-              _ref41 = _context29.sent;
-              _ref42 = _slicedToArray(_ref41, 2);
-              rows = _ref42[0];
-              fields = _ref42[1];
+              _ref45 = _context29.sent;
+              _ref46 = _slicedToArray(_ref45, 2);
+              rows = _ref46[0];
+              fields = _ref46[1];
               return _context29.abrupt("return", rows);
 
             case 12:
@@ -681,13 +714,13 @@ var resolvers = {
     }
   },
   User: {
-    userName: function userName(_ref43, _, context) {
+    userName: function userName(_ref47, _, context) {
       var userId;
       return regeneratorRuntime.async(function userName$(_context30) {
         while (1) {
           switch (_context30.prev = _context30.next) {
             case 0:
-              userId = _ref43.userId;
+              userId = _ref47.userId;
               return _context30.abrupt("return", UserModel.getName(context, {
                 userId: userId
               }));
@@ -699,17 +732,17 @@ var resolvers = {
         }
       });
     },
-    userId: function userId(_ref44, _, context) {
-      var _userId = _ref44.userId;
+    userId: function userId(_ref48, _, context) {
+      var _userId = _ref48.userId;
       return _userId;
     },
-    account: function account(_ref45, _, context) {
+    account: function account(_ref49, _, context) {
       var userId;
       return regeneratorRuntime.async(function account$(_context31) {
         while (1) {
           switch (_context31.prev = _context31.next) {
             case 0:
-              userId = _ref45.userId;
+              userId = _ref49.userId;
               return _context31.abrupt("return", UserModel.getAccount(context, {
                 userId: userId
               }));
@@ -721,13 +754,13 @@ var resolvers = {
         }
       });
     },
-    pass: function pass(_ref46, _, context) {
+    pass: function pass(_ref50, _, context) {
       var userId;
       return regeneratorRuntime.async(function pass$(_context32) {
         while (1) {
           switch (_context32.prev = _context32.next) {
             case 0:
-              userId = _ref46.userId;
+              userId = _ref50.userId;
               return _context32.abrupt("return", UserModel.getPassword(context, {
                 userId: userId
               }));
@@ -739,13 +772,13 @@ var resolvers = {
         }
       });
     },
-    email: function email(_ref47, _, context) {
+    email: function email(_ref51, _, context) {
       var userId;
       return regeneratorRuntime.async(function email$(_context33) {
         while (1) {
           switch (_context33.prev = _context33.next) {
             case 0:
-              userId = _ref47.userId;
+              userId = _ref51.userId;
               return _context33.abrupt("return", UserModel.getEmail(context, {
                 userId: userId
               }));
@@ -757,24 +790,24 @@ var resolvers = {
         }
       });
     },
-    products: function products(_ref48, _, context) {
-      var userId, _ref49, _ref50, rows, fields;
+    products: function products(_ref52, _, context) {
+      var userId, _ref53, _ref54, rows, fields;
 
       return regeneratorRuntime.async(function products$(_context34) {
         while (1) {
           switch (_context34.prev = _context34.next) {
             case 0:
-              userId = _ref48.userId;
+              userId = _ref52.userId;
               _context34.next = 3;
               return regeneratorRuntime.awrap(context.db.query('SELECT product_id AS productId FROM product WHERE seller = ?', [userId]));
 
             case 3:
-              _ref49 = _context34.sent;
-              _ref50 = _slicedToArray(_ref49, 2);
-              rows = _ref50[0];
-              fields = _ref50[1];
-              return _context34.abrupt("return", rows.map(function (_ref51) {
-                var productId = _ref51.productId;
+              _ref53 = _context34.sent;
+              _ref54 = _slicedToArray(_ref53, 2);
+              rows = _ref54[0];
+              fields = _ref54[1];
+              return _context34.abrupt("return", rows.map(function (_ref55) {
+                var productId = _ref55.productId;
                 return {
                   productId: productId
                 };
@@ -783,6 +816,171 @@ var resolvers = {
             case 8:
             case "end":
               return _context34.stop();
+          }
+        }
+      });
+    },
+    buyProducts: function buyProducts(_ref56, _, context) {
+      var userId, _ref57, _ref58, rows, fields;
+
+      return regeneratorRuntime.async(function buyProducts$(_context35) {
+        while (1) {
+          switch (_context35.prev = _context35.next) {
+            case 0:
+              userId = _ref56.userId;
+              _context35.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT history_id AS HistoryId FROM history WHERE buyer = ?', [userId]));
+
+            case 3:
+              _ref57 = _context35.sent;
+              _ref58 = _slicedToArray(_ref57, 2);
+              rows = _ref58[0];
+              fields = _ref58[1];
+              console.log("buyProducts::::", JSON.stringify(rows));
+              return _context35.abrupt("return", rows.map(function (_ref59) {
+                var HistoryId = _ref59.HistoryId;
+                return {
+                  HistoryId: HistoryId
+                };
+              }));
+
+            case 9:
+            case "end":
+              return _context35.stop();
+          }
+        }
+      });
+    } // ,
+    // buyDate: async ({ userId }, _, context) => {
+    //   console.log(userId)
+    //   const [rows, fields] = await context.db.query('SELECT history_id AS HistoryId FROM history WHERE buyer = ?', [userId]);
+    //   console.log("BoughtDate", JSON.stringify(rows))
+    //   return rows.map(({ HistoryId }) => ({ HistoryId: HistoryId }));
+    // }
+
+  },
+  History: {
+    buyer: function buyer(_ref60, _, context) {
+      var HistoryId, _ref61, _ref62, rows, fields;
+
+      return regeneratorRuntime.async(function buyer$(_context36) {
+        while (1) {
+          switch (_context36.prev = _context36.next) {
+            case 0:
+              HistoryId = _ref60.HistoryId;
+              _context36.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT buyer FROM history WHERE history_id = ?', [HistoryId]));
+
+            case 3:
+              _ref61 = _context36.sent;
+              _ref62 = _slicedToArray(_ref61, 2);
+              rows = _ref62[0];
+              fields = _ref62[1];
+              return _context36.abrupt("return", rows.length === 0 ? null : rows[0].buyer);
+
+            case 8:
+            case "end":
+              return _context36.stop();
+          }
+        }
+      });
+    },
+    buy_at: function buy_at(_ref63, _, context) {
+      var HistoryId, _ref64, _ref65, rows, fields;
+
+      return regeneratorRuntime.async(function buy_at$(_context37) {
+        while (1) {
+          switch (_context37.prev = _context37.next) {
+            case 0:
+              HistoryId = _ref63.HistoryId;
+              _context37.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT buy_at FROM history WHERE history_id = ?', [HistoryId]));
+
+            case 3:
+              _ref64 = _context37.sent;
+              _ref65 = _slicedToArray(_ref64, 2);
+              rows = _ref65[0];
+              fields = _ref65[1];
+              return _context37.abrupt("return", rows.length === 0 ? null : rows[0].buy_at.toISOString().substring(0, 10));
+
+            case 8:
+            case "end":
+              return _context37.stop();
+          }
+        }
+      });
+    },
+    num: function num(_ref66, _, context) {
+      var HistoryId, _ref67, _ref68, rows, fields;
+
+      return regeneratorRuntime.async(function num$(_context38) {
+        while (1) {
+          switch (_context38.prev = _context38.next) {
+            case 0:
+              HistoryId = _ref66.HistoryId;
+              _context38.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT num FROM history WHERE history_id = ?', [HistoryId]));
+
+            case 3:
+              _ref67 = _context38.sent;
+              _ref68 = _slicedToArray(_ref67, 2);
+              rows = _ref68[0];
+              fields = _ref68[1];
+              return _context38.abrupt("return", rows.length === 0 ? null : rows[0].num);
+
+            case 8:
+            case "end":
+              return _context38.stop();
+          }
+        }
+      });
+    },
+    product_name: function product_name(_ref69, _, context) {
+      var HistoryId, _ref70, _ref71, rows, fields;
+
+      return regeneratorRuntime.async(function product_name$(_context39) {
+        while (1) {
+          switch (_context39.prev = _context39.next) {
+            case 0:
+              HistoryId = _ref69.HistoryId;
+              _context39.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT product_name FROM history WHERE history_id = ?', [HistoryId]));
+
+            case 3:
+              _ref70 = _context39.sent;
+              _ref71 = _slicedToArray(_ref70, 2);
+              rows = _ref71[0];
+              fields = _ref71[1];
+              return _context39.abrupt("return", rows.length === 0 ? null : rows[0].product_name);
+
+            case 8:
+            case "end":
+              return _context39.stop();
+          }
+        }
+      });
+    },
+    price: function price(_ref72, _, context) {
+      var HistoryId, _ref73, _ref74, rows, fields;
+
+      return regeneratorRuntime.async(function price$(_context40) {
+        while (1) {
+          switch (_context40.prev = _context40.next) {
+            case 0:
+              HistoryId = _ref72.HistoryId;
+              _context40.next = 3;
+              return regeneratorRuntime.awrap(context.db.query('SELECT price FROM history WHERE history_id = ?', [HistoryId]));
+
+            case 3:
+              _ref73 = _context40.sent;
+              _ref74 = _slicedToArray(_ref73, 2);
+              rows = _ref74[0];
+              fields = _ref74[1];
+              return _context40.abrupt("return", rows.length === 0 ? null : rows[0].price);
+
+            case 8:
+            case "end":
+              return _context40.stop();
           }
         }
       });

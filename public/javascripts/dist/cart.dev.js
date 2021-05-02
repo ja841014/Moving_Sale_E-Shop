@@ -42,6 +42,7 @@ window.onload = function () {
   totalPrice.innerHTML = priceData;
   var logout = document.querySelector('#logout');
   logout.addEventListener("click", function () {
-    localStorage.remove('items');
+    console.log("fndknfsd");
+    localStorage.removeItem('items');
   });
 };

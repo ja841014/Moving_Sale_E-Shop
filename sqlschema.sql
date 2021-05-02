@@ -16,7 +16,7 @@ CREATE TABLE product(
   boughtDate VARCHAR(40) NOT NULL,
   product_photo VARCHAR(150) NOT NULL CHECK (product_photo <> ''),
   look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),
-  numberOfProduct INT SIGNED NOT NULL CHECK (numberOfProduct >= 0),
+  numberOfProduct INT NOT NULL CHECK (numberOfProduct >= 0),
   descript VARCHAR(200) NOT NULL,
   -- CONSTRAINT fk_Seller_Id FOREIGN KEY(seller) REFERENCES user(user_id) ON DELETE CASCADE,
   PRIMARY KEY (product_id)
@@ -24,11 +24,12 @@ CREATE TABLE product(
 
 CREATE TABLE history(
   history_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  price INT NOT NULL CHECK (num >= 0),
   buyer VARCHAR(40) NOT NULL CHECK (buyer <> ''),
   seller VARCHAR(40) NOT NULL CHECK (seller <> ''),
   buy_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  product_id INT NOT NULL CHECK (product_id <> ''),
-  num INT NOT NULL CHECK (num <> ''),
+  product_name VARCHAR(40) NOT NULL CHECK (product_name <> ''),
+  num INT NOT NULL CHECK (num >= 0),
   PRIMARY KEY (history_id)
 );
 
@@ -47,7 +48,7 @@ INSERT INTO user (user_id, userName, account, email, pass) VALUES
 
   INSERT INTO product (product_id, productName, price, seller, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES
   (2, "tshirt", 10, 3, "4/28/2021","http:///2", "used", 2, "descript"),
-  (3, "tshirt3", 11, 1, "4/28/2021","http:///3", "used",1, "descript"),
+  (3, "tshirt3", 11, "608d163c8874dcc8fabfe514", "4/28/2021","http:///3", "used",1, "descript"),
   (4, "tshir4", 12, 2, "4/28/2021","http:///4", "used", 6, "descript"),
-  (5, "tshir5", 103, 1, "4/28/2021","http:///5", "used",3, "descript"),
+  (5, "tshir5", 103, "608d163c8874dcc8fabfe514", "4/28/2021","http:///5", "used",3, "descript"),
   (6, "tshir6", 1, 2, "4/28/2021","http:///6", "used", 9, "descript");

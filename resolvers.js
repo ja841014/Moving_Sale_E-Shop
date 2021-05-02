@@ -64,10 +64,10 @@ const ProductModel = {
 
     return (rows.length === 0 ? null : { userId: rows[0].seller });
   },
-  getBuyer: async (context, { productId }) => {
-    const rows = await ProductModel.load(context, productId);
-    return (rows.length === 0 ? null : rows[0].buyer);
-  },
+  // getBuyer: async (context, { productId }) => {
+  //   const rows = await ProductModel.load(context, productId);
+  //   return (rows.length === 0 ? null : rows[0].buyer);
+  // },
   getBoughtDate: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
     return (rows.length === 0 ? null : rows[0].boughtDate);
@@ -88,8 +88,14 @@ const ProductModel = {
     const rows = await ProductModel.load(context, productId);
     return (rows.length === 0 ? null : rows[0].descript);
   }
+  // ,
+  // getSoldDate: async (context, { productId }) => {
+  //   const rows = await ProductModel.load(context, productId);
+  //   return (rows.length === 0 ? null : rows[0].buy_at);
+  // }
 
 }
+
 
 
 const resolvers = {
@@ -109,9 +115,9 @@ const resolvers = {
       
       return ProductModel.getSeller(context, { productId });
     },
-    buyer: async({ productId }, _, context) => {
-      return ProductModel.getBuyer(context, { productId });
-    },
+    // buyer: async({ productId }, _, context) => {
+    //   return ProductModel.getBuyer(context, { productId });
+    // },
     boughtDate: async({ productId }, _, context) => {
       return ProductModel.getBoughtDate(context, { productId });
     },
@@ -126,7 +132,14 @@ const resolvers = {
     },
     descript: async({ productId }, _, context) => {
       return ProductModel.getDescript(context, { productId });
-    },
+    }
+    // ,
+    // soldDate: async({ productId }, _, context) => {
+    //   console.log("soldDate",productId)
+    //   const [rows, fields] = await context.db.query('SELECT buy_at AS BoughtDate FROM history WHERE product_id = ?', [productId]);
+    //   console.log("soldDate after:", JSON.stringify(rows))
+    //   return rows.map(({ BoughtDate }) => ({ BoughtDate: BoughtDate }));
+    // }
   },
   Query: {
     user: async (_, { userId }, context) => {
@@ -145,10 +158,20 @@ const resolvers = {
       return (rows.length > 0 ? { productId: rows[0].productId } : null);
     },
     products: async (_, { limit = 20, offset = 0, sort = 'ASC' }, context) => {
-      
       const [rows, fields] = await context.db.query('SELECT product_id AS productId FROM product LIMIT ? OFFSET ?', [limit, offset]);
       return rows;
-    }
+    },
+
+    history: async (_, { historyId }, context) => {
+      console.log("history", historyId);
+      const [rows, fields] = await context.db.query('SELECT history_id AS historyId FROM history WHERE history_id = ?', [historyId]);
+      return (rows.length > 0 ? { historyId: rows[0].historyId } : null);
+    },
+    historys: async (_, { limit = 20, offset = 0, sort = 'ASC' }, context) => {
+      const [rows, fields] = await context.db.query('SELECT history_id AS historyId FROM history LIMIT ? OFFSET ?', [limit, offset]);
+      return rows;
+    },
+
   },
   Mutation: {
     updateUser: async(_, { userId, account, email }, context) => {
@@ -196,8 +219,52 @@ const resolvers = {
 
       const [rows, fields] = await context.db.query('SELECT product_id AS productId FROM product WHERE seller = ?', [userId]);
       return rows.map(({ productId }) => ({ productId: productId }));
+    },
+    buyProducts: async ({ userId }, _, context) => {
+      const [rows, fields] = await context.db.query('SELECT history_id AS HistoryId FROM history WHERE buyer = ?', [userId]);
+      console.log("buyProducts::::", JSON.stringify(rows))
+      return rows.map(({ HistoryId }) => ({ HistoryId: HistoryId }));
     }
+    // ,
+    // buyDate: async ({ userId }, _, context) => {
+    //   console.log(userId)
+    //   const [rows, fields] = await context.db.query('SELECT history_id AS HistoryId FROM history WHERE buyer = ?', [userId]);
+    //   console.log("BoughtDate", JSON.stringify(rows))
+    //   return rows.map(({ HistoryId }) => ({ HistoryId: HistoryId }));
+    // }
+  },
+  History: {
+    buyer: async ({ HistoryId }, _, context) => {
+      // console.log("HistoryId", HistoryId)
+      const [rows, fields] = await context.db.query('SELECT buyer FROM history WHERE history_id = ?', [HistoryId]);
+      // console.log("buyProducts", JSON.stringify(rows[0].buyer))
+      // return a value not return a map. not like the error below
+      return (rows.length === 0 ? null : rows[0].buyer);
+      // return (rows.length > 0 ? { buyer: rows[0].buyer } : null);
+      
+      // return rows.map(({ buyer }) => ({ buyer: buyer }));
+    },
+    buy_at: async ({ HistoryId }, _, context) => {
+      const [rows, fields] = await context.db.query('SELECT buy_at FROM history WHERE history_id = ?', [HistoryId]);
+
+      return (rows.length === 0 ? null : rows[0].buy_at.toISOString().substring(0, 10) );
+      
+    },
+    num: async ({ HistoryId }, _, context) => {
+      const [rows, fields] = await context.db.query('SELECT num FROM history WHERE history_id = ?', [HistoryId]);
+      return (rows.length === 0 ? null : rows[0].num );
+    },
+    product_name: async ({ HistoryId }, _, context) => {
+      const [rows, fields] = await context.db.query('SELECT product_name FROM history WHERE history_id = ?', [HistoryId]);
+      return (rows.length === 0 ? null : rows[0].product_name );
+    },
+    price: async ({ HistoryId }, _, context) => {
+      const [rows, fields] = await context.db.query('SELECT price FROM history WHERE history_id = ?', [HistoryId]);
+      return (rows.length === 0 ? null : rows[0].price );
+    }
+
   }
+
 };
 
 

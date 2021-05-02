@@ -167,6 +167,60 @@
 
                         </div>
                     </section>
+
+
+                    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="History">
+                      <div>
+                          <h1 class="mb-0 text-dark"> History</h1>
+                          <div id="sellerHistory" class="resume-item d-flex flex-column flex-md-row mb-5">
+                              <div class="resume-content mr-auto w-100">
+                                  <h3 class="mb-0">Purchase History</h3>
+
+                                  <div class="container">
+                                    <div style="background-color: rgba(99, 111, 216, 0.5)" class="row">
+                                      <div class="col-sm">
+                                        Name
+                                      </div>
+                                      <div class="col-sm">
+                                        Price
+                                      </div>
+                                      <div class="col-sm">
+                                        Number
+                                      </div>
+                                      <div class="col-sm">
+                                        Bought Date
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div v-for="(user, idx) in users.buyProducts" >
+                                    
+                                    <div class="container">
+                                      <div style="background-color: rgba(181, 186, 228, 0.5)" class="row">
+                                        <div class="col-sm">
+                                          {{ user.product_name }}
+                                        </div>
+                                        <div class="col-sm">
+                                          $ {{ user.price }}
+                                        </div>
+                                        <div class="col-sm">
+                                          {{ user.num }} piece(s)
+                                        </div>
+                                        <div class="col-sm">
+                                          {{ user.buy_at }}
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                              </div>
+                              
+                              
+                          </div>
+
+                      </div>
+                  </section>
+
                 </div> 
         
             </div>
@@ -184,7 +238,8 @@
         data: {
           errorMsg:  '',
           isEditing: {},
-          users: []
+          users: [],
+          historys:[]
         },
         created() {
           this.load();
@@ -207,6 +262,12 @@
                         productName
                         price
                         numberOfProduct
+                      }
+                      buyProducts {
+                        buy_at
+                        num
+                        product_name
+                        price
                       }
                     }
                   }
@@ -248,22 +309,24 @@
               .then(this.load)
               .catch(this.flash)
             
-          },
-          del(idx) {
-            const { user_id } = this.users[idx];
-            return fetch(`/api/user/${user_id}`, { method: 'DELETE' })
-              .then(async r => {
-                if (!r.ok) throw new Error(await r.text());
-                return r;
-              })
-              .then(() => this.users.splice(idx, 1))
-              .catch(this.flash)
-              .then(this.load);
-
-          },
-          flash(msg) {
-            this.errorMsg = msg
           }
+          // ,
+          
+          // del(idx) {
+          //   const { user_id } = this.users[idx];
+          //   return fetch(`/api/user/${user_id}`, { method: 'DELETE' })
+          //     .then(async r => {
+          //       if (!r.ok) throw new Error(await r.text());
+          //       return r;
+          //     })
+          //     .then(() => this.users.splice(idx, 1))
+          //     .catch(this.flash)
+          //     .then(this.load);
+
+          // },
+          // flash(msg) {
+          //   this.errorMsg = msg
+          // }
         }
       })
     </script>

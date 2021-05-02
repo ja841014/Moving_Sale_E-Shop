@@ -18,7 +18,19 @@ type Query {
     offset: Int
     sort:   String
   ): [Product]
+
+  history(
+    history_id: ID!
+  ): History
+
+  historys(
+    limit:  Int
+    offset: Int
+    sort:   String
+  ): [History]
   
+
+
 }
 
 type Mutation {
@@ -30,7 +42,6 @@ type Product {
   productName:  String!
   price:        Int!
   seller:       User!
-  buyer:        User!
   boughtDate:   String!
   product_photo:String!
   look_like:    String!
@@ -45,4 +56,14 @@ type User {
   pass: String!
   email:    String!
   products: [Product]
+  buyProducts: [History]
 }
+
+type History {
+  buyer:        String
+  buy_at:       String
+  num:          Int
+  product_name: String
+  price:         Int
+}
+

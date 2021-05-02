@@ -218,7 +218,13 @@
             const localItems = JSON.parse(localStorage.getItem("items"));
             localItems.map(data=>{
               if(item.productId == data.productId){
-                item.number = data.number + 1;
+                //  our puchase number cannot exceed the sell number
+                if(data.number < this.productList.numberOfProduct) {
+                  item.number = data.number + 1;
+                }
+                else {
+                  item.number = data.number
+                }
               }else{
                 items.push(data);
               }

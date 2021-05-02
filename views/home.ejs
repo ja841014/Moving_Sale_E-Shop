@@ -13,6 +13,7 @@
         <!-- connect to home.css -->
         <link rel="stylesheet" href="/stylesheets/home.css">
     </head>
+    
 
     <body class="d-flex text-center text-white bg-dark">
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
@@ -34,6 +35,20 @@
                     </nav>
                 </div>
             </header>
+
+            <% if(success && success.length) { %> 
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <%= success %> 
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %> 
+                
+                <% if(error && error.length) { %> 
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= error %> 
+                        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %> 
             <!-- p->padding x->menas up and down -->
             <main class="px-3">
                 <h1>Moving Sale E-Shop</h1>

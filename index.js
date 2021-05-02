@@ -137,7 +137,8 @@ app.use('/graphql', graphqlHTTP(async (req) => {
         req,
         db: await connection.promise(),
         userCache: {},
-        productCache: {}
+        productCache: {},
+        historyCache: {}
       }
     };
   }));
@@ -210,16 +211,16 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
         const [rows, fields] = await connection.promise().query(q, d);
 
 
-        const numberOfProduct = (rows[0].numberOfProduct - number) == 0 ? 0 : rows[0].numberOfProduct - number;
+        const numberOfProduct = rows[0].numberOfProduct - number;
         console.log("numberOfProduct", numberOfProduct);
 
-        const updateq = 'UPDATE product SET numberOfProduct=?, buyer=? WHERE product_id=?';
-        const updated = [numberOfProduct, String(curUser), productId];
+        const updateq = 'UPDATE product SET numberOfProduct=?  WHERE product_id=?';
+        const updated = [numberOfProduct, productId];
         const [rowsUPDATE, fieldsUPDATE] = await connection.promise().query(updateq, updated);
         console.log("rowsUPDATE:", rowsUPDATE)
 
-        const insertq = 'INSERT INTO history (buyer, seller, product_id, num) VALUES (?, ?, ?, ?)';
-        const insertd = [String(curUser), String(sellerName), productId, number];
+        const insertq = 'INSERT INTO history (buyer, seller, product_name, num, price) VALUES (?, ?, ?, ?, ?)';
+        const insertd = [String(curUser), String(sellerName), productName, number, Number(price)*Number(number)];
         const [rowsInsert, fieldsInsert] = await connection.promise().query(insertq, insertd);
 
         
@@ -240,6 +241,25 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
     //   }
 }) 
 
+// fetch history
+// app.get('/history', jsonBodyParser, async(req, res, next) => {
+//     console.log("history", req.body);
+//     const buyer = req.body.userID;
+
+//     const q = 'SELECT product_id FROM history WHERE buyer =?';
+//     const d  = [buyer];
+//     const [rows, fields] = await connection.promise().query(q, d);
+//     const productName = [];
+//     const fieldsproduct = [];
+//     for(let i = 0 ;i < rows.length; i++) {
+//         const qproduct = 'SELECT productName FROM product WHERE product_id =?';
+//         const dproduct  = [rows[i].product_id];
+//         [productName, fieldsproduct] = await connection.promise().query(qproduct, dproduct);
+//     }
+//     console.log("productName", productName);
+//     res.render('profile', {productName});
+
+// })
 // Profile
 app.get('/profile', (req, res, next) => {
     console.log(res.locals.currentUser );
