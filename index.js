@@ -158,7 +158,8 @@ app.get('/home', (req, res, next) => {
 
 // Introduce our website
 app.get('/about', (req, res, next) => {
-    res.sendFile(__dirname+'/views/about.html');
+    res.render('about')
+    // res.sendFile(__dirname+'/views/about.html');
 });
 
 // Add Product 

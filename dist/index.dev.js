@@ -184,7 +184,7 @@ app.get('/home', function (req, res, next) {
 }); // Introduce our website
 
 app.get('/about', function (req, res, next) {
-  res.sendFile(__dirname + '/views/about.html');
+  res.render('about'); // res.sendFile(__dirname+'/views/about.html');
 }); // Add Product 
 
 app.get('/products/new', function (req, res, next) {

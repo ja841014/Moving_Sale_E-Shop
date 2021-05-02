@@ -36,3 +36,63 @@ body {
     color: #333;
     text-shadow: none;
 }
+
+
+.cartBox{
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 99999;
+	transition: 0.3s linear;
+	transform: scale(0);
+}
+.cartBox.active{
+	transform: scale(1);
+}
+.cartBox .cart{
+	position: relative;
+	height: 70%;
+	width: 80%;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.cartBox .cart i{
+	position: absolute;
+	right: 0;
+	top: 0;
+	background:#f00;
+	padding:10px 15px;
+	color: #fff;
+	cursor: pointer;
+}
+.cartBox .cart i:hover{
+	background: #ff0000a5;
+}
+.cartBox .cart h1{
+	position: relative;
+	margin-top: 2%;
+	font-size: 2.8rem;
+	color: #017bf5;
+}
+
+.addToCart{
+	position: relative;
+	text-align: left;
+	font-size: 1rem;
+	/* padding: 10px 0; */
+	background:white;
+	text-decoration: none;
+	color: rgb(8, 165, 238);
+	/* padding: 10px 15px; */
+	text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
+
