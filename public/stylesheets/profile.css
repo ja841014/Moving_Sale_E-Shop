@@ -18,7 +18,7 @@ body {
 
 
 
-/* @media (min-width: 992px) { */
+@media (min-width: 992px) {
     
     #sideNav {
         text-align: center;
@@ -69,7 +69,7 @@ body {
       margin-left: 5rem;
       margin-right: 5rem;
     }
-/* } */
+}
 
 #sellerHistory, #userinfo {
   font-size: 2rem;
