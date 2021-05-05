@@ -12,7 +12,38 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
 
+    <script>
+      FontAwesomeConfig = { autoReplaceSvg: false }
+  </script>
+    <!-- font -->
+    <link rel="stylesheet" type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+
     <link href="/stylesheets/profile.css" rel="stylesheet">
+
+    <script>
+      function Delete(e) {
+        console.log(e.parentElement.parentElement.children[0].textContent);
+        let items = [];
+        JSON.parse(localStorage.getItem('items')).map(data => {
+          if (data.productId != e.parentElement.parentElement.children[0].textContent) {
+  
+            items.push(data);
+  
+          }
+          else {
+            if (data.number - 1 != 0) {
+              data.number = data.number - 1;
+              items.push(data);
+            }
+          }
+        });
+        localStorage.setItem('items', JSON.stringify(items));
+        window.location.reload();
+      };
+    </script>
+
     <title>Moving Sale E-Shop</title>
 </head>
 
@@ -25,8 +56,8 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav w-100">
               <a class="nav-link " href="/home">Home</a>
               <a class="nav-link" href="/about">About</a>
               <a class="nav-link" href="/products/new">Add</a>
@@ -38,8 +69,10 @@
                 <a class="nav-link" href="/login">Login</a>
                 <a class="nav-link" href="/register">Register</a>
                 <% } else { %> 
+                <p id="cartNum" style="color: aquamarine;">0</p>
+                <i class="iconShopping fa fa-shopping-cart fa-2x fa-fw" style="color: aquamarine;"></i>
                 <a class="nav-link" href="/profile">Profile</a>
-                <a class="nav-link" href="/logout">Logout</a>
+                <a id="logout" class="nav-link" href="/logout">Logout</a>
                 <% } %> 
             </div>
           </div>
@@ -91,7 +124,7 @@
                             <div id="mydiv" data-test=<%= currentUser._id %>></div>
 
 
-                            <h1 class="mb-0 text-dark"> Hello, {{ users.userName }} </h1>
+                            <h1 class="mb-0 "> Hello, {{ users.userName }} </h1>
                             <div id="userinfo">
                               <div>
                                 Account: 
@@ -128,7 +161,7 @@
 
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="sellerHistory">
                         <div>
-                            <h1 class="mb-0 text-dark"> History</h1>
+                            <h1  class="mb-0 "> Stock</h1 >
                             <div id="sellerHistory" class="resume-item d-flex flex-column flex-md-row mb-5">
                                 <div class="resume-content mr-auto w-100">
                                     <h3 class="mb-0">Things to Sell</h3>
@@ -175,7 +208,7 @@
 
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="purchaseHistory">
                       <div>
-                          <h1 class="mb-0 text-dark"> History</h1>
+                          <h1 class="mb-0 "> Purchased</h1>
                           <div id="sellerHistory" class="resume-item d-flex flex-column flex-md-row mb-5">
                               <div class="resume-content mr-auto w-100">
                                   <h3 class="mb-0">Purchase History</h3>
@@ -229,6 +262,32 @@
         
             </div>
         </div>
+    </div>
+    <div id="cont" class="cartBox">
+      <div class="cart">
+        <i  class="fa fa-close"></i>
+        <h1>Cart</h1>
+        <h3 class="mb-0" style="color:black;">Things to Buy</h3>
+        <div class="container">
+          <div style="background-color: rgba(99, 111, 216, 0.5)" class="row">
+            <div class="col-sm" style="color:black;">
+              Name
+            </div>
+            <div class="col-sm" style="color:black;">
+              Price
+            </div>
+            <div class="col-sm" style="color:black;">
+              Number
+            </div>
+            <div class="col-sm" style="color:black;">
+              Cancel
+            </div>
+          </div>
+        </div>
+        <div id="showItem" class="container" style="color:black;"></div>
+        <div id="total" style="float:right; color:black;"> Total Price: $ 0</div>
+        <button class="btn btn-info" style="float:right" @click="pay();"> Buy Them All</button>
+      </div>
     </div>
 
   
@@ -333,8 +392,49 @@
           // }
         }
       })
-    </script>
 
+      const newVa = new Vue({
+      el: '#cont',
+      data: {
+        errorMsg: '',
+        isEditing: {},
+        productList: []
+      },
+      created() {
+
+      },
+      methods: {
+        pay() {
+          // const { email_address, user_id } = this.users[idx];
+
+
+          const localItems = localStorage.getItem("items");
+
+          // validation
+
+          const opts = {
+            method: 'POST',
+            body: localItems,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+
+          return fetch('/cart', opts)
+            .then(async r => {
+              if (!r.ok) throw new Error(await r.text());
+              return r;
+            })
+            .then(localStorage.removeItem('items'))
+            .then(this.load)
+            .then(window.location.reload())
+            .catch(this.flash)
+
+        }
+      }
+    })
+    </script>
+    <script src="/javascripts/cart.js"></script>
     
 </body>
 </html>
