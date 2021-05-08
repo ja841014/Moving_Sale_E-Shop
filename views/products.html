@@ -11,7 +11,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
-    <!-- connect to home.css -->
     <link rel="stylesheet" href="/stylesheets/products.css">
 </head>
 
@@ -34,12 +33,8 @@
             </div>
         </div>
     </nav>
-    TODO LIST:<br />
-    slide不能對齊 -> 圖片要跟框框一樣大<br />
-    商品圖link detail<br />
-
-    <!-- mt = magin top 5 pixal -->
-    <!-- <main class="container mt-5"> -->
+    
+    <!-- Slides -->
     <div class="middleTop">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -50,13 +45,13 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <!-- class="d-block w-100" -->
-                <img src="stylesheets/image/Bobo.JPG" alt="Cannot show the picture">
+                <img src="https://res.cloudinary.com/ja841014/image/upload/v1620446364/MovingSale/Slide-1_yqfjnn.jpg" alt="Cannot show the picture">
               </div>
               <div class="carousel-item">
-                <img src="stylesheets/image/Bee.jpg"  alt="Cannot show the picture">
+                <img src="https://res.cloudinary.com/ja841014/image/upload/v1620446471/MovingSale/Slide-2_yy6rvx.jpg"  alt="Cannot show the picture">
               </div>
               <div class="carousel-item">
-                <img src="stylesheets/image/Bagel.jpg" alt="Cannot show the picture">
+                <img src="https://res.cloudinary.com/ja841014/image/upload/v1620446473/MovingSale/Slide-3_bl1gev.jpg" alt="Cannot show the picture">
               </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -69,52 +64,53 @@
             </a>
         </div>
     </div>    
-    <!-- </main> -->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <div class="middle">
+      <!--Categories可視情況增減-->
+      <div class="leftColumn">
+          <ul>
+              <li>Clothes</li>
+                  <ul>
+                      <!--Connect with categorized query-->
+                      <li>Tops</li></a>
+                      <li>Bottoms</li>
+                      <li>Shoes</li>
+                      <li>Accessories</li>
+                      <li>Bags</li>
+                  </ul>
+              <li>Furnitures
+                  <ul>
+                      <li>Living room</li>
+                      <li>Kitchen</li>
+                      <li>Bedroom</li>
+                      <li>Bathroom</li>
+                  </ul>
+              </li>
+          </ul>
+      </div>
+
+      <div class="container">
+          <div class="row">
+              <div id="content" >
+                <div v-for="(product, idx) in productList"  class="col-lg-3 col-sm-4 col-6 item">
+                    <p><a :href="'/products/new/'+product.productId">
+                      <img v-if="product.product_photo" :src="product.product_photo" />
+                      <img v-else src="stylesheets/image/Bee.jpg" />
+                    </a></p>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </body>
 
-<div class="middle">
-    <!--Categories可視情況增減-->
-    <div class="leftColumn">
-        <ul>
-            <li>Clothes</li>
-                <ul>
-                    <!--Connect with categorized query-->
-                    <a href="/home"><li>Tops</li></a>
-                    <li>Bottoms</li>
-                    <li>Shoes</li>
-                    <li>Accessories</li>
-                    <li>Bags</li>
-                </ul>
-            <li>Furnitures
-                <ul>
-                    <li>Living room</li>
-                    <li>Kitchen</li>
-                    <li>Bedroom</li>
-                    <li>Bathroom</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
 
-    <div class="rightColumn">
-        <div class="imageBox">
-            <div id="content" >
-              <div v-for="(product, idx) in productList" >
-                  {{product.productName}}
-                  <a :href="'/products/new/'+product.productId">
-                    <img v-if="product.product_photo" :src="product.product_photo" />
-                    <img v-else src="stylesheets/image/Bee.jpg" />
-                  </a>
-              </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script type="text/javascript">
     $('.carousel').carousel({
@@ -167,8 +163,6 @@
   }
 })
 </script>
-
-
 
 
 <!-- padding  y-axis top and bottom-->
