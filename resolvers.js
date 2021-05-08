@@ -68,6 +68,10 @@ const ProductModel = {
   //   const rows = await ProductModel.load(context, productId);
   //   return (rows.length === 0 ? null : rows[0].buyer);
   // },
+  getCategory: async (context, { productId }) => {
+    const rows = await ProductModel.load(context, productId);
+    return (rows.length === 0 ? null : rows[0].category);
+  },
   getBoughtDate: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
     return (rows.length === 0 ? null : rows[0].boughtDate);
@@ -118,6 +122,9 @@ const resolvers = {
     // buyer: async({ productId }, _, context) => {
     //   return ProductModel.getBuyer(context, { productId });
     // },
+    category: async({ productId }, _, context) => {
+      return ProductModel.getCategory(context, { productId });
+    },
     boughtDate: async({ productId }, _, context) => {
       return ProductModel.getBoughtDate(context, { productId });
     },
@@ -153,7 +160,6 @@ const resolvers = {
       return rows;
     },
     product: async (_, { productId }, context) => {
-
       const [rows, fields] = await context.db.query('SELECT product_id AS productId FROM product WHERE product_id = ?', [productId]);
       return (rows.length > 0 ? { productId: rows[0].productId } : null);
     },
