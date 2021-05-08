@@ -28,9 +28,6 @@ type Query {
     offset: Int
     sort:   String
   ): [History]
-  
-
-
 }
 
 type Mutation {
@@ -66,4 +63,3 @@ type History {
   product_name: String
   price:         Int
 }
-

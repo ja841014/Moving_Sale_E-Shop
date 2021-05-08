@@ -90,15 +90,13 @@
       </div>
 
       <div class="container">
-          <div class="row">
-              <div id="content" >
+          <div class="row" id="content">
                 <div v-for="(product, idx) in productList"  class="col-lg-3 col-sm-4 col-6 item">
                     <p><a :href="'/products/new/'+product.productId">
                       <img v-if="product.product_photo" :src="product.product_photo" />
                       <img v-else src="stylesheets/image/Bee.jpg" />
                     </a></p>
                 </div>
-              </div>
           </div>
       </div>
   </div>
