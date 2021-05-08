@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Favicon -->
+    <link href="stylesheets/image/shop.png" rel="shortcut icon" type="image/ico" />
     <title>Moving Sale E-Shop</title>
     <!-- we need to careful the link CDN may change its version and cause some code cannot work properly -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -36,11 +38,15 @@
     
 
     <div class="middle">
-        <!-- <div class="leftColumn">
+        <div class="leftColumn">
             <div class="imageBox">
-                <img src="/stylesheets/image/Bagel.jpg">
+                <!-- <img src="/stylesheets/image/Bagel.jpg"> -->
+                <!-- <form runat="server">
+                    <input type='file' id="imgInp" />
+                    <img id="blah" src="#" alt="your image" />
+                </form> -->
             </div>
-        </div> -->
+        </div>
 
         <div class="rightColumn">
             <div class="form-container">
@@ -48,6 +54,13 @@
                 <form ACTION="/products/new" METHOD="POST" ENCTYPE="multipart/form-data">
                     <label for="product_name">Product Name:</label>
                     <input type="text" name="product_name" id="product_name" />
+                    <br />
+
+                    <label for="category">Category: </label>
+                    <select name="Category">
+                        <option value="Clothes" selected>Clothes</option>
+                        <option value="Furnitures">Furnitures</option>
+                    </select>
                     <br />
 
                     <label for="price">Price:</label>
@@ -89,6 +102,30 @@
     </div>
 
 </body>
+
+<!-- <script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+    
+    $("#imgInp").change(function() {
+        readURL(this);
+    });
+</script> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
+
 
 <!-- padding  y-axis top and bottom-->
 <footer class="footer bg-dark py-3 mt-auto">

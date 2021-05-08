@@ -13,6 +13,7 @@ CREATE TABLE product(
   seller VARCHAR(40) NOT NULL DEFAULT 'Alison',
   buyer VARCHAR(40),
   price INT UNSIGNED NOT NULL CHECK (price >= 0),
+  category VARCHAR(40) NOT NULL,
   boughtDate VARCHAR(40) NOT NULL,
   product_photo VARCHAR(150) NOT NULL CHECK (product_photo <> ''),
   look_like VARCHAR(150) NOT NULL CHECK (look_like <> ''),

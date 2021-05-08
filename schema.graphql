@@ -42,6 +42,7 @@ type Product {
   productName:  String!
   price:        Int!
   seller:       User!
+  category:     String!
   boughtDate:   String!
   product_photo:String!
   look_like:    String!
