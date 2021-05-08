@@ -28,48 +28,41 @@ body {
 }
 
 .middleTop {
-  border: 3px solid rgb(238, 234, 4);
   margin: 5px 10px;
 }
 
 #carouselExampleIndicators {
   margin: 2% 30% 2% 30%;
   padding: 1em;
-  border: 3px solid rgb(4, 27, 238);
   width: 40%;
   height: 80%;
-
 }
 
-.carousel-inner img{
-  margin: 2% 20% 2% 20%;
-  border: 3px solid rgb(4, 238, 238);
-  height: 180px;
-  width: 300px;
+.carousel-item img{
+  height: 250px;
+  width: 550px;
 }
 
 .middle {
-  border: 3px solid rgb(203, 8, 241);
   margin: 5px 10px;
-
+  border: 3px solid rgb(8, 236, 27);
 }
 
 .leftColumn {
-  border: 3px solid green;
   margin: 5px 10px;
+  border: 3px solid rgb(236, 8, 8);
+
   padding: 10px 5px;
 
+  color: white;
   width: 20%;
   margin: auto;
   float: left;
 }
 
-.rightColumn .imageBox{
-  border: 3px solid rgb(238, 78, 4);
-
-
-  margin: 1em;
-  padding: 1em;
+.rightColumn {
+  margin: 5px 10px;
+  padding: 10px 5px;
 
   width: 75%;
   float: left;
@@ -85,3 +78,16 @@ body {
     height: 10%;  
 }
 
+#content img{
+  width: 150px;
+  height: 150px;
+}
+
+.container {
+  border: 3px solid rgb(8, 12, 236);
+}
+
+.container .row {
+  border: 3px solid rgb(236, 8, 65);
+
+}
