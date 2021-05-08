@@ -51,7 +51,7 @@ module.exports.login = (req, res)=> {
     // console.log("req", req);
     // console.log("res", res);
     req.flash('success', 'Walcome Back');
-    const redirectUrl = req.session.returnTo || '/about';
+    const redirectUrl = req.session.returnTo || '/product';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 

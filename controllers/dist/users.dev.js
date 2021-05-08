@@ -72,7 +72,7 @@ module.exports.login = function (req, res) {
   // console.log("req", req);
   // console.log("res", res);
   req.flash('success', 'Walcome Back');
-  var redirectUrl = req.session.returnTo || '/about';
+  var redirectUrl = req.session.returnTo || '/product';
   delete req.session.returnTo;
   res.redirect(redirectUrl);
 };
