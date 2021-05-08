@@ -45,12 +45,10 @@ body {
 
 .middle {
   margin: 5px 10px;
-  border: 3px solid rgb(8, 236, 27);
 }
 
 .leftColumn {
   margin: 5px 10px;
-  border: 3px solid rgb(236, 8, 8);
 
   padding: 10px 5px;
 
@@ -81,13 +79,4 @@ body {
 #content img{
   width: 150px;
   height: 150px;
-}
-
-.container {
-  border: 3px solid rgb(8, 12, 236);
-}
-
-.container .row {
-  border: 3px solid rgb(236, 8, 65);
-
 }

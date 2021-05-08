@@ -32,14 +32,16 @@ body {
 }
 
 .leftColumn {
-    margin: 5px 10px;
+    margin: 5% 5% 5% 5%;
+    border: 3px solid gray;
 
-    width: 45%;
+    width: 400px;
+    height: 400px;
     float: left;
 }
   
-.leftColumn .imageBox img{
-    margin: 5px 150px;
+.leftColumn img{
+    margin: 5% 5% 5% 5%;
     padding: 5px 10px;
 
     width: 400px;
@@ -47,9 +49,9 @@ body {
 }
 
 .rightColumn {
-    margin: 5% 25% 5% 25%;
+    margin: 5% 5% 5% 5%;
 
-    width: 45%;
+    height: 400px;
     float: left;
     color: white;
 
