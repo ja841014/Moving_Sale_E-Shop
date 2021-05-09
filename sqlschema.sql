@@ -11,7 +11,6 @@ CREATE TABLE product(
   product_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   productName VARCHAR(40) NOT NULL CHECK (productName <> ''),
   seller VARCHAR(40) NOT NULL DEFAULT 'Alison',
-  buyer VARCHAR(40),
   price INT UNSIGNED NOT NULL CHECK (price >= 0),
   category VARCHAR(40) NOT NULL,
   boughtDate VARCHAR(40) NOT NULL,
