@@ -198,7 +198,7 @@ app.post('/products/new', upload.single('product_photo'), function _callee2(req,
         case 0:
           console.log(req.user);
           _context2.prev = 1;
-          q = 'INSERT INTO product(seller, category, productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?, ?);';
+          q = 'INSERT INTO product(seller, category, productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
           d = [String(req.user), req.body.category, req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript];
           _context2.next = 6;
           return regeneratorRuntime.awrap(connection.promise().query(q, d));
@@ -228,7 +228,7 @@ app.get('/products/new/:productId', jsonBodyParser, function _callee3(req, res, 
       switch (_context3.prev = _context3.next) {
         case 0:
           // console.log(req.params)
-          res.render('productDetail'); //   res.sendFile(__dirname+'/views/productDetail.html');
+          res.render('productDetail');
 
         case 1:
         case "end":
@@ -243,7 +243,7 @@ app.get('/products', function _callee4(req, res, next) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          res.sendFile(__dirname + '/views/products.html');
+          res.render("products");
 
         case 1:
         case "end":
@@ -251,7 +251,13 @@ app.get('/products', function _callee4(req, res, next) {
       }
     }
   });
-});
+}); // app.get('/products/clothes', async (req, res, next) => {
+//   res.sendFile(__dirname+'/views/productsClothes.html');
+// });
+// app.get('/products/furnitures', async (req, res, next) => {
+//   res.sendFile(__dirname+'/views/productsFurnitures.html');
+// });
+
 app.post('/cart', jsonBodyParser, function _callee5(req, res, next) {
   var i, curUser, _req$body$i, productName, productId, price, sellerName, number, q, d, _ref, _ref2, rows, fields, numberOfProduct, updateq, updated, _ref3, _ref4, rowsUPDATE, fieldsUPDATE, insertq, insertd, _ref5, _ref6, rowsInsert, fieldsInsert;
 

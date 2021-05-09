@@ -159,20 +159,19 @@ app.get('/home', (req, res, next) => {
 // Introduce our website
 app.get('/about', (req, res, next) => {
     res.render('about')
-    // res.sendFile(__dirname+'/views/about.html');
 });
 
 // Add Product 
 app.get('/products/new', (req, res, next) => {
-    res.sendFile(__dirname+'/views/add.html');
+    res.render('add');
 });
 
 app.post('/products/new', upload.single('product_photo'), async (req, res, next) => {
-  console.log(req.user)
+  // console.log(String(req.user), req.body.category, req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript)
+  // console.log(req.user)
     try {
-
         const q = 'INSERT INTO product(seller, category, productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
-        const d = [ String(req.user), req.body.category,req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript];
+        const d = [ String(req.user._id), req.body.category, req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript];
 
         await connection.promise().query(q, d);
     } catch (err) {
@@ -186,7 +185,6 @@ app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
   
   // console.log(req.params)
   res.render('productDetail')
-//   res.sendFile(__dirname+'/views/productDetail.html');
 
 });
 
@@ -195,26 +193,19 @@ app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
 
 // Show products
 app.get('/products', async (req, res, next) => {
-  res.sendFile(__dirname+'/views/products.html');
-});
-
-app.get('/products/clothes', async (req, res, next) => {
-  res.sendFile(__dirname+'/views/productsClothes.html');
-});
-
-app.get('/products/furnitures', async (req, res, next) => {
-  res.sendFile(__dirname+'/views/productsFurnitures.html');
+  res.render("products")
 });
 
 
+// checkout
 app.post('/cart', jsonBodyParser, async(req, res, next) => {
     
     for(let i = 0; i < req.body.length; i++) {
         const curUser = req.user._id
-        console.log("user:", curUser);
+        // console.log("user:", curUser);
 
         const {productName, productId, price, sellerName, number } = req.body[i];
-        console.log("productId", productId)
+        // console.log("productId", productId)
 
         const q = 'SELECT numberOfProduct FROM product WHERE product_id =?';
         const d  = [productId];
@@ -222,59 +213,28 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
 
 
         const numberOfProduct = rows[0].numberOfProduct - number;
-        console.log("numberOfProduct", numberOfProduct);
+        // console.log("numberOfProduct", numberOfProduct);
 
         const updateq = 'UPDATE product SET numberOfProduct=?  WHERE product_id=?';
         const updated = [numberOfProduct, productId];
         const [rowsUPDATE, fieldsUPDATE] = await connection.promise().query(updateq, updated);
-        console.log("rowsUPDATE:", rowsUPDATE)
+        // console.log("rowsUPDATE:", rowsUPDATE)
 
         const insertq = 'INSERT INTO history (buyer, seller, product_name, num, price) VALUES (?, ?, ?, ?, ?)';
         const insertd = [String(curUser), String(sellerName), productName, number, Number(price)*Number(number)];
         const [rowsInsert, fieldsInsert] = await connection.promise().query(insertq, insertd);
 
         
-        console.log("DONE")
+        // console.log("DONE")
     }
-    // window.localStorage.removeItem('items')
-    // console.log(req);
-    // try {
-    //     const q = 'UPDATE product SET numberOfProduct = ? WHERE seller = ?';
-    //     const d = [req.body.email_address, req.params.userId];
-    //     const [rows, fields] = await connection.promise().query(q, d);
     
-    //     res.status(204).end();
-    
-    //   } catch(err) {
-    //     console.error('Error', err);
-    //     res.status(500).end(err.message);
-    //   }
 }) 
 
-// fetch history
-// app.get('/history', jsonBodyParser, async(req, res, next) => {
-//     console.log("history", req.body);
-//     const buyer = req.body.userID;
 
-//     const q = 'SELECT product_id FROM history WHERE buyer =?';
-//     const d  = [buyer];
-//     const [rows, fields] = await connection.promise().query(q, d);
-//     const productName = [];
-//     const fieldsproduct = [];
-//     for(let i = 0 ;i < rows.length; i++) {
-//         const qproduct = 'SELECT productName FROM product WHERE product_id =?';
-//         const dproduct  = [rows[i].product_id];
-//         [productName, fieldsproduct] = await connection.promise().query(qproduct, dproduct);
-//     }
-//     console.log("productName", productName);
-//     res.render('profile', {productName});
-
-// })
 // Profile
 app.get('/profile', (req, res, next) => {
-    console.log(res.locals.currentUser );
+    // console.log(res.locals.currentUser );
     res.render('profile')
-    // res.sendFile(__dirname+'/views/profile.html');
 })
 
 // user route
