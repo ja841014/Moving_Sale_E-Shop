@@ -117,7 +117,9 @@
 
 
 <script>
-  const va = new Vue({
+const cate = "Clothes"
+
+const va = new Vue({
   el: '#content',
   data: {
     errorMsg:  '',
@@ -134,19 +136,22 @@
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           query: `
-          query {
-              
-              products {
-                      productName
-                      productId
-                      price
-                      product_photo
-                      look_like
-                      numberOfProduct
-                      boughtDate
-                  }
-            }
-          `
+                query {
+                  product(category:"`+ cate + `") {
+                        productName
+                        productId
+                        price
+                        product_photo
+                        look_like
+                        numberOfProduct
+                        boughtDate
+                        descript
+                        seller {
+                          userName
+                        }
+                    }
+                }
+                `
         })
       })
         .then(async r => {

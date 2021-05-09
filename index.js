@@ -198,6 +198,14 @@ app.get('/products', async (req, res, next) => {
   res.sendFile(__dirname+'/views/products.html');
 });
 
+app.get('/products/clothes', async (req, res, next) => {
+  res.sendFile(__dirname+'/views/productsClothes.html');
+});
+
+app.get('/products/furnitures', async (req, res, next) => {
+  res.sendFile(__dirname+'/views/productsFurnitures.html');
+});
+
 
 app.post('/cart', jsonBodyParser, async(req, res, next) => {
     
