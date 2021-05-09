@@ -60,7 +60,7 @@ const ProductModel = {
   },
   getSeller: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
-    console.log("getSeller", rows[0].seller)
+    // console.log("getSeller", rows[0].seller)
 
     return (rows.length === 0 ? null : { userId: rows[0].seller });
   },
@@ -169,7 +169,7 @@ const resolvers = {
     },
 
     history: async (_, { historyId }, context) => {
-      console.log("history", historyId);
+      // console.log("history", historyId);
       const [rows, fields] = await context.db.query('SELECT history_id AS historyId FROM history WHERE history_id = ?', [historyId]);
       return (rows.length > 0 ? { historyId: rows[0].historyId } : null);
     },
@@ -181,21 +181,21 @@ const resolvers = {
   },
   Mutation: {
     updateUser: async(_, { userId, account, email }, context) => {
-      console.log("mutation:", userId,account, email);
+      // console.log("mutation:", userId,account, email);
       let q = '';
       let d = [];
       if(account && !email ) {
-        console.log("email null")
+        // console.log("email null")
         q = 'UPDATE user SET account = ? WHERE user_id = ?';
         d = [account, userId];
       }
       else if(!account  && email ) {
-        console.log("account null")
+        // console.log("account null")
         q = 'UPDATE user SET email = ? WHERE user_id = ?';
         d = [email, userId];
       }
       else {
-        console.log("both not null")
+        // console.log("both not null")
         q = 'UPDATE user SET account = ?, email = ? WHERE user_id = ?';
         d = [account, email, userId];
       }

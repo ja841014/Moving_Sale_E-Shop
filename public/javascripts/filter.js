@@ -1,5 +1,4 @@
-window.onload = function() {
-
+    // this.console.log("nfjdnjdksn")
     const btns = document.querySelectorAll('.btn');
     // console.log(btns);
     
@@ -31,7 +30,7 @@ window.onload = function() {
             });
         });
     };
-}
+
 
 // SEARCH FILTER
 // const search = document.getElementById("search");
