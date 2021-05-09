@@ -171,7 +171,7 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
   console.log(req.user)
     try {
 
-        const q = 'INSERT INTO product(seller, category, productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?, ?);';
+        const q = 'INSERT INTO product(seller, category, productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
         const d = [ String(req.user), req.body.category,req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript];
 
         await connection.promise().query(q, d);
