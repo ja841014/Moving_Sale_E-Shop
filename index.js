@@ -25,6 +25,7 @@ const passport = require("passport")
 const bodyParser = require("body-parser")
 const LocalStrategy = require("passport-local")
 
+
 const User = require("./models/user");
 
 const MongoDBStore = require("connect-mongo")(session);
@@ -94,6 +95,7 @@ app.set('views', path.join(__dirname, 'views'));
 /// authentication part ///
 app.use(session(sessionConfig));
 app.use(flash());
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -178,6 +180,7 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
       console.error('Errorrrr', err);
     //   return next();
     }
+    req.flash('success', 'Successfully add a new product');
     res.redirect('/products/new');
 });
 

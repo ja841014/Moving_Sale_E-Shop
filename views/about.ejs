@@ -3,128 +3,130 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Moving Sale E-Shop</title>
-    <!-- we need to careful the link CDN may change its version and cause some code cannot work properly -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
-    <!-- font -->
-    <link rel="stylesheet" type="text/css"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Moving Sale E-Shop</title>
+  <!-- we need to careful the link CDN may change its version and cause some code cannot work properly -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
+  <!-- font -->
+  <link rel="stylesheet" type="text/css"
     href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <!-- connect to home.css -->
-    <link rel="stylesheet" href="/stylesheets/home.css">
+  <!-- connect to home.css -->
+  <link rel="stylesheet" href="/stylesheets/home.css">
 
-    <script>
-      function Delete(e){
-        console.log(e.parentElement.parentElement.children[0].textContent);
-        let items = [];
-        JSON.parse(localStorage.getItem('items')).map(data=>{
-          if(data.productId != e.parentElement.parentElement.children[0].textContent){
-            
+  <script>
+    function Delete(e) {
+      console.log(e.parentElement.parentElement.children[0].textContent);
+      let items = [];
+      JSON.parse(localStorage.getItem('items')).map(data => {
+        if (data.productId != e.parentElement.parentElement.children[0].textContent) {
+
+          items.push(data);
+
+        }
+        else {
+          if (data.number - 1 != 0) {
+            data.number = data.number - 1;
             items.push(data);
-  
           }
-          else {
-            if(data.number - 1 != 0) {
-              data.number = data.number - 1;
-              items.push(data);
-            }
-          }
-        });
-        localStorage.setItem('items',JSON.stringify(items));
-        window.location.reload();
-      };
-    </script>
+        }
+      });
+      localStorage.setItem('items', JSON.stringify(items));
+      window.location.reload();
+    };
+  </script>
 </head>
 
 <body class="d-flex flex-column text-white vh-100">
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/home">Moving Sale E-Shop</a>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home">Moving Sale E-Shop</a>
 
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link" href="/home">Home</a>
-              <a class="nav-link" href="/about">About</a>
-              <% if(currentUser) {%>
-              <a class="nav-link" href="/products/new">Add</a>
-              <% } %> 
-              <a class="nav-link" href="/products">Products</a>
-            </div>
-            <div class="navbar-nav ml-auto" style="margin-left: auto!important;">
-              <% if(!currentUser) {%>
-                <a class="nav-link" href="/login">Login</a>
-                <a class="nav-link" href="/register">Register</a>
-                <% }else { %> 
-                  <p id="cartNum" style="color: aquamarine;">0</p>
-                  <i class="iconShopping fa fa-shopping-cart fa-2x fa-fw" style="color: aquamarine;"></i>
-                  <a class="nav-link" href="/profile">Profile</a>
-                  <a id="logout" class="nav-link" href="/logout">Logout</a>
-                <% } %> 
-            </div>
-          </div>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/home">Home</a>
+          <a class="nav-link" href="/about">About</a>
+          <% if(currentUser) {%>
+          <a class="nav-link" href="/products/new">Add</a>
+          <% } %>
+          <a class="nav-link" href="/products">Products</a>
         </div>
-      </nav>
-    <!-- mt = magin top 5 pixal -->
-    <main class="container mt-5">
-        <div>
-            <h2>About us</h2>
-        
-            It's usual to rent an unfurnished place.<br>
-            <br>
-            Pros: You can decorate as you like and you are used to. <br>
-            Cons: It's troublesome when you need to relocate because you need to sell or throw these furniture by yourselves.<br>
-            <br>
-            We hear your voice.<br>
-            Instead of posting on every social media, this is a grat platform which gathers not only sellers, but also buyers.<br>
-            We set up this website for everyone's convinience.<br>
-            Buyers no longer need ot browse tons of websites, and sellers have no need to post everywhere.<br>
-            <br>
-            <h4>Welcome!</h4>
+        <div class="navbar-nav ml-auto" style="margin-left: auto!important;">
+          <% if(!currentUser) {%>
+          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/register">Register</a>
+          <% }else { %>
+          <p id="cartNum" style="color: aquamarine;">0</p>
+          <i class="iconShopping fa fa-shopping-cart fa-2x fa-fw" style="color: aquamarine;"></i>
+          <a class="nav-link" href="/profile">Profile</a>
+          <a id="logout" class="nav-link" href="/logout">Logout</a>
+          <% } %>
         </div>
-
-        <div id="cont" class="cartBox">
-          <div class="cart">
-            <i class="fa fa-close"></i>
-            <h1>Cart</h1>
-            <h3 class="mb-0" style="color:black;">Things to Buy</h3>
-            <div class="container">
-              <div style="background-color: rgba(99, 111, 216, 0.5)" class="row">
-                <div class="col-sm" style="color:black;">
-                  Name
-                </div>
-                <div class="col-sm" style="color:black;">
-                  Price
-                </div>
-                <div class="col-sm" style="color:black;">
-                  Number
-                </div>
-                <div class="col-sm" style="color:black;">
-                  Cancel
-                </div>
-              </div>
-            </div>
-            <div id="showItem" class="container" style="color:black;"></div>
-            <div id="total" style="float:right; color:black;"> Total Price: $ 0</div>
-            <button class="btn btn-info" style="float:right" @click="pay();"> Buy Them All</button>
-          </div>
-        </div>
-
-    </main>
-    
-    <!-- padding  y-axis top and bottom-->
-    <footer class="footer bg-dark py-3 mt-auto">
-      <div class="container">
-          <span class="text-muted">&copf; Lai & Lee 2021</span>
       </div>
-    </footer>
+    </div>
+  </nav>
+  <!-- mt = magin top 5 pixal -->
+  <main class="container mt-5">
+    <div>
+      <h2>About us</h2>
 
-    <script>
-      const newVa = new Vue({
+      It's usual to rent an unfurnished place.<br>
+      <br>
+      Pros: You can decorate as you like and you are used to. <br>
+      Cons: It's troublesome when you need to relocate because you need to sell or throw these furniture by
+      yourselves.<br>
+      <br>
+      We hear your voice.<br>
+      Instead of posting on every social media, this is a grat platform which gathers not only sellers, but also
+      buyers.<br>
+      We set up this website for everyone's convinience.<br>
+      Buyers no longer need ot browse tons of websites, and sellers have no need to post everywhere.<br>
+      <br>
+      <h4>Welcome!</h4>
+    </div>
+
+    <div id="cont" class="cartBox">
+      <div class="cart">
+        <i class="fa fa-close"></i>
+        <h1>Cart</h1>
+        <h3 class="mb-0" style="color:black;">Things to Buy</h3>
+        <div class="container">
+          <div style="background-color: rgba(99, 111, 216, 0.5)" class="row">
+            <div class="col-sm" style="color:black;">
+              Name
+            </div>
+            <div class="col-sm" style="color:black;">
+              Price
+            </div>
+            <div class="col-sm" style="color:black;">
+              Number
+            </div>
+            <div class="col-sm" style="color:black;">
+              Cancel
+            </div>
+          </div>
+        </div>
+        <div id="showItem" class="container" style="color:black;"></div>
+        <div id="total" style="float:right; color:black;"> Total Price: $ 0</div>
+        <button class="btn btn-info" style="float:right" @click="pay();"> Buy Them All</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- padding  y-axis top and bottom-->
+  <footer class="footer bg-dark py-3 mt-auto">
+    <div class="container">
+      <span class="text-muted">&copf; Lai & Lee 2021</span>
+    </div>
+  </footer>
+
+  <script>
+    const newVa = new Vue({
       el: '#cont',
       data: {
         errorMsg: '',
@@ -132,40 +134,40 @@
         productList: []
       },
       created() {
-        
+
       },
       methods: {
-          pay() {
-            // const { email_address, user_id } = this.users[idx];
-            
+        pay() {
+          // const { email_address, user_id } = this.users[idx];
 
-            const localItems = localStorage.getItem("items");
-            
-            // validation
 
-            const opts = {
-              method: 'POST',
-              body: localItems,
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            };
+          const localItems = localStorage.getItem("items");
 
-            return fetch('/cart', opts)
-              .then(async r => {
-                if (!r.ok) throw new Error(await r.text());
-                return r;
-              })
-              .then(localStorage.removeItem('items'))
-              .then(this.load)
-              .then(window.location.reload())
-              .catch(this.flash)
-            
-          }
+          // validation
+
+          const opts = {
+            method: 'POST',
+            body: localItems,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+
+          return fetch('/cart', opts)
+            .then(async r => {
+              if (!r.ok) throw new Error(await r.text());
+              return r;
+            })
+            .then(localStorage.removeItem('items'))
+            .then(this.load)
+            .then(window.location.reload())
+            .catch(this.flash)
+
+        }
       }
     })
-    </script>
-    <script src="/javascripts/cart.js"></script>
+  </script>
+  <script src="/javascripts/cart.js"></script>
 </body>
 
 

@@ -17,26 +17,26 @@
 
 
   <script>
-		function Delete(e){
+    function Delete(e) {
       console.log(e.parentElement.parentElement.children[0].textContent);
-			let items = [];
-			JSON.parse(localStorage.getItem('items')).map(data=>{
-				if(data.productId != e.parentElement.parentElement.children[0].textContent){
-					
-					items.push(data);
+      let items = [];
+      JSON.parse(localStorage.getItem('items')).map(data => {
+        if (data.productId != e.parentElement.parentElement.children[0].textContent) {
+
+          items.push(data);
 
         }
         else {
-          if(data.number - 1 != 0) {
+          if (data.number - 1 != 0) {
             data.number = data.number - 1;
             items.push(data);
           }
         }
-			});
-			localStorage.setItem('items',JSON.stringify(items));
-			window.location.reload();
-		};
-	</script>
+      });
+      localStorage.setItem('items', JSON.stringify(items));
+      window.location.reload();
+    };
+  </script>
 
 </head>
 
@@ -53,7 +53,9 @@
         <div class="navbar-nav w-100">
           <a class="nav-link " href="/home">Home</a>
           <a class="nav-link" href="/about">About</a>
+          <% if(currentUser) {%>
           <a class="nav-link" href="/products/new">Add</a>
+          <% } %>
           <a class="nav-link" href="/products">Products</a>
         </div>
         <div class="navbar-nav ml-auto">
@@ -100,11 +102,11 @@
             <li class="list-group-item">Remain: {{productList.numberOfProduct}} piece(s)</li>
             <li class="list-group-item">Bought At: {{productList.boughtDate}}</li>
             <li class="list-group-item">
-            <button class="addToCart" @click="add();"> Add To Cart </button>
+              <button class="addToCart" @click="add();"> Add To Cart </button>
             </li>
-            
+
           </ul>
-          
+
 
           <!-- <div class="card-footer text-muted">
                     <a href="/campgrounds" class="card-link btn btn-dark">All Campground</a>
@@ -112,7 +114,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="cont" class="cartBox">
       <div class="cart">
         <i class="fa fa-close"></i>
@@ -210,35 +212,35 @@
             sellerName: this.productList.seller.userName,
             number: 1
           };
-          
-          if(JSON.parse(localStorage.getItem('items')) === null){
+
+          if (JSON.parse(localStorage.getItem('items')) === null) {
             items.push(item);
-            localStorage.setItem("items",JSON.stringify(items));
+            localStorage.setItem("items", JSON.stringify(items));
             window.location.reload();
-          }else{
+          } else {
             const localItems = JSON.parse(localStorage.getItem("items"));
-            localItems.map(data=>{
-              if(item.productId == data.productId){
+            localItems.map(data => {
+              if (item.productId == data.productId) {
                 //  our puchase number cannot exceed the sell number
-                if(data.number < this.productList.numberOfProduct) {
+                if (data.number < this.productList.numberOfProduct) {
                   item.number = data.number + 1;
                 }
                 else {
                   item.number = data.number
                 }
-              }else{
+              } else {
                 items.push(data);
               }
             });
             items.push(item);
-            localStorage.setItem('items',JSON.stringify(items));
+            localStorage.setItem('items', JSON.stringify(items));
             window.location.reload();
           }
 
-            
-            
-          }
-          
+
+
+        }
+
       }
     })
 
@@ -286,53 +288,53 @@
             .then(r => (this.productList = r.data.product))
             .catch(this.flash)
         },
-          pay() {
-            // const { email_address, user_id } = this.users[idx];
-            
+        pay() {
+          // const { email_address, user_id } = this.users[idx];
 
-            const localItems = localStorage.getItem("items");
-            
-            // validation
 
-            const opts = {
-              method: 'POST',
-              body: localItems,
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            };
+          const localItems = localStorage.getItem("items");
 
-            return fetch('/cart', opts)
-              .then(async r => {
-                if (!r.ok) throw new Error(await r.text());
-                return r;
-              })
-              .then(localStorage.removeItem('items'))
-              .then(this.load)
-              .then(window.location.reload())
-              .catch(this.flash)
-            
-          }
-          // ,
-          // Delete(e){
-          //   console.log(e.parentElement.parentElement.children[0].textContent);
-          //   let items = [];
-          //   JSON.parse(localStorage.getItem('items')).map(data=>{
-          //     if(data.productId != e.parentElement.parentElement.children[0].textContent){
-                
-          //       items.push(data);
+          // validation
 
-          //     }
-          //     else {
-          //       if(data.number - 1 != 0) {
-          //         data.number = data.number - 1;
-          //         items.push(data);
-          //       }
-          //     }
-          //   });
-          //   localStorage.setItem('items',JSON.stringify(items));
-          //   // window.location.reload();
-          // }
+          const opts = {
+            method: 'POST',
+            body: localItems,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+
+          return fetch('/cart', opts)
+            .then(async r => {
+              if (!r.ok) throw new Error(await r.text());
+              return r;
+            })
+            .then(localStorage.removeItem('items'))
+            .then(this.load)
+            .then(window.location.reload())
+            .catch(this.flash)
+
+        }
+        // ,
+        // Delete(e){
+        //   console.log(e.parentElement.parentElement.children[0].textContent);
+        //   let items = [];
+        //   JSON.parse(localStorage.getItem('items')).map(data=>{
+        //     if(data.productId != e.parentElement.parentElement.children[0].textContent){
+
+        //       items.push(data);
+
+        //     }
+        //     else {
+        //       if(data.number - 1 != 0) {
+        //         data.number = data.number - 1;
+        //         items.push(data);
+        //       }
+        //     }
+        //   });
+        //   localStorage.setItem('items',JSON.stringify(items));
+        //   // window.location.reload();
+        // }
       }
     })
   </script>

@@ -26,7 +26,7 @@ module.exports.register = async(req, res, next) => {
                 return next(err);
             }
             else {
-                req.flash('success', 'Walcome to Moving E-Shop');
+                req.flash('success', 'Welcome to Moving E-Shop');
                 // console.log(req);
                 res.redirect('/home');
             }

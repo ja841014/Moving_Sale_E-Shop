@@ -33,7 +33,9 @@
                 <div class="navbar-nav">
                     <a class="nav-link " href="/home">Home</a>
                     <a class="nav-link" href="/about">About</a>
+                    <% if(currentUser) {%>
                     <a class="nav-link" href="/products/new">Add</a>
+                    <% } %>
                     <a class="nav-link" href="/products">Products</a>
                 </div>
                 <div class="navbar-nav ml-auto" style="margin-left: auto!important;">
