@@ -23,6 +23,14 @@
 
   <script>
     FontAwesomeConfig = { autoReplaceSvg: false }
+    function myFunction() {
+      var x = document.getElementById("myInput");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
   </script>
   <!-- font -->
   <link rel="stylesheet" type="text/css"
@@ -145,11 +153,20 @@
                 </div>
 
                 <div>
-                  Email:
+                  Email                       :
                   <input type="text" v-model="users.email" :disabled="!isEditing[0]" :class="{view: !isEditing[0]}">
                 </div>
                 <!-- <div>{{ users.account }}</div> -->
-                <div> Password: {{ users.pass }}</div>
+                <div> 
+                  <!-- Password: {{ users.pass }} -->
+                  Password: <input type="password" v-model="users.pass" value="FakePSW" id="myInput" style="background-color: rgba(255, 246, 246, 0.678);" readonly >
+                <!-- An element to toggle between password visibility -->
+                <div>
+                  <input type="checkbox" onclick="myFunction()">Show Password
+                </div>
+                
+
+                </div>
 
                 <button class="btn btn-info" @click="$set(isEditing, 0, true)" v-if="!isEditing[0]">
                   Edit
