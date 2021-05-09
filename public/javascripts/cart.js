@@ -10,7 +10,7 @@ window.onload = function() {
     });
 
     const iconShoppingP = document.querySelector('#cartNum');
-    this.console.log("iconShoppingP", iconShoppingP);
+    // this.console.log("iconShoppingP", iconShoppingP);
 	let no = 0;
 	JSON.parse(localStorage.getItem('items')).map(data=>{
 		no = no+data.number
@@ -29,7 +29,7 @@ window.onload = function() {
 	}else{
 		JSON.parse(localStorage.getItem('items')).map(data=>{
             total = total + data.number * data.price;
-            this.console.log(total);
+            // this.console.log(total);
             tableData += 
             `
             <div style="background-color: rgba(181, 186, 228, 0.5)" class="row">
@@ -60,7 +60,7 @@ window.onload = function() {
 
     const logout = document.querySelector('#logout')
     logout.addEventListener("click", function() {
-        console.log("fndknfsd")
+        // console.log("fndknfsd")
         localStorage.removeItem('items');
     });
 

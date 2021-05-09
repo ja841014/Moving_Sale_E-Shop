@@ -34,7 +34,7 @@
 
   <script>
     function Delete(e) {
-      console.log(e.parentElement.parentElement.children[0].textContent);
+      // console.log(e.parentElement.parentElement.children[0].textContent);
       let items = [];
       JSON.parse(localStorage.getItem('items')).map(data => {
         if (data.productId != e.parentElement.parentElement.children[0].textContent) {

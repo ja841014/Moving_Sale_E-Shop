@@ -18,7 +18,7 @@
 
   <script>
     function Delete(e) {
-      console.log(e.parentElement.parentElement.children[0].textContent);
+      // console.log(e.parentElement.parentElement.children[0].textContent);
       let items = [];
       JSON.parse(localStorage.getItem('items')).map(data => {
         if (data.productId != e.parentElement.parentElement.children[0].textContent) {
@@ -101,9 +101,11 @@
             <li class="list-group-item">Look like: {{productList.look_like}}</li>
             <li class="list-group-item">Remain: {{productList.numberOfProduct}} piece(s)</li>
             <li class="list-group-item">Bought At: {{productList.boughtDate}}</li>
+            <% if(currentUser) {%>
             <li class="list-group-item">
               <button class="addToCart" @click="add();"> Add To Cart </button>
             </li>
+          <% } %> 
 
           </ul>
 
@@ -203,7 +205,7 @@
             .catch(this.flash)
         },
         add() {
-          console.log("addd")
+          // console.log("addd")
           let items = [];
           let item = {
             productName: this.productList.productName,

@@ -20,7 +20,7 @@ module.exports.register = async(req, res, next) => {
         const d = [String(registerUser._id), username, account, email, password];
         await connection.promise().query(q, d);
 
-        console.log("registerUser", registerUser);
+        // console.log("registerUser", registerUser);
         req.login(registerUser, err => {
             if(err) {
                 return next(err);
@@ -32,7 +32,7 @@ module.exports.register = async(req, res, next) => {
             }
         })
     } catch (e) {
-        console.log("register error:", e.message)
+        // console.log("register error:", e.message)
         req.flash('error', e.message);
         res.redirect('/register');
     }
@@ -50,7 +50,7 @@ module.exports.login = (req, res)=> {
     // console.log("dfdfdsfdsfdsfs")
     // console.log("req", req);
     // console.log("res", res);
-    req.flash('success', 'Walcome Back');
+    req.flash('success', 'Welcome Back');
     const redirectUrl = req.session.returnTo || '/products';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
@@ -60,7 +60,7 @@ module.exports.login = (req, res)=> {
 
 
 module.exports.logout = (req, res) => {
-    console.log("LOGOUT!!");
+    // console.log("LOGOUT!!");
     req.logout();
     req.flash('success', "GoodBye");
     // console.log(req);

@@ -1,7 +1,7 @@
 window.onload = function() {
 
     const btns = document.querySelectorAll('.btn');
-    console.log(btns);
+    // console.log(btns);
     
     // const search = document.getElementById(search);
     // console.log(storeProducts);
@@ -11,24 +11,21 @@ window.onload = function() {
         btns[i].addEventListener('click', (e) => {
             const storeProducts = document.querySelectorAll('.store-product');
             e.preventDefault()
-            console.log("click")
+            // console.log("click")
             const filter = e.target.dataset.filter;
-            console.log(filter);
-            console.log(storeProducts);
+            // console.log(filter);
+            // console.log(storeProducts);
             
             storeProducts.forEach((product)=> {
-                this.console.log("classlist", product.classList)
+                // this.console.log("classlist", product.classList)
                 
                 if (filter === 'all'){
                     product.style.display = 'block'
-                    this.console.log("1")
                 } else {
                     if (product.classList.contains(filter)){
                         product.style.display = 'block'
-                        this.console.log("2")
                     } else {
                         product.style.display = 'none'
-                        this.console.log("3")
                     }
                 }
             });
