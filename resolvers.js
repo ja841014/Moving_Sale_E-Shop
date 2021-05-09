@@ -228,7 +228,7 @@ const resolvers = {
     },
     buyProducts: async ({ userId }, _, context) => {
       const [rows, fields] = await context.db.query('SELECT history_id AS HistoryId FROM history WHERE buyer = ?', [userId]);
-      console.log("buyProducts::::", JSON.stringify(rows))
+      // console.log("buyProducts::::", JSON.stringify(rows))
       return rows.map(({ HistoryId }) => ({ HistoryId: HistoryId }));
     }
     // ,
