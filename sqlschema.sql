@@ -24,12 +24,12 @@ CREATE TABLE product(
 
 CREATE TABLE history(
   history_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  price INT NOT NULL CHECK (num >= 0),
+  price INT UNSIGNED NOT NULL,
   buyer VARCHAR(40) NOT NULL CHECK (buyer <> ''),
   seller VARCHAR(40) NOT NULL CHECK (seller <> ''),
   buy_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   product_name VARCHAR(40) NOT NULL CHECK (product_name <> ''),
-  num INT NOT NULL CHECK (num >= 0),
+  num INT UNSIGNED NOT NULL,
   PRIMARY KEY (history_id)
 );
 
