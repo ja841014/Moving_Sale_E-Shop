@@ -98,7 +98,7 @@ CREATE DATABASE project
 ### Edit [database.js](database.js)
 Change the host ip.
 
-### Key of Cloudinary and MongoDB Atlas
+### Key of Cloudinary and MongoDB Atlas 
 
 CLOUDINARY_CLOUD_NAME=ja841014
 CLOUDINARY_KEY=767971241295556
