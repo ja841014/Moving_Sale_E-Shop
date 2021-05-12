@@ -98,7 +98,7 @@ CREATE DATABASE project
 ### Edit [database.js](database.js)
 Change the host ip.
 
-### Create an .env file copy and paste the following inside
+### Create an .env file copy and paste the following lines inside
 
 CLOUDINARY_CLOUD_NAME=ja841014
 CLOUDINARY_KEY=767971241295556
