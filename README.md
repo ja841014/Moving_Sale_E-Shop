@@ -44,9 +44,6 @@ CREATE TABLE history(
   PRIMARY KEY (history_id)
 );
 ```
-
-### MongoDB
-
 ---
 ### GraphQL
 ```graphql
@@ -87,7 +84,7 @@ type History {
 
 ## Prerequisites
 
-### MySQL server start
+### 1. MySQL server start
 
 Please start your MySQL server.
 And then create database and tables which is mentioned above.
@@ -95,16 +92,18 @@ And then create database and tables which is mentioned above.
 CREATE DATABASE project
 ```
 
-### Edit [database.js](database.js)
+### 2. Edit [database.js](database.js)
 Change the host ip.
 
-### Create an .env file copy and paste the following lines inside
+### 3. Key of Cloudinary and MongoDB Atlas
+Create an .env file copy and paste the following lines inside
 
+```
 CLOUDINARY_CLOUD_NAME=ja841014
 CLOUDINARY_KEY=767971241295556
 CLOUDINARY_SECRET=6jdvnJYb6x259FP56wHhZpnqJ20
 DB_URL=mongodb+srv://movingeshop:9Ybf5lkE4RBuj3Va@cluster0.hv7xo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-
+```
 ---
 
 ## Run the program
@@ -116,7 +115,7 @@ node index.js
 ```
 ---
 ## Major files
-[index.js](index.js): All GET and POST<br>
+[index.js](index.js): All GET and POST <br>
 [database.js](database.js): Connect with MySQL server<br>
 [login.ejs](login.ejs): Page to login<br>
 [register.ejs](register.ejs): Page to register as a member<br>
