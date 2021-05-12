@@ -8,7 +8,6 @@ const express = require('express');
 
 const path = require('path');
 
-// const mysql = require('mysql2');
 const {connection} = require("./database");
 
 const multer = require('multer')
@@ -167,10 +166,8 @@ app.get('/about', (req, res, next) => {
 app.get('/products/new', (req, res, next) => {
     res.render('add');
 });
-
+// post a new product
 app.post('/products/new', upload.single('product_photo'), async (req, res, next) => {
-  // console.log(String(req.user), req.body.category, req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript)
-  // console.log(req.user)
     try {
         const q = 'INSERT INTO product(seller, category, productName, price, boughtDate, product_photo, look_like, numberOfProduct, descript) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
         const d = [ String(req.user._id), req.body.category, req.body.product_name, req.body.price, req.body.boughtDate, req.file.path, req.body.look_like, req.body.numberOfProduct, req.body.descript];
@@ -178,7 +175,6 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
         await connection.promise().query(q, d);
     } catch (err) {
       console.error('Errorrrr', err);
-    //   return next();
     }
     req.flash('success', 'Successfully add a new product');
     res.redirect('/products/new');
@@ -186,7 +182,6 @@ app.post('/products/new', upload.single('product_photo'), async (req, res, next)
 
 app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
   
-  // console.log(req.params)
   res.render('productDetail')
 
 });
@@ -205,10 +200,8 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
     
     for(let i = 0; i < req.body.length; i++) {
         const curUser = req.user._id
-        // console.log("user:", curUser);
 
         const {productName, productId, price, sellerName, number } = req.body[i];
-        // console.log("productId", productId)
 
         const q = 'SELECT numberOfProduct FROM product WHERE product_id =?';
         const d  = [productId];
@@ -216,19 +209,14 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
 
 
         const numberOfProduct = rows[0].numberOfProduct - number;
-        // console.log("numberOfProduct", numberOfProduct);
 
         const updateq = 'UPDATE product SET numberOfProduct=?  WHERE product_id=?';
         const updated = [numberOfProduct, productId];
         const [rowsUPDATE, fieldsUPDATE] = await connection.promise().query(updateq, updated);
-        // console.log("rowsUPDATE:", rowsUPDATE)
 
         const insertq = 'INSERT INTO history (buyer, seller, product_name, num, price) VALUES (?, ?, ?, ?, ?)';
         const insertd = [String(curUser), String(sellerName), productName, number, Number(price)*Number(number)];
         const [rowsInsert, fieldsInsert] = await connection.promise().query(insertq, insertd);
-
-        
-        // console.log("DONE")
     }
     
 }) 
@@ -236,7 +224,6 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
 
 // Profile
 app.get('/profile', (req, res, next) => {
-    // console.log(res.locals.currentUser );
     res.render('profile')
 })
 

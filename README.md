@@ -98,6 +98,11 @@ CREATE DATABASE project
 ### Edit [database.js](database.js)
 Change the host ip.
 
+### Key of Cloudinary and MongoDB Atlas
+CLOUDINARY_CLOUD_NAME=ja841014
+CLOUDINARY_KEY=767971241295556
+CLOUDINARY_SECRET=6jdvnJYb6x259FP56wHhZpnqJ20
+DB_URL=mongodb+srv://movingeshop:9Ybf5lkE4RBuj3Va@cluster0.hv7xo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 ---
 
 ## Run the program
@@ -119,6 +124,7 @@ nodemon index.js
 [product.ejs](product.ejs): Page of listing all selling goods<br>
 [productDetail.ejs](productDetail.ejs): Detail of a specific product<br>
 [add.ejs](add.ejs): Page to upload a new product<br>
-[controllers/users.js](controllers/users.js):<br>
-[resolvers.js](resolvers.js):<br>
+[controllers/users.js](controllers/users.js): Logic part of login, logout and register<br>
+[routes/users.js](routes/users.js): Route part of login, logout and register<br>
+[resolvers.js](resolvers.js): Logic part of GraphQL<br>
 

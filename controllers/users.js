@@ -27,29 +27,21 @@ module.exports.register = async(req, res, next) => {
             }
             else {
                 req.flash('success', 'Welcome to Moving E-Shop');
-                // console.log(req);
                 res.redirect('/home');
             }
         })
     } catch (e) {
-        // console.log("register error:", e.message)
         req.flash('error', e.message);
         res.redirect('/register');
     }
-    // console.log(registerUser);    
 }
 
 module.exports.renderLogin = (req, res)=> {
-
-    // res.sendFile(__dirname + '/views/login.html');
     res.render('./login');
 };
 
 
 module.exports.login = (req, res)=> {
-    // console.log("dfdfdsfdsfdsfs")
-    // console.log("req", req);
-    // console.log("res", res);
     req.flash('success', 'Welcome Back');
     const redirectUrl = req.session.returnTo || '/products';
     delete req.session.returnTo;
@@ -60,10 +52,8 @@ module.exports.login = (req, res)=> {
 
 
 module.exports.logout = (req, res) => {
-    // console.log("LOGOUT!!");
     req.logout();
     req.flash('success', "GoodBye");
-    // console.log(req);
     res.redirect('/home')
 }
 
