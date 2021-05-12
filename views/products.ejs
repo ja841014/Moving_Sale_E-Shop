@@ -1,4 +1,3 @@
-<!-- this is the common thing in all page so we can use this to avoid doing duplicate work -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +33,6 @@
 
   <script>
     function Delete(e) {
-      // console.log(e.parentElement.parentElement.children[0].textContent);
       let items = [];
       JSON.parse(localStorage.getItem('items')).map(data => {
         if (data.productId != e.parentElement.parentElement.children[0].textContent) {
@@ -109,7 +107,6 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <!-- class="d-block w-100" -->
           <img src="https://res.cloudinary.com/ja841014/image/upload/v1620446364/MovingSale/Slide-1_yqfjnn.jpg"
             alt="Cannot show the picture">
         </div>
@@ -134,7 +131,6 @@
   </div>
 
   <div class="middle">
-    <!--Categories可視情況增減-->
     <div class="leftColumn">
       <ul>
         <li><a style="color: bisque;" href="/products" class="btn active" data-filter="all">All</a></li>
@@ -190,15 +186,11 @@
   </div>
 
 
-
-  
-
   <script type="text/javascript">
     $('.carousel').carousel({
       interval: 2000
     });
   </script>
-
 
   <script>
     const va = new Vue({
@@ -256,12 +248,7 @@
       },
       methods: {
         pay() {
-          // const { email_address, user_id } = this.users[idx];
-
-
           const localItems = localStorage.getItem("items");
-
-          // validation
 
           const opts = {
             method: 'POST',
@@ -291,8 +278,6 @@
 
 
 
-
-<!-- padding  y-axis top and bottom-->
 <footer class="footer bg-dark py-3 mt-auto">
   <div class="container">
     <span class="text-muted">&copf; Lai & Lee 2021</span>

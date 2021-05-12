@@ -5,8 +5,6 @@ const catchAsync = require('../utils/catchAsync');
 const User = require('../models/user');
 const users = require('../controllers/users');
 
-
-
 // these methods are define in controllers folder
 
 // render register page 

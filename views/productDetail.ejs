@@ -1,4 +1,3 @@
-<!-- this is the common thing in all page so we can use this to avoid doing duplicate work -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +19,6 @@
 
   <script>
     function Delete(e) {
-      // console.log(e.parentElement.parentElement.children[0].textContent);
       let items = [];
       JSON.parse(localStorage.getItem('items')).map(data => {
         if (data.productId != e.parentElement.parentElement.children[0].textContent) {
@@ -42,10 +40,6 @@
 
 </head>
 
-
-
-
-
 <body class="d-flex flex-column vh-100">
   <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -66,11 +60,8 @@
           <a class="nav-link" href="/login">Login</a>
           <a class="nav-link" href="/register">Register</a>
           <% } else { %>
-          <!-- https://fontawesome.com/v4.7.0/examples/ -->
-          <!-- <p class="iconShopping"> -->
           <p id="cartNum" style="color: aquamarine;">0</p>
           <i class="iconShopping fa fa-shopping-cart fa-2x fa-fw" style="color: aquamarine;"></i>
-          <!-- </p> -->
           <a class="nav-link" href="/profile">Profile</a>
           <a id="logout" class="nav-link" href="/logout">Logout</a>
           <% } %>
@@ -80,15 +71,12 @@
       </div>
     </div>
   </nav>
-  <!-- mt = magin top 5 pixal -->
   <main class="container mt-5">
     <div id="content" class="row">
       <div class="col-6 ">
 
         <img :src="productList.product_photo" class="d-block w-100" alt="">
 
-
-        <!-- </div> -->
       </div>
       <div class="col-6 ">
         <div class="card mb-3">
@@ -107,14 +95,10 @@
             <li class="list-group-item">
               <button class="addToCart" @click="add();"> Add To Cart </button>
             </li>
-          <% } %> 
+            <% } %>
 
           </ul>
 
-
-          <!-- <div class="card-footer text-muted">
-                    <a href="/campgrounds" class="card-link btn btn-dark">All Campground</a>
-                </div> -->
         </div>
       </div>
     </div>
@@ -157,11 +141,8 @@
 
   <script type="application/javascript">
     const currentURL = window.location.pathname
-    // console.log(currentURL)
 
     const product_id = currentURL.split('/')[3]
-    // console.log(product_id)
-
 
     const va = new Vue({
       el: '#content',
@@ -207,7 +188,6 @@
             .catch(this.flash)
         },
         add() {
-          // console.log("addd")
           let items = [];
           let item = {
             productName: this.productList.productName,
@@ -240,11 +220,7 @@
             localStorage.setItem('items', JSON.stringify(items));
             window.location.reload();
           }
-
-
-
         }
-
       }
     })
 
@@ -293,13 +269,7 @@
             .catch(this.flash)
         },
         pay() {
-          // const { email_address, user_id } = this.users[idx];
-
-
           const localItems = localStorage.getItem("items");
-
-          // validation
-
           const opts = {
             method: 'POST',
             body: localItems,
@@ -319,26 +289,6 @@
             .catch(this.flash)
 
         }
-        // ,
-        // Delete(e){
-        //   console.log(e.parentElement.parentElement.children[0].textContent);
-        //   let items = [];
-        //   JSON.parse(localStorage.getItem('items')).map(data=>{
-        //     if(data.productId != e.parentElement.parentElement.children[0].textContent){
-
-        //       items.push(data);
-
-        //     }
-        //     else {
-        //       if(data.number - 1 != 0) {
-        //         data.number = data.number - 1;
-        //         items.push(data);
-        //       }
-        //     }
-        //   });
-        //   localStorage.setItem('items',JSON.stringify(items));
-        //   // window.location.reload();
-        // }
       }
     })
   </script>

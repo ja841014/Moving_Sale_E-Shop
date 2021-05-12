@@ -41,7 +41,6 @@
 
   <script>
     function Delete(e) {
-      // console.log(e.parentElement.parentElement.children[0].textContent);
       let items = [];
       JSON.parse(localStorage.getItem('items')).map(data => {
         if (data.productId != e.parentElement.parentElement.children[0].textContent) {
@@ -110,7 +109,6 @@
           <a class="navbar-brand js-scroll-trigger" href="#page-top">
             <span class="d-block d-lg-none">Moving Sale E-Shop</span>
             <span class="d-none d-lg-block">
-              <!-- <img class="img-fluid img-profile mx-auto mb-2" src="img/profile.jpg" alt=""> -->
             </span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -155,21 +153,16 @@
                 </div>
 
                 <div>
-                  Email                       :
+                  Email :
                   <input type="text" v-model="users.email" :disabled="!isEditing[0]" :class="{view: !isEditing[0]}">
                 </div>
-                <!-- <div>{{ users.account }}</div> -->
-                <div> 
-                  <!-- Password: {{ users.pass }} -->
-                  Password: <input type="password" v-model="users.pass" value="FakePSW" id="myInput" style="background-color: rgba(255, 246, 246, 0.678);" readonly >
-                <!-- An element to toggle between password visibility -->
                 <div>
-                  <input type="checkbox" onclick="myFunction()">Show Password
+                  Password: <input type="password" v-model="users.pass" value="FakePSW" id="myInput"
+                    style="background-color: rgba(255, 246, 246, 0.678);" readonly>
+                  <div>
+                    <input type="checkbox" onclick="myFunction()">Show Password
+                  </div>
                 </div>
-                
-
-                </div>
-
                 <button class="btn btn-info" @click="$set(isEditing, 0, true)" v-if="!isEditing[0]">
                   Edit
                 </button>
@@ -182,12 +175,7 @@
                 <button class="btn btn-dark" @click="$set(isEditing, 0, false)" v-if="isEditing[0]">
                   Cancel
                 </button>
-
               </div>
-
-
-
-
             </div>
           </section>
 
@@ -227,23 +215,16 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
-
-
               </div>
-
             </div>
           </section>
-
-
           <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="purchaseHistory">
             <div>
               <h1 class="mb-0 "> Purchase History</h1>
               <div id="sellerHistory" class="resume-item d-flex flex-column flex-md-row mb-5">
                 <div class="resume-content mr-auto w-100">
-                  <!-- <h3 class="mb-0">Purchase History</h3> -->
 
                   <div class="container">
                     <div style="background-color: rgba(99, 111, 216, 0.5)" class="row">
@@ -284,7 +265,6 @@
                   </div>
                 </div>
 
-
               </div>
 
             </div>
@@ -323,11 +303,8 @@
   </div>
 
 
-
-
   <script>
     var userID = document.getElementById('mydiv').dataset.test
-    // console.log(userID);
     const va = new Vue({
       el: '#content',
       data: {
@@ -375,15 +352,10 @@
             })
             .then(r => r.json())
             .then(r => (this.users = r.data.user))
-            // .then(console.log("hfuhd",JSON.parse(JSON.stringify(this.users))))
             .catch(this.flash)
         },
         save(idx) {
-          // console.log(JSON.parse(JSON.stringify(this.users)))
-          // console.log(users.user_id)
-          // console.log(users.email)
           const { account, email } = JSON.parse(JSON.stringify(this.users));
-          // console.log(user_id)
 
           return fetch('/graphql', {
             method: 'POST',
@@ -405,7 +377,7 @@
             .catch(this.flash)
 
         }
-        
+
       }
     })
 
@@ -421,13 +393,7 @@
       },
       methods: {
         pay() {
-          // const { email_address, user_id } = this.users[idx];
-
-
           const localItems = localStorage.getItem("items");
-
-          // validation
-
           const opts = {
             method: 'POST',
             body: localItems,

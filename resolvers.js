@@ -32,10 +32,7 @@ const UserModel = {
     return (rows.length === 0 ? null : rows[0].email);
   }
 
-  // getProducts: async (context, { userId }) => {
-  //   const rows = UserModel.load(context, userId);
-  //   return (rows.length === 0 ? null : rows[0].name);
-  // }
+ 
 }
 
 const ProductModel = {
@@ -44,14 +41,12 @@ const ProductModel = {
       return context.productCache[productId];
     }
     const [rows, fields] = await context.db.query('SELECT * FROM product WHERE product_id = ?', [productId]);
-    // console.log("product rows", rows)
     context.productCache[productId] = rows;
     return rows;
   },
 
   getName: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
-    // console.log("product rows getName", rows)
     return (rows.length === 0 ? null : rows[0].productName);
   },
   getPrice: async (context, { productId }) => {
@@ -60,14 +55,10 @@ const ProductModel = {
   },
   getSeller: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
-    // console.log("getSeller", rows[0].seller)
 
     return (rows.length === 0 ? null : { userId: rows[0].seller });
   },
-  // getBuyer: async (context, { productId }) => {
-  //   const rows = await ProductModel.load(context, productId);
-  //   return (rows.length === 0 ? null : rows[0].buyer);
-  // },
+  
   getCategory: async (context, { productId }) => {
     const rows = await ProductModel.load(context, productId);
     return (rows.length === 0 ? null : rows[0].category);
@@ -92,11 +83,7 @@ const ProductModel = {
     const rows = await ProductModel.load(context, productId);
     return (rows.length === 0 ? null : rows[0].descript);
   }
-  // ,
-  // getSoldDate: async (context, { productId }) => {
-  //   const rows = await ProductModel.load(context, productId);
-  //   return (rows.length === 0 ? null : rows[0].buy_at);
-  // }
+  
 
 }
 
@@ -105,7 +92,6 @@ const ProductModel = {
 const resolvers = {
   Product: {
     productId: ({ productId }, _, context) => {
-      // console.log("productId", productId)
       return productId;
     },
     productName: async({ productId }, _, context) => {
@@ -119,9 +105,7 @@ const resolvers = {
       
       return ProductModel.getSeller(context, { productId });
     },
-    // buyer: async({ productId }, _, context) => {
-    //   return ProductModel.getBuyer(context, { productId });
-    // },
+    
     category: async({ productId }, _, context) => {
       return ProductModel.getCategory(context, { productId });
     },
@@ -140,13 +124,7 @@ const resolvers = {
     descript: async({ productId }, _, context) => {
       return ProductModel.getDescript(context, { productId });
     }
-    // ,
-    // soldDate: async({ productId }, _, context) => {
-    //   console.log("soldDate",productId)
-    //   const [rows, fields] = await context.db.query('SELECT buy_at AS BoughtDate FROM history WHERE product_id = ?', [productId]);
-    //   console.log("soldDate after:", JSON.stringify(rows))
-    //   return rows.map(({ BoughtDate }) => ({ BoughtDate: BoughtDate }));
-    // }
+    
   },
   Query: {
     user: async (_, { userId }, context) => {
@@ -181,32 +159,26 @@ const resolvers = {
   },
   Mutation: {
     updateUser: async(_, { userId, account, email }, context) => {
-      // console.log("mutation:", userId,account, email);
       let q = '';
       let d = [];
       if(account && !email ) {
-        // console.log("email null")
         q = 'UPDATE user SET account = ? WHERE user_id = ?';
         d = [account, userId];
       }
       else if(!account  && email ) {
-        // console.log("account null")
         q = 'UPDATE user SET email = ? WHERE user_id = ?';
         d = [email, userId];
       }
       else {
-        // console.log("both not null")
         q = 'UPDATE user SET account = ?, email = ? WHERE user_id = ?';
         d = [account, email, userId];
       }
       const [rows, fields] = await context.db.query(q, d);
-      // this return is useless, because mysql cannot return anything
       return rows
     }
   },
   User: {
     userName: async ({ userId }, _, context) => {
-      // console.log("userId", userId)
       return UserModel.getName(context, { userId });
     },
     userId: ({ userId }, _, context) => {
@@ -228,27 +200,15 @@ const resolvers = {
     },
     buyProducts: async ({ userId }, _, context) => {
       const [rows, fields] = await context.db.query('SELECT history_id AS HistoryId FROM history WHERE buyer = ?', [userId]);
-      // console.log("buyProducts::::", JSON.stringify(rows))
       return rows.map(({ HistoryId }) => ({ HistoryId: HistoryId }));
     }
-    // ,
-    // buyDate: async ({ userId }, _, context) => {
-    //   console.log(userId)
-    //   const [rows, fields] = await context.db.query('SELECT history_id AS HistoryId FROM history WHERE buyer = ?', [userId]);
-    //   console.log("BoughtDate", JSON.stringify(rows))
-    //   return rows.map(({ HistoryId }) => ({ HistoryId: HistoryId }));
-    // }
+    
   },
   History: {
     buyer: async ({ HistoryId }, _, context) => {
-      // console.log("HistoryId", HistoryId)
       const [rows, fields] = await context.db.query('SELECT buyer FROM history WHERE history_id = ?', [HistoryId]);
-      // console.log("buyProducts", JSON.stringify(rows[0].buyer))
-      // return a value not return a map. not like the error below
       return (rows.length === 0 ? null : rows[0].buyer);
-      // return (rows.length > 0 ? { buyer: rows[0].buyer } : null);
       
-      // return rows.map(({ buyer }) => ({ buyer: buyer }));
     },
     buy_at: async ({ HistoryId }, _, context) => {
       const [rows, fields] = await context.db.query('SELECT buy_at FROM history WHERE history_id = ?', [HistoryId]);

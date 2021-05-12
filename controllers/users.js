@@ -20,7 +20,6 @@ module.exports.register = async(req, res, next) => {
         const d = [String(registerUser._id), username, account, email, password];
         await connection.promise().query(q, d);
 
-        // console.log("registerUser", registerUser);
         req.login(registerUser, err => {
             if(err) {
                 return next(err);

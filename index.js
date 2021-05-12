@@ -24,23 +24,12 @@ const passport = require("passport")
 const bodyParser = require("body-parser")
 const LocalStrategy = require("passport-local")
 
-
 const User = require("./models/user");
 
 const MongoDBStore = require("connect-mongo")(session);
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/project';
 
-
-
-
-
-///////////////////
 const jsonBodyParser = bodyParser.json();
-///////////////////
-
-
-
-
 
 // project db name
 // 'mongodb://localhost:27017/project'
@@ -77,14 +66,10 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
-
-//////////////////////////
-
 
 const app = express();
 // let express can use the public folder directly  https://expressjs.com/zh-tw/starter/static-files.html
@@ -94,7 +79,6 @@ app.set('views', path.join(__dirname, 'views'));
 /// authentication part ///
 app.use(session(sessionConfig));
 app.use(flash());
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -110,10 +94,8 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     next();
 })
-//////////////////////////////////////////
 
-/////////////////////////
-///// graphql thing /////
+///// graphql thing
 const { graphqlHTTP } = require('express-graphql');
 const { readFileSync } = require('fs')
 const { assertResolversPresent, makeExecutableSchema } = require('@graphql-tools/schema');
@@ -143,8 +125,6 @@ app.use('/graphql', graphqlHTTP(async (req) => {
       }
     };
   }));
-/////////////////////
-/////////////////////
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -186,14 +166,10 @@ app.get('/products/new/:productId', jsonBodyParser, async (req, res, next) => {
 
 });
 
-
-
-
 // Show products
 app.get('/products', async (req, res, next) => {
   res.render("products")
 });
-
 
 // checkout
 app.post('/cart', jsonBodyParser, async(req, res, next) => {
@@ -221,7 +197,6 @@ app.post('/cart', jsonBodyParser, async(req, res, next) => {
     
 }) 
 
-
 // Profile
 app.get('/profile', (req, res, next) => {
     res.render('profile')
@@ -230,9 +205,6 @@ app.get('/profile', (req, res, next) => {
 // user route
 // they are in routes folder
 app.use('/', userRoutes);
-
-
-
 
 app.listen(3000);
 console.log('GraphQL API server running at http://localhost:3000/graphql');

@@ -98,7 +98,7 @@ CREATE DATABASE project
 ### Edit [database.js](database.js)
 Change the host ip.
 
-### Key of Cloudinary and MongoDB Atlas 
+### Create an .env file copy and paste the following inside
 
 CLOUDINARY_CLOUD_NAME=ja841014
 CLOUDINARY_KEY=767971241295556
@@ -112,7 +112,7 @@ DB_URL=mongodb+srv://movingeshop:9Ybf5lkE4RBuj3Va@cluster0.hv7xo.mongodb.net/myF
 Please run:
 
 ```shell
-nodemon index.js
+node index.js
 ```
 ---
 ## Major files

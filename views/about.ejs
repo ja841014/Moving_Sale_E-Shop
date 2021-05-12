@@ -1,4 +1,3 @@
-<!-- this is the common thing in all page so we can use this to avoid doing duplicate work -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +21,6 @@
 
   <script>
     function Delete(e) {
-      // console.log(e.parentElement.parentElement.children[0].textContent);
       let items = [];
       JSON.parse(localStorage.getItem('items')).map(data => {
         if (data.productId != e.parentElement.parentElement.children[0].textContent) {
@@ -120,7 +118,6 @@
 
   </main>
 
-  <!-- padding  y-axis top and bottom-->
   <footer class="footer bg-dark py-3 mt-auto">
     <div class="container">
       <span class="text-muted">&copf; Lai & Lee 2021</span>
@@ -140,12 +137,7 @@
       },
       methods: {
         pay() {
-          // const { email_address, user_id } = this.users[idx];
-
-
           const localItems = localStorage.getItem("items");
-
-          // validation
 
           const opts = {
             method: 'POST',
