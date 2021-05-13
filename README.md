@@ -99,10 +99,10 @@ Change the host ip.
 Create an .env file copy and paste the following lines inside
 
 ```
-CLOUDINARY_CLOUD_NAME=ja841014
-CLOUDINARY_KEY=767971241295556
-CLOUDINARY_SECRET=6jdvnJYb6x259FP56wHhZpnqJ20
-DB_URL=mongodb+srv://movingeshop:9Ybf5lkE4RBuj3Va@cluster0.hv7xo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+CLOUDINARY_CLOUD_NAME=xxxx
+CLOUDINARY_KEY=xxxx
+CLOUDINARY_SECRET=xxxx
+DB_URL=xxxxx
 ```
 ---
 
