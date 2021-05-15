@@ -4,9 +4,6 @@
 <p align="center"><img src="READMEIMG/Home.png" width="500" /></p>
 <a href="http://54.219.155.154:3000/home">To see the app in action</a>
 
-
-- Please clone the repository, look through [README.md](README.md).
-
 ---
 
 ## The Database Schema
@@ -88,8 +85,14 @@ type History {
 <p align="center"><img src="READMEIMG/Architecture.png" width="500" /></p>
 
 ## Flow Chart
-<p align="center"><img src="READMEIMG/flowchart.png" height="600" /></p>
+<p align="center"><img src="READMEIMG/flowchart.png" height="700" /></p>
 
+## Features
+
+* Used node.js express as backend, Vue.js as frontend and integrated with MongoDB Atlas and AWS RDS.
+* Used GraphQL to fetch and update data in database.
+* Used local strategy of Passport.js for authentication and authorization.
+* Implemented shopping cart by using LocalStorage and MySQL.
 
 ## Prerequisites
 
