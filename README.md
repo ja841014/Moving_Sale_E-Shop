@@ -1,7 +1,9 @@
 # Moving_Sale_E-Shop
 
-> This project is a full-stack implementation. It provides a front-end website and interacts with two back-end databases.
+> Cooperated with teammate to develop and deployed web application on AWS EC2 by using Node.js Express, Vue.js, MongoDB Atlas, AWS RDS, Cloudinary and GraphQL API.
 <p align="center"><img src="READMEIMG/Home.png" width="500" /></p>
+<a href="http://54.219.155.154:3000/home">To see the app in action</a>
+
 
 - Please clone the repository, look through [README.md](README.md).
 
@@ -82,6 +84,13 @@ type History {
 
 ---
 
+## Architecuture
+<p align="center"><img src="READMEIMG/Architecture.png" width="500" /></p>
+
+## Flow Chart
+<p align="center"><img src="READMEIMG/flowchart.png" height="600" /></p>
+
+
 ## Prerequisites
 
 ### 1. MySQL server start
@@ -111,6 +120,7 @@ DB_URL=xxxxx
 Please run:
 
 ```shell
+cd Moving_Sale_E-Shop
 node index.js
 ```
 ---
