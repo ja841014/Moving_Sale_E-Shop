@@ -2,7 +2,7 @@
 
 > Cooperated with teammate to develop and deployed web application on AWS EC2 by using Node.js Express, Vue.js, MongoDB Atlas, AWS RDS, Cloudinary and GraphQL API.
 <p align="center"><img src="READMEIMG/Home.png" width="500" /></p>
-<a href="http://54.219.155.154:3000/home">To see the app in action</a>
+<a href="http://ec2-54-219-155-154.us-west-1.compute.amazonaws.com:3000/home">To see the app in action</a>
 
 ---
 
